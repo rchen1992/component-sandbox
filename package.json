@@ -1,0 +1,45 @@
+{
+    "name": "react-typescript-storybook-starter",
+    "version": "0.0.1",
+    "main": "build/lib/index.js",
+    "types": "build/lib/index.d.ts",
+    "files": [
+        "build/lib"
+    ],
+    "scripts": {
+        "storybook": "start-storybook -p 6006 -c .storybook",
+        "build": "npm run build-lib && build-storybook",
+        "build-lib": "tsc && npm run copy-css-to-lib",
+        "build-storybook": "build-storybook",
+        "copy-css-to-lib": "cpx \"./src/**/*.css\" ./build/lib"
+    },
+    "repository": "https://github.com/sw-yx/react-typescript-storybook-starter.git",
+    "author": "sw-yx <shawnthe1@gmail.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/cli": "^7.1.5",
+        "@babel/core": "^7.1.5",
+        "@babel/preset-env": "^7.1.5",
+        "@storybook/addon-info": "^4.0.4",
+        "@storybook/addon-knobs": "^4.0.4",
+        "@storybook/react": "^4.0.4",
+        "@types/jest": "^23.3.9",
+        "@types/react": "^16.7.1",
+        "@types/storybook__addon-info": "^3.4.2",
+        "@types/storybook__addon-knobs": "^3.4.1",
+        "@types/storybook__react": "^4.0.0",
+        "awesome-typescript-loader": "^5.2.1",
+        "babel-loader": "^8.0.4",
+        "jest": "^23.6.0",
+        "react-docgen-typescript-webpack-plugin": "^1.1.0",
+        "storybook-addon-jsx": "5.0.0",
+        "ts-jest": "^23.10.4",
+        "tslint": "^5.11.0",
+        "tslint-microsoft-contrib": "^5.2.1",
+        "typescript": "^3.1.6"
+    },
+    "dependencies": {
+        "react": "^16.6.1",
+        "react-dom": "^16.6.1"
+    }
+}
