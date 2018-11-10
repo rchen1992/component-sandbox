@@ -4,6 +4,11 @@ import { storiesOf } from '@storybook/react';
 import { Button } from './Button';
 import { wInfo } from '../utils';
 import { text, boolean } from '@storybook/addon-knobs/react';
+import { action } from '@storybook/addon-actions';
+
+const actions = {
+    onClick: action('onClick'),
+};
 
 (storiesOf('Components/Button', module) as any).add(
     'basic Button',
@@ -11,7 +16,7 @@ import { text, boolean } from '@storybook/addon-knobs/react';
         <Button
             label={text('label', 'Enroll')}
             disabled={boolean('disabled', false)}
-            onClick={() => alert('hello there')}
+            {...actions}
         />
     ),
     wInfo(`
