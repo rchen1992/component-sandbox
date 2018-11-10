@@ -1,7 +1,9 @@
 import { configure } from '@storybook/react';
-import { setAddon, addDecorator } from '@storybook/react';
-import { withKnobs, select } from '@storybook/addon-knobs/react';
+import { addDecorator } from '@storybook/react';
+import { withKnobs } from '@storybook/addon-knobs';
+import { withInfo } from '@storybook/addon-info';
 addDecorator(withKnobs);
+addDecorator(withInfo);
 
 // automatically import all files ending in *.stories.js
 const req = require.context('../src', true, /.stories.tsx$/);

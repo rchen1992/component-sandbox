@@ -7,24 +7,24 @@ import { text, boolean } from '@storybook/addon-knobs/react';
 
 (storiesOf('Components/Button', module) as any).add(
     'basic Button',
-    wInfo(`
-
-  ### Notes
-
-  This is a button
-
-  ### Usage
-  ~~~js
-  <Button
-    label={'Enroll'}
-    disabled={false}
-    onClick={() => alert('hello there')}
-  />
-  ~~~`)(() => (
+    () => (
         <Button
             label={text('label', 'Enroll')}
             disabled={boolean('disabled', false)}
             onClick={() => alert('hello there')}
         />
-    ))
+    ),
+    wInfo(`
+            ### Notes
+
+            This is a button!
+
+            ### Usage
+            ~~~js
+            <Button
+                label={'Enroll'}
+                disabled={false}
+                onClick={() => alert('hello there')}
+            />
+            ~~~`)
 );

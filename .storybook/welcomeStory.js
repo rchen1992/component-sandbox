@@ -5,6 +5,7 @@ import { wInfo } from './utils';
 
 storiesOf('Welcome', module).add(
     'to your new Storybook🎊',
+    () => <div>This is an example component</div>,
     wInfo(`
 
 
@@ -20,5 +21,5 @@ storiesOf('Welcome', module).add(
     ### To use this Storybook
 
     Explore the panels on the left.
-  `)(() => <div>This is an example component</div>)
+  `)
 );
