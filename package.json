@@ -14,7 +14,7 @@
         "copy-css-to-lib": "cpx \"./src/**/*.css\" ./build/lib"
     },
     "repository": "https://github.com/sw-yx/react-typescript-storybook-starter.git",
-    "author": "sw-yx <shawnthe1@gmail.com>",
+    "author": "rchen1992 <raymoc2@uci.edu>",
     "license": "MIT",
     "devDependencies": {
         "@babel/cli": "^7.1.5",
@@ -30,6 +30,7 @@
         "@types/storybook__react": "^4.0.0",
         "awesome-typescript-loader": "^5.2.1",
         "babel-loader": "^8.0.4",
+        "cpx": "^1.5.0",
         "jest": "^23.6.0",
         "react-docgen-typescript-webpack-plugin": "^1.1.0",
         "storybook-addon-jsx": "5.0.0",
