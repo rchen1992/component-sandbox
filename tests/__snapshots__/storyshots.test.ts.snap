@@ -1,6 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Components/Button basic Button 1`] = `
+.c0 {
+  background-color: red;
+  color: blue;
+}
+
 <div>
   <div>
     <div
@@ -69,7 +74,7 @@ exports[`Storyshots Components/Button basic Button 1`] = `
       onClick={[Function]}
     >
       <button
-        className="sc-bdVaJa jWfbDW"
+        className="c0"
         color="blue"
       >
         Enroll
