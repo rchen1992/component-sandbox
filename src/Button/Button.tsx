@@ -1,5 +1,20 @@
 import * as React from 'react';
 import './Button.css';
+import sc from 'styled-components';
+import { styledComponentWithProps } from '../utils';
+
+interface TestProps {
+    color: string;
+}
+
+const styled = {
+    button: styledComponentWithProps<TestProps, HTMLButtonElement>(sc.button),
+};
+
+const Test = styled.button`
+    background-color: red;
+    color: ${props => props.color};
+`;
 
 export interface Props {
     /** this dictates what the button will say  */
@@ -19,7 +34,7 @@ export const Button = (props: Props) => {
     const disabledclass = disabled ? 'Button_disabled' : '';
     return (
         <div className={`Button ${disabledclass}`} onClick={!disabled ? onClick : noop}>
-            <span>{label}</span>
+            <Test color="blue">{label}</Test>
         </div>
     );
 };

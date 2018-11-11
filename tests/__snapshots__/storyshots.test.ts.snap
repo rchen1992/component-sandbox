@@ -68,9 +68,12 @@ exports[`Storyshots Components/Button basic Button 1`] = `
       className="Button "
       onClick={[Function]}
     >
-      <span>
+      <button
+        className="sc-bdVaJa jWfbDW"
+        color="blue"
+      >
         Enroll
-      </span>
+      </button>
     </div>
   </div>
   <div>
