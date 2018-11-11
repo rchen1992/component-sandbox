@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { Button } from './Button';
-import { wInfo } from '../utils';
+import { Button } from '../src/Button/Button';
+import { wInfo } from '../src/utils';
 import { text, boolean } from '@storybook/addon-knobs/react';
 import { action } from '@storybook/addon-actions';
 
@@ -10,7 +10,7 @@ const actions = {
     onClick: action('onClick'),
 };
 
-(storiesOf('Components/Button', module) as any).add(
+export default (storiesOf('Components/Button', module) as any).add(
     'basic Button',
     () => (
         <Button

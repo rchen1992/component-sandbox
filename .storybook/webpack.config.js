@@ -7,5 +7,6 @@ module.exports = (baseConfig, env, defaultConfig) => {
     });
     defaultConfig.plugins.push(new TSDocgenPlugin());
     defaultConfig.resolve.extensions.push('.ts', '.tsx');
+
     return defaultConfig;
 };
