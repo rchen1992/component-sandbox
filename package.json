@@ -55,6 +55,7 @@
         "typescript-plugin-styled-components": "^1.0.0"
     },
     "dependencies": {
+        "polished": "^2.3.0",
         "react": "^16.6.1",
         "react-dom": "^16.6.1",
         "styled-components": "^4.0.3"
