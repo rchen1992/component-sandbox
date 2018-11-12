@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { Button } from '../src/Button/Button';
+import Button from '../src/Button';
 import { wInfo } from '../src/utils';
 import { text, boolean } from '@storybook/addon-knobs/react';
 import { action } from '@storybook/addon-actions';
