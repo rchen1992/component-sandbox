@@ -1,4 +1,4 @@
-import { getColorShades } from 'style/utils';
+import { getColorShades } from '../../utils';
 import {
     elementBlue,
     elementGreen,
@@ -7,7 +7,37 @@ import {
     elementRed,
     lightGray,
     gray,
-} from 'style/colors';
+} from '../../colors';
+
+export interface IElementColors {
+    defaultBorderColor: string;
+    secondaryTextColor: string;
+    primaryColor: string;
+    primaryColorAccent: string;
+    primaryColorLight: string;
+    primaryColorHighlight: string;
+    primaryColorDark: string;
+    successColor: string;
+    successColorAccent: string;
+    successColorLight: string;
+    successColorHighlight: string;
+    successColorDark: string;
+    infoColor: string;
+    infoColorAccent: string;
+    infoColorLight: string;
+    infoColorHighlight: string;
+    infoColorDark: string;
+    warningColor: string;
+    warningColorAccent: string;
+    warningColorLight: string;
+    warningColorHighlight: string;
+    warningColorDark: string;
+    dangerColor: string;
+    dangerColorAccent: string;
+    dangerColorLight: string;
+    dangerColorHighlight: string;
+    dangerColorDark: string;
+}
 
 const defaultPrimaryColor = elementBlue;
 
@@ -46,7 +76,7 @@ const {
     dark: dangerColorDark,
 } = getColorShades(elementRed);
 
-const ElementColors = {
+const ElementColors: IElementColors = {
     defaultBorderColor: lightGray,
     secondaryTextColor: gray,
     primaryColor: defaultPrimaryColor,

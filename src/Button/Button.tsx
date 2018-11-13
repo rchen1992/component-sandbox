@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Button.css';
 import sc from 'styled-components';
-import { styledComponentWithProps } from '../utils';
+import { styledComponentWithProps } from '../sc-utils';
 
 interface TestProps {
     color: string;
@@ -12,7 +12,7 @@ const styled = {
 };
 
 const Test = styled.button`
-    background-color: red;
+    background-color: ${({ theme }) => theme.warningColor};
     color: ${props => props.color};
 `;
 
