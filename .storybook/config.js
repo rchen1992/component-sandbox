@@ -3,7 +3,7 @@ import { configure } from '@storybook/react';
 import { addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
-import Provider from './Provider';
+import Provider from '../src/Provider';
 
 addDecorator(withKnobs);
 addDecorator(withInfo);

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { createGlobalStyle, ThemeProvider } from '../src/sc-utils';
-import ElementTheme from '../src/style/themes/ElementTheme';
+import { createGlobalStyle, ThemeProvider } from './sc-utils';
+import ElementTheme from './style/themes/ElementTheme';
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
 /**
  * React component that provides theme object and global styles.
  */
-const Provider: React.SFC<{}> = props => (
+const Provider: React.FunctionComponent = props => (
     <ThemeProvider theme={ElementTheme}>
         <div>
             {props.children}
