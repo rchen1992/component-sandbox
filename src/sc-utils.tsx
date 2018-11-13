@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as styledComponents from 'styled-components';
 import { ThemedStyledComponentsModule, ThemedStyledFunction } from 'styled-components';
-import { IElementTheme } from './style/themes/ElementTheme';
+import { ITheme } from './style/themes/theme-types';
 
 /**
  * Add our theme interface type to styled component functions,
@@ -16,14 +16,14 @@ export const {
     createGlobalStyle,
     keyframes,
     ThemeProvider,
-} = styledComponents as ThemedStyledComponentsModule<IElementTheme>;
+} = styledComponents as ThemedStyledComponentsModule<ITheme>;
 
 /**
  * Create a temporary StyledFunction type that includes our theme type.
  * We use this in our helper function below to include the theme type
  * in our styled components.
  */
-type StyledFunction<T> = ThemedStyledFunction<T, IElementTheme>;
+type StyledFunction<T> = ThemedStyledFunction<T, ITheme>;
 
 /**
  * Wraps a styled-components function with prop types, including theme.

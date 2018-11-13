@@ -1,12 +1,7 @@
-import ElementColors, { IElementColors } from './colors';
+import ElementColors from './colors';
+import { ITheme } from '../theme-types';
 
-export interface IElementTheme extends IElementColors {
-    fontSize: string;
-    defaultButtonVerticalPadding: string;
-    defaultButtonHorizontalPadding: string;
-}
-
-const ElementTheme: IElementTheme = {
+const ElementTheme: ITheme = {
     fontSize: '16px',
     defaultButtonVerticalPadding: '12px',
     defaultButtonHorizontalPadding: '24px',
