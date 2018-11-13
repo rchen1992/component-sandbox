@@ -1,7 +1,6 @@
 import * as React from 'react';
 import './Button.css';
-import sc from 'styled-components';
-import { styledComponentWithProps } from '../sc-utils';
+import sc, { styledComponentWithProps } from '../sc-utils';
 
 interface TestProps {
     color: string;

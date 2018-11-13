@@ -9,6 +9,9 @@ import { ITheme } from './style/themes/theme-types';
  *
  * This allows the theme variable in styled component functions
  * to be aware of the theme type.
+ *
+ * In general, usage of styled-components in this project should
+ * reference these exports instead of the original styled-comopnents.
  */
 export const {
     default: styled,
@@ -22,6 +25,11 @@ export const {
  * Create a temporary StyledFunction type that includes our theme type.
  * We use this in our helper function below to include the theme type
  * in our styled components.
+ *
+ * Note: this is not necessary if we always use the above exports when
+ * dealing with styled components. However, if you happen to pass in a
+ * styled component function from the original package, it will be missing the theme type.
+ * This makes extra sure that the theme will be always be available.
  */
 type StyledFunction<T> = ThemedStyledFunction<T, ITheme>;
 
