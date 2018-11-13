@@ -2,214 +2,216 @@
 
 exports[`Storyshots Components/Button basic Button 1`] = `
 .c0 {
-  background-color: red;
+  background-color: hsl(36,77%,57%);
   color: blue;
 }
 
 <div>
   <div>
-    <div
-      style={
-        Object {
-          "WebkitFontSmoothing": "antialiased",
-          "backgroundColor": "#eee",
-          "border": "1px solid #eee",
-          "borderRadius": "2px",
-          "color": "#444",
-          "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-          "fontSize": "15px",
-          "fontWeight": 300,
-          "lineHeight": "2",
-          "marginBottom": "20px",
-          "marginTop": "20px",
-          "padding": "0px 5px",
-        }
-      }
-    >
+    <div>
       <div
         style={
           Object {
-            "borderBottom": "1px solid #eee",
-            "marginBottom": 10,
-            "paddingBottom": 0,
-            "paddingTop": 0,
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
           }
         }
       >
-        <h1
-          style={
-            Object {
-              "display": "inline",
-              "fontSize": "25px",
-              "margin": 0,
-              "marginRight": "20px",
-              "padding": 0,
-            }
-          }
-        >
-          Components/Button
-        </h1>
-        <h2
-          style={
-            Object {
-              "color": "#999",
-              "display": "inline",
-              "fontSize": "22px",
-              "fontWeight": 400,
-              "margin": "0 0 10px 0",
-              "padding": 0,
-            }
-          }
-        >
-          basic Button
-        </h2>
-      </div>
-    </div>
-  </div>
-  <div
-    style={Object {}}
-  >
-    <div
-      className="Button "
-      onClick={[Function]}
-    >
-      <button
-        className="c0"
-        color="blue"
-      >
-        Enroll
-      </button>
-    </div>
-  </div>
-  <div>
-    <div
-      style={
-        Object {
-          "WebkitFontSmoothing": "antialiased",
-          "backgroundColor": "#eee",
-          "border": "1px solid #eee",
-          "borderRadius": "2px",
-          "color": "#444",
-          "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-          "fontSize": "15px",
-          "fontWeight": 300,
-          "lineHeight": "2",
-          "marginBottom": "20px",
-          "marginTop": "20px",
-          "padding": "0px 5px",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "marginBottom": 0,
-          }
-        }
-      >
-        <h3
-          id="notes"
-          style={
-            Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "22px",
-              "fontWeight": 600,
-              "margin": 0,
-              "padding": 0,
-              "textTransform": "uppercase",
-            }
-          }
-        >
-          Notes
-        </h3>
         <div
           style={
             Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "15px",
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
             }
           }
         >
-          This is a button!
+          <h1
+            style={
+              Object {
+                "display": "inline",
+                "fontSize": "25px",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
+              }
+            }
+          >
+            Components/Button
+          </h1>
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            basic Button
+          </h2>
         </div>
-        <h3
-          id="notes-usage"
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <div
+        className="Button "
+        onClick={[Function]}
+      >
+        <button
+          className="c0"
+          color="blue"
+        >
+          Enroll
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
           style={
             Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "22px",
-              "fontWeight": 600,
-              "margin": 0,
-              "padding": 0,
-              "textTransform": "uppercase",
+              "marginBottom": 0,
             }
           }
         >
-          Usage
-        </h3>
-        <pre
-          className="language-js"
-          style={
-            Object {
-              "backgroundColor": "#fafafa",
-              "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
-              "lineHeight": 1.5,
-              "overflowX": "scroll",
-              "padding": ".5rem",
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
             }
-          }
-        >
-          <code
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            This is a button!
+          </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
             className="language-js"
             style={
               Object {
                 "backgroundColor": "#fafafa",
                 "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
               }
             }
           >
-            &lt;Button
+            <code
+              className="language-js"
+              style={
+                Object {
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                }
+              }
+            >
+              &lt;Button
     label={'Enroll'}
     disabled={false}
     onClick={() =&gt; alert('hello there')}
 /&gt;
-          </code>
-        </pre>
-      </div>
-      <div>
-        <h1
-          style={
-            Object {
-              "borderBottom": "1px solid #EEE",
-              "fontSize": "25px",
-              "margin": "20px 0 0 0",
-              "padding": "0 0 5px 0",
-            }
-          }
-        >
-          Prop Types
-        </h1>
+            </code>
+          </pre>
+        </div>
         <div>
-          <h2
+          <h1
             style={
               Object {
+                "borderBottom": "1px solid #EEE",
+                "fontSize": "25px",
                 "margin": "20px 0 0 0",
+                "padding": "0 0 5px 0",
               }
             }
           >
-            "
-            Button
-            " Component
-          </h2>
-          <small>
-            No propTypes defined!
-          </small>
+            Prop Types
+          </h1>
+          <div>
+            <h2
+              style={
+                Object {
+                  "margin": "20px 0 0 0",
+                }
+              }
+            >
+              "
+              Button
+              " Component
+            </h2>
+            <small>
+              No propTypes defined!
+            </small>
+          </div>
         </div>
       </div>
     </div>
@@ -220,195 +222,197 @@ exports[`Storyshots Components/Button basic Button 1`] = `
 exports[`Storyshots Welcome to your new Storybook🎊 1`] = `
 <div>
   <div>
-    <div
-      style={
-        Object {
-          "WebkitFontSmoothing": "antialiased",
-          "backgroundColor": "#eee",
-          "border": "1px solid #eee",
-          "borderRadius": "2px",
-          "color": "#444",
-          "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-          "fontSize": "15px",
-          "fontWeight": 300,
-          "lineHeight": "2",
-          "marginBottom": "20px",
-          "marginTop": "20px",
-          "padding": "0px 5px",
-        }
-      }
-    >
-      <div
-        style={
-          Object {
-            "borderBottom": "1px solid #eee",
-            "marginBottom": 10,
-            "paddingBottom": 0,
-            "paddingTop": 0,
-          }
-        }
-      >
-        <h1
-          style={
-            Object {
-              "display": "inline",
-              "fontSize": "25px",
-              "margin": 0,
-              "marginRight": "20px",
-              "padding": 0,
-            }
-          }
-        >
-          Welcome
-        </h1>
-        <h2
-          style={
-            Object {
-              "color": "#999",
-              "display": "inline",
-              "fontSize": "22px",
-              "fontWeight": 400,
-              "margin": "0 0 10px 0",
-              "padding": 0,
-            }
-          }
-        >
-          to your new Storybook🎊
-        </h2>
-      </div>
-    </div>
-  </div>
-  <div
-    style={Object {}}
-  >
     <div>
-      This is an example component
-    </div>
-  </div>
-  <div>
-    <div
-      style={
-        Object {
-          "WebkitFontSmoothing": "antialiased",
-          "backgroundColor": "#eee",
-          "border": "1px solid #eee",
-          "borderRadius": "2px",
-          "color": "#444",
-          "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-          "fontSize": "15px",
-          "fontWeight": 300,
-          "lineHeight": "2",
-          "marginBottom": "20px",
-          "marginTop": "20px",
-          "padding": "0px 5px",
-        }
-      }
-    >
       <div
         style={
           Object {
-            "marginBottom": 0,
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
           }
         }
       >
-        <h3
-          id="notes"
-          style={
-            Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "22px",
-              "fontWeight": 600,
-              "margin": 0,
-              "padding": 0,
-              "textTransform": "uppercase",
-            }
-          }
-        >
-          Notes
-        </h3>
         <div
           style={
             Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "15px",
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
             }
           }
         >
-          Hello world!:
+          <h1
+            style={
+              Object {
+                "display": "inline",
+                "fontSize": "25px",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
+              }
+            }
+          >
+            Welcome
+          </h1>
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            to your new Storybook🎊
+          </h2>
         </div>
-        <h3
-          id="notes-usage"
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <div>
+        This is an example component
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
           style={
             Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "22px",
-              "fontWeight": 600,
-              "margin": 0,
-              "padding": 0,
-              "textTransform": "uppercase",
+              "marginBottom": 0,
             }
           }
         >
-          Usage
-        </h3>
-        <pre
-          className="language-js"
-          style={
-            Object {
-              "backgroundColor": "#fafafa",
-              "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
-              "lineHeight": 1.5,
-              "overflowX": "scroll",
-              "padding": ".5rem",
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
             }
-          }
-        >
-          <code
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            Hello world!:
+          </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
             className="language-js"
             style={
               Object {
                 "backgroundColor": "#fafafa",
                 "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
               }
             }
           >
-            &lt;div&gt;This is an example component&lt;/div&gt;
-          </code>
-        </pre>
-        <h3
-          id="notes-usage-to-use-this-storybook"
-          style={
-            Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "22px",
-              "fontWeight": 600,
-              "margin": 0,
-              "padding": 0,
-              "textTransform": "uppercase",
+            <code
+              className="language-js"
+              style={
+                Object {
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                }
+              }
+            >
+              &lt;div&gt;This is an example component&lt;/div&gt;
+            </code>
+          </pre>
+          <h3
+            id="notes-usage-to-use-this-storybook"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
             }
-          }
-        >
-          To use this Storybook
-        </h3>
-        <div
-          style={
-            Object {
-              "WebkitFontSmoothing": "antialiased",
-              "color": "#444",
-              "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
-              "fontSize": "15px",
+          >
+            To use this Storybook
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
             }
-          }
-        >
-          Explore the panels on the left.
+          >
+            Explore the panels on the left.
+          </div>
         </div>
       </div>
     </div>
