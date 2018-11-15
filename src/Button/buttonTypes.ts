@@ -4,12 +4,12 @@ import { ButtonCssFunction } from './Button';
  * Button types
  */
 export enum ButtonType {
-    PRIMARY = 'primary',
-    SUCCESS = 'success',
-    INFO = 'info',
-    WARNING = 'warning',
-    DANGER = 'danger',
-    TEXT = 'text',
+    primary = 'primary',
+    success = 'success',
+    info = 'info',
+    warning = 'warning',
+    danger = 'danger',
+    text = 'text',
 }
 
 /**

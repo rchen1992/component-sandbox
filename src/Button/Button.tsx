@@ -9,8 +9,8 @@ export interface IButtonProps {
     round?: boolean;
     plain?: boolean;
     disabled?: boolean;
-    type?: ButtonType;
-    size?: ButtonSize;
+    type?: keyof typeof ButtonType;
+    buttonSize?: keyof typeof ButtonSize;
 }
 
 export interface IButtonPropsAndTheme extends IButtonProps {

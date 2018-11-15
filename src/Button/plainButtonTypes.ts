@@ -75,12 +75,12 @@ const DangerButtonCss = getButtonTypeCss(
 );
 
 const buttonTypeToCss = {
-    [ButtonType.PRIMARY]: PrimaryButtonCss,
-    [ButtonType.SUCCESS]: SuccessButtonCss,
-    [ButtonType.INFO]: InfoButtonCss,
-    [ButtonType.WARNING]: WarningButtonCss,
-    [ButtonType.DANGER]: DangerButtonCss,
-    [ButtonType.TEXT]: TextButtonCss,
+    [ButtonType.primary]: PrimaryButtonCss,
+    [ButtonType.success]: SuccessButtonCss,
+    [ButtonType.info]: InfoButtonCss,
+    [ButtonType.warning]: WarningButtonCss,
+    [ButtonType.danger]: DangerButtonCss,
+    [ButtonType.text]: TextButtonCss,
 };
 
 export default getButtonTypeCssFromMapping(buttonTypeToCss);
