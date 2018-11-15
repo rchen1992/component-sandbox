@@ -1,9 +1,97 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Components/Button basic Button 1`] = `
-.c0 {
-  background-color: hsl(36,77%,57%);
-  color: blue;
+exports[`Storyshots Components/Button Button Sizes 1`] = `
+.c1 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+}
+
+.c1:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c1:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c2 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  padding: calc(12px - 2px) 24px;
+}
+
+.c2:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c2:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c3 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  padding: calc(12px - 3px) calc(24px - 9px);
+  font-size: calc(16px - 2px);
+}
+
+.c3:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c3:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c4 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  padding: calc(12px - 5px) calc(24px - 9px);
+  font-size: calc(16px - 2px);
+}
+
+.c4:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c4:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c0 > button {
+  margin-right: 6px;
 }
 
 <div>
@@ -62,7 +150,7 @@ exports[`Storyshots Components/Button basic Button 1`] = `
               }
             }
           >
-            basic Button
+            Button Sizes
           </h2>
         </div>
       </div>
@@ -71,14 +159,31 @@ exports[`Storyshots Components/Button basic Button 1`] = `
       style={Object {}}
     >
       <div
-        className="Button "
-        onClick={[Function]}
+        className="c0"
       >
         <button
-          className="c0"
-          color="blue"
+          className="c1"
+          onClick={[Function]}
         >
-          Enroll
+          Default
+        </button>
+        <button
+          className="c2"
+          onClick={[Function]}
+        >
+          Medium
+        </button>
+        <button
+          className="c3"
+          onClick={[Function]}
+        >
+          Small
+        </button>
+        <button
+          className="c4"
+          onClick={[Function]}
+        >
+          Mini
         </button>
       </div>
     </div>
@@ -135,7 +240,7 @@ exports[`Storyshots Components/Button basic Button 1`] = `
               }
             }
           >
-            This is a button!
+            Different Button Sizes.
           </div>
           <h3
             id="notes-usage"
@@ -175,43 +280,2022 @@ exports[`Storyshots Components/Button basic Button 1`] = `
                 }
               }
             >
-              &lt;Button
-    label={'Enroll'}
-    disabled={false}
-    onClick={() =&gt; alert('hello there')}
-/&gt;
+              &lt;Button&gt;Default&lt;/Button&gt;
+&lt;Button buttonSize='medium'&gt;Medium&lt;/Button&gt;
+&lt;Button buttonSize='small'&gt;Small&lt;/Button&gt;
+&lt;Button buttonSize='mini'&gt;Mini&lt;/Button&gt;
             </code>
           </pre>
         </div>
-        <div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Components/Button Button Types 1`] = `
+.c1 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(212,100%,63%);
+  background-color: hsl(212,100%,63%);
+}
+
+.c1:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c1:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c1:hover {
+  color: white;
+  background-color: #66adff;
+  border-color: #66adff;
+}
+
+.c1:active {
+  background-color: #3889e5;
+  border-color: #3889e5;
+}
+
+.c2 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(100,54%,49%);
+  background-color: hsl(100,54%,49%);
+}
+
+.c2:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c2:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c2:hover {
+  color: white;
+  background-color: #7acb51;
+  border-color: #7acb51;
+}
+
+.c2:active {
+  background-color: #5f8c49;
+  border-color: #5f8c49;
+}
+
+.c3 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(0,0%,58%);
+  background-color: hsl(0,0%,58%);
+}
+
+.c3:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c3:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c3:hover {
+  color: white;
+  background-color: #a6a6a6;
+  border-color: #a6a6a6;
+}
+
+.c3:active {
+  background-color: #828282;
+  border-color: #828282;
+}
+
+.c4 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(36,77%,57%);
+  background-color: hsl(36,77%,57%);
+}
+
+.c4:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c4:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c4:hover {
+  color: white;
+  background-color: #eab15d;
+  border-color: #eab15d;
+}
+
+.c4:active {
+  background-color: #c58d3a;
+  border-color: #c58d3a;
+}
+
+.c5 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(0,87%,69%);
+  background-color: hsl(0,87%,69%);
+}
+
+.c5:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c5:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c5:hover {
+  color: white;
+  background-color: #f78c8c;
+  border-color: #f78c8c;
+}
+
+.c5:active {
+  background-color: #dd6060;
+  border-color: #dd6060;
+}
+
+.c6 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: hsl(212,100%,63%);
+  border: none;
+  background: none;
+}
+
+.c6:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c6:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c6:hover {
+  color: #66adff;
+  border: none;
+  background: none;
+}
+
+.c6:active {
+  color: #3889e5;
+}
+
+.c0 > button {
+  margin-right: 6px;
+}
+
+<div>
+  <div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
+            }
+          }
+        >
           <h1
             style={
               Object {
-                "borderBottom": "1px solid #EEE",
+                "display": "inline",
                 "fontSize": "25px",
-                "margin": "20px 0 0 0",
-                "padding": "0 0 5px 0",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
               }
             }
           >
-            Prop Types
+            Components/Button
           </h1>
-          <div>
-            <h2
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            Button Types
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <div
+        className="c0"
+      >
+        <button
+          className="c1"
+          onClick={[Function]}
+          type="primary"
+        >
+          Primary
+        </button>
+        <button
+          className="c2"
+          onClick={[Function]}
+          type="success"
+        >
+          Success
+        </button>
+        <button
+          className="c3"
+          onClick={[Function]}
+          type="info"
+        >
+          Info
+        </button>
+        <button
+          className="c4"
+          onClick={[Function]}
+          type="warning"
+        >
+          Warning
+        </button>
+        <button
+          className="c5"
+          onClick={[Function]}
+          type="danger"
+        >
+          Danger
+        </button>
+        <button
+          className="c6"
+          onClick={[Function]}
+          type="text"
+        >
+          Text
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "marginBottom": 0,
+            }
+          }
+        >
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            Different Button Types.
+          </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
+            className="language-js"
+            style={
+              Object {
+                "backgroundColor": "#fafafa",
+                "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
+              }
+            }
+          >
+            <code
+              className="language-js"
               style={
                 Object {
-                  "margin": "20px 0 0 0",
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
                 }
               }
             >
-              "
-              Button
-              " Component
-            </h2>
-            <small>
-              No propTypes defined!
-            </small>
+              &lt;Button type='primary'&gt;Primary&lt;/Button&gt;
+&lt;Button type='success'&gt;Success&lt;/Button&gt;
+&lt;Button type='info'&gt;Info&lt;/Button&gt;
+&lt;Button type='warning'&gt;Warning&lt;/Button&gt;
+&lt;Button type='danger'&gt;Danger&lt;/Button&gt;
+&lt;Button type='text'&gt;Text&lt;/Button&gt;
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Components/Button Default 1`] = `
+.c0 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+}
+
+.c0:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c0:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+<div>
+  <div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
+            }
+          }
+        >
+          <h1
+            style={
+              Object {
+                "display": "inline",
+                "fontSize": "25px",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
+              }
+            }
+          >
+            Components/Button
+          </h1>
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            Default
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <button
+        className="c0"
+        onClick={[Function]}
+      >
+        Default
+      </button>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "marginBottom": 0,
+            }
+          }
+        >
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            Default button.
           </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
+            className="language-js"
+            style={
+              Object {
+                "backgroundColor": "#fafafa",
+                "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
+              }
+            }
+          >
+            <code
+              className="language-js"
+              style={
+                Object {
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                }
+              }
+            >
+              &lt;Button onClick={() =&gt; {}}&gt;Default&lt;/Button&gt;
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Components/Button Disabled 1`] = `
+.c1 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.c1:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c1:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c2 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(212,100%,63%);
+  background-color: hsl(212,100%,63%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.c2:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c2:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c2:hover {
+  color: white;
+  background-color: #66adff;
+  border-color: #66adff;
+}
+
+.c2:active {
+  background-color: #3889e5;
+  border-color: #3889e5;
+}
+
+.c3 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(100,54%,49%);
+  background-color: hsl(100,54%,49%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.c3:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c3:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c3:hover {
+  color: white;
+  background-color: #7acb51;
+  border-color: #7acb51;
+}
+
+.c3:active {
+  background-color: #5f8c49;
+  border-color: #5f8c49;
+}
+
+.c4 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(0,0%,58%);
+  background-color: hsl(0,0%,58%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.c4:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c4:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c4:hover {
+  color: white;
+  background-color: #a6a6a6;
+  border-color: #a6a6a6;
+}
+
+.c4:active {
+  background-color: #828282;
+  border-color: #828282;
+}
+
+.c5 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(36,77%,57%);
+  background-color: hsl(36,77%,57%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.c5:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c5:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c5:hover {
+  color: white;
+  background-color: #eab15d;
+  border-color: #eab15d;
+}
+
+.c5:active {
+  background-color: #c58d3a;
+  border-color: #c58d3a;
+}
+
+.c6 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(0,87%,69%);
+  background-color: hsl(0,87%,69%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.c6:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c6:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c6:hover {
+  color: white;
+  background-color: #f78c8c;
+  border-color: #f78c8c;
+}
+
+.c6:active {
+  background-color: #dd6060;
+  border-color: #dd6060;
+}
+
+.c0 > button {
+  margin-right: 6px;
+}
+
+<div>
+  <div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
+            }
+          }
+        >
+          <h1
+            style={
+              Object {
+                "display": "inline",
+                "fontSize": "25px",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
+              }
+            }
+          >
+            Components/Button
+          </h1>
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            Disabled
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <div
+        className="c0"
+      >
+        <button
+          className="c1"
+          disabled={true}
+          onClick={[Function]}
+        >
+          Default
+        </button>
+        <button
+          className="c2"
+          disabled={true}
+          onClick={[Function]}
+          type="primary"
+        >
+          Primary
+        </button>
+        <button
+          className="c3"
+          disabled={true}
+          onClick={[Function]}
+          type="success"
+        >
+          Success
+        </button>
+        <button
+          className="c4"
+          disabled={true}
+          onClick={[Function]}
+          type="info"
+        >
+          Info
+        </button>
+        <button
+          className="c5"
+          disabled={true}
+          onClick={[Function]}
+          type="warning"
+        >
+          Warning
+        </button>
+        <button
+          className="c6"
+          disabled={true}
+          onClick={[Function]}
+          type="danger"
+        >
+          Danger
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "marginBottom": 0,
+            }
+          }
+        >
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            Disabled Button Types.
+          </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
+            className="language-js"
+            style={
+              Object {
+                "backgroundColor": "#fafafa",
+                "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
+              }
+            }
+          >
+            <code
+              className="language-js"
+              style={
+                Object {
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                }
+              }
+            >
+              &lt;Button disabled&gt;Default&lt;/Button&gt;
+&lt;Button disabled type='primary'&gt;Primary&lt;/Button&gt;
+&lt;Button disabled type='success'&gt;Success&lt;/Button&gt;
+&lt;Button disabled type='info'&gt;Info&lt;/Button&gt;
+&lt;Button disabled type='warning'&gt;Warning&lt;/Button&gt;
+&lt;Button disabled type='danger'&gt;Danger&lt;/Button&gt;
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Components/Button Plain Variation 1`] = `
+.c1 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+}
+
+.c1:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c1:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c1:hover {
+  background-color: white;
+  border-color: hsl(212,100%,63%);
+}
+
+.c2 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(212,100%,63%);
+  background-color: hsl(212,100%,63%);
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c2:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c2:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c2:hover {
+  color: white;
+  background-color: #66adff;
+  border-color: #66adff;
+}
+
+.c2:active {
+  background-color: #3889e5;
+  border-color: #3889e5;
+}
+
+.c2:hover {
+  background-color: white;
+  border-color: hsl(212,100%,63%);
+}
+
+.c2:hover {
+  color: white;
+  border-color: hsl(212,100%,63%);
+  background-color: hsl(212,100%,63%);
+}
+
+.c2:active {
+  background-color: #3889e5;
+  border-color: #3889e5;
+}
+
+.c3 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(100,54%,49%);
+  background-color: hsl(100,54%,49%);
+  color: hsl(100,54%,49%);
+  border-color: #c9eab8;
+  background-color: #f3faef;
+}
+
+.c3:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c3:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c3:hover {
+  color: white;
+  background-color: #7acb51;
+  border-color: #7acb51;
+}
+
+.c3:active {
+  background-color: #5f8c49;
+  border-color: #5f8c49;
+}
+
+.c3:hover {
+  background-color: white;
+  border-color: hsl(212,100%,63%);
+}
+
+.c3:hover {
+  color: white;
+  border-color: hsl(100,54%,49%);
+  background-color: hsl(100,54%,49%);
+}
+
+.c3:active {
+  background-color: #5f8c49;
+  border-color: #5f8c49;
+}
+
+.c4 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(0,0%,58%);
+  background-color: hsl(0,0%,58%);
+  color: hsl(0,0%,58%);
+  border-color: #d1d1d1;
+  background-color: #f5f5f5;
+}
+
+.c4:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c4:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c4:hover {
+  color: white;
+  background-color: #a6a6a6;
+  border-color: #a6a6a6;
+}
+
+.c4:active {
+  background-color: #828282;
+  border-color: #828282;
+}
+
+.c4:hover {
+  background-color: white;
+  border-color: hsl(212,100%,63%);
+}
+
+.c4:hover {
+  color: white;
+  border-color: hsl(0,0%,58%);
+  background-color: hsl(0,0%,58%);
+}
+
+.c4:active {
+  background-color: #828282;
+  border-color: #828282;
+}
+
+.c5 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(36,77%,57%);
+  background-color: hsl(36,77%,57%);
+  color: hsl(36,77%,57%);
+  border-color: #f5d8ae;
+  background-color: #fdf6ed;
+}
+
+.c5:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c5:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c5:hover {
+  color: white;
+  background-color: #eab15d;
+  border-color: #eab15d;
+}
+
+.c5:active {
+  background-color: #c58d3a;
+  border-color: #c58d3a;
+}
+
+.c5:hover {
+  background-color: white;
+  border-color: hsl(212,100%,63%);
+}
+
+.c5:hover {
+  color: white;
+  border-color: hsl(36,77%,57%);
+  background-color: hsl(36,77%,57%);
+}
+
+.c5:active {
+  background-color: #c58d3a;
+  border-color: #c58d3a;
+}
+
+.c6 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  color: white;
+  border-color: hsl(0,87%,69%);
+  background-color: hsl(0,87%,69%);
+  color: hsl(0,87%,69%);
+  border-color: #f9a9a9;
+  background-color: #feecec;
+}
+
+.c6:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c6:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c6:hover {
+  color: white;
+  background-color: #f78c8c;
+  border-color: #f78c8c;
+}
+
+.c6:active {
+  background-color: #dd6060;
+  border-color: #dd6060;
+}
+
+.c6:hover {
+  background-color: white;
+  border-color: hsl(212,100%,63%);
+}
+
+.c6:hover {
+  color: white;
+  border-color: hsl(0,87%,69%);
+  background-color: hsl(0,87%,69%);
+}
+
+.c6:active {
+  background-color: #dd6060;
+  border-color: #dd6060;
+}
+
+.c0 > button {
+  margin-right: 6px;
+}
+
+<div>
+  <div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
+            }
+          }
+        >
+          <h1
+            style={
+              Object {
+                "display": "inline",
+                "fontSize": "25px",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
+              }
+            }
+          >
+            Components/Button
+          </h1>
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            Plain Variation
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <div
+        className="c0"
+      >
+        <button
+          className="c1"
+          onClick={[Function]}
+        >
+          Primary
+        </button>
+        <button
+          className="c2"
+          onClick={[Function]}
+          type="primary"
+        >
+          Primary
+        </button>
+        <button
+          className="c3"
+          onClick={[Function]}
+          type="success"
+        >
+          Success
+        </button>
+        <button
+          className="c4"
+          onClick={[Function]}
+          type="info"
+        >
+          Info
+        </button>
+        <button
+          className="c5"
+          onClick={[Function]}
+          type="warning"
+        >
+          Warning
+        </button>
+        <button
+          className="c6"
+          onClick={[Function]}
+          type="danger"
+        >
+          Danger
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "marginBottom": 0,
+            }
+          }
+        >
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            Plain Button Types.
+          </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
+            className="language-js"
+            style={
+              Object {
+                "backgroundColor": "#fafafa",
+                "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
+              }
+            }
+          >
+            <code
+              className="language-js"
+              style={
+                Object {
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                }
+              }
+            >
+              &lt;Button plain&gt;Default&lt;/Button&gt;
+&lt;Button plain type='primary'&gt;Primary&lt;/Button&gt;
+&lt;Button plain type='success'&gt;Success&lt;/Button&gt;
+&lt;Button plain type='info'&gt;Info&lt;/Button&gt;
+&lt;Button plain type='warning'&gt;Warning&lt;/Button&gt;
+&lt;Button plain type='danger'&gt;Danger&lt;/Button&gt;
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Components/Button Round Variation 1`] = `
+.c1 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  border-radius: 20px;
+}
+
+.c1:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c1:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c2 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  border-radius: 20px;
+  color: white;
+  border-color: hsl(212,100%,63%);
+  background-color: hsl(212,100%,63%);
+}
+
+.c2:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c2:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c2:hover {
+  color: white;
+  background-color: #66adff;
+  border-color: #66adff;
+}
+
+.c2:active {
+  background-color: #3889e5;
+  border-color: #3889e5;
+}
+
+.c3 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  border-radius: 20px;
+  color: white;
+  border-color: hsl(100,54%,49%);
+  background-color: hsl(100,54%,49%);
+}
+
+.c3:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c3:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c3:hover {
+  color: white;
+  background-color: #7acb51;
+  border-color: #7acb51;
+}
+
+.c3:active {
+  background-color: #5f8c49;
+  border-color: #5f8c49;
+}
+
+.c4 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  border-radius: 20px;
+  color: white;
+  border-color: hsl(0,0%,58%);
+  background-color: hsl(0,0%,58%);
+}
+
+.c4:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c4:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c4:hover {
+  color: white;
+  background-color: #a6a6a6;
+  border-color: #a6a6a6;
+}
+
+.c4:active {
+  background-color: #828282;
+  border-color: #828282;
+}
+
+.c5 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  border-radius: 20px;
+  color: white;
+  border-color: hsl(36,77%,57%);
+  background-color: hsl(36,77%,57%);
+}
+
+.c5:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c5:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c5:hover {
+  color: white;
+  background-color: #eab15d;
+  border-color: #eab15d;
+}
+
+.c5:active {
+  background-color: #c58d3a;
+  border-color: #c58d3a;
+}
+
+.c6 {
+  border-radius: 5px;
+  outline: none;
+  font-size: inherit;
+  padding: 12px 24px;
+  color: hsl(0,0%,30%);
+  border: 1px solid hsl(0,0%,80%);
+  border-radius: 20px;
+  color: white;
+  border-color: hsl(0,87%,69%);
+  background-color: hsl(0,87%,69%);
+}
+
+.c6:hover {
+  cursor: pointer;
+  color: hsl(212,100%,63%);
+  border-color: #a3ceff;
+  background-color: #ebf4ff;
+}
+
+.c6:active {
+  border-color: #3889e5;
+  color: #3889e5;
+}
+
+.c6:hover {
+  color: white;
+  background-color: #f78c8c;
+  border-color: #f78c8c;
+}
+
+.c6:active {
+  background-color: #dd6060;
+  border-color: #dd6060;
+}
+
+.c0 > button {
+  margin-right: 6px;
+}
+
+<div>
+  <div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
+            }
+          }
+        >
+          <h1
+            style={
+              Object {
+                "display": "inline",
+                "fontSize": "25px",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
+              }
+            }
+          >
+            Components/Button
+          </h1>
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            Round Variation
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <div
+        className="c0"
+      >
+        <button
+          className="c1"
+          onClick={[Function]}
+        >
+          Default
+        </button>
+        <button
+          className="c2"
+          onClick={[Function]}
+          type="primary"
+        >
+          Primary
+        </button>
+        <button
+          className="c3"
+          onClick={[Function]}
+          type="success"
+        >
+          Success
+        </button>
+        <button
+          className="c4"
+          onClick={[Function]}
+          type="info"
+        >
+          Info
+        </button>
+        <button
+          className="c5"
+          onClick={[Function]}
+          type="warning"
+        >
+          Warning
+        </button>
+        <button
+          className="c6"
+          onClick={[Function]}
+          type="danger"
+        >
+          Danger
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "marginBottom": 0,
+            }
+          }
+        >
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            Round Button Types.
+          </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
+            className="language-js"
+            style={
+              Object {
+                "backgroundColor": "#fafafa",
+                "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
+              }
+            }
+          >
+            <code
+              className="language-js"
+              style={
+                Object {
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                }
+              }
+            >
+              &lt;Button round&gt;Default&lt;/Button&gt;
+&lt;Button round type='primary'&gt;Primary&lt;/Button&gt;
+&lt;Button round type='success'&gt;Success&lt;/Button&gt;
+&lt;Button round type='info'&gt;Info&lt;/Button&gt;
+&lt;Button round type='warning'&gt;Warning&lt;/Button&gt;
+&lt;Button round type='danger'&gt;Danger&lt;/Button&gt;
+            </code>
+          </pre>
         </div>
       </div>
     </div>
