@@ -22,11 +22,11 @@ export const {
 } = styledComponents as ThemedStyledComponentsModule<ITheme>;
 
 /**
- * Create a temporary StyledFunction type that includes our theme type.
- * We use this in our helper function below to include the theme type
+ * A temporary StyledFunction type that includes our theme type.
+ * We use this in our helper function `styledComponentWithProps` to include the theme type
  * in our styled components.
  *
- * Note: this is not necessary if we always use the above exports when
+ * Note: this is not necessary if we always use the theme-aware exports when
  * dealing with styled components. However, if you happen to pass in a
  * styled component function from the original package, it will be missing the theme type.
  * This makes extra sure that the theme will be always be available.

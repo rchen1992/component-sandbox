@@ -1,3 +1,6 @@
+/**
+ * All color variables for theme.
+ */
 export interface IThemeColors {
     defaultBorderColor: string;
     secondaryTextColor: string;
@@ -28,6 +31,9 @@ export interface IThemeColors {
     dangerColorDark: string;
 }
 
+/**
+ * Object containing theme variables.
+ */
 export interface ITheme extends IThemeColors {
     fontSize: string;
     defaultButtonVerticalPadding: string;

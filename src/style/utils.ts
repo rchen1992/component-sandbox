@@ -1,5 +1,8 @@
 import { lighten, darken, desaturate, setLightness } from 'polished';
 
+/**
+ * Object containing various shades of a certain color.
+ */
 interface IColorShades {
     highlight: string;
     accent: string;

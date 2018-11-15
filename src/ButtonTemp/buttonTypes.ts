@@ -15,7 +15,7 @@ export enum ButtonType {
 /**
  * A mapping between valid button types and their corresponding CSS function.
  */
-export type IButtonTypeCssMapping = { [K in ButtonType]: ButtonCssFunction };
+export type IButtonTypeCssMapping = { [Type in ButtonType]: ButtonCssFunction };
 
 /**
  * Takes a mapping between button types and their CSS functions and
