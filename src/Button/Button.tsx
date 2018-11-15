@@ -71,7 +71,7 @@ export default styled.button`
     ${props => props.type && getBasicButtonTypeCss(props.type)};
 
     /**
-     * Plain buttons.
+     * Default plain button.
      */
     ${props =>
         props.plain &&
@@ -83,6 +83,9 @@ export default styled.button`
             }
         `};
 
+    /**
+     * Plain buttons types.
+     */
     ${props => props.plain && props.type && getPlainButtonTypeCss(props.type)};
 
     /**
