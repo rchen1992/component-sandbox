@@ -42,7 +42,7 @@ export function styledComponentWithProps<T, U extends HTMLElement = HTMLElement>
     return styledFunction;
 }
 
-// Re-export theme interface
+// Re-export theme interface for easier access
 export { ITheme };
 
 export default styled;
