@@ -11,11 +11,30 @@ const stories = storiesOf('Components/Grid', module) as any;
 stories.add(
     'Layout',
     () => (
-        <Row>
-            <Col span={6}>Hello</Col>
-            <Col span={6}>Hello</Col>
-            <Col span={6}>Hello</Col>
-        </Row>
+        <>
+            <Row>
+                <Col span={6}>Hello</Col>
+                <Col span={6}>Hello</Col>
+                <Col span={6}>Hello</Col>
+                <Col span={6}>Hello</Col>
+            </Row>
+            <Row>
+                <Col span={8}>Hello</Col>
+                <Col span={8}>Hello</Col>
+                <Col span={8}>Hello</Col>
+            </Row>
+            <Row>
+                <Col span={6} offset={6}>
+                    Hello
+                </Col>
+                <Col span={6} offset={6}>
+                    Hello
+                </Col>
+            </Row>
+            <Row>
+                <Col>No Span; Default 24</Col>
+            </Row>
+        </>
     ),
     wInfo(`
         ### Notes
