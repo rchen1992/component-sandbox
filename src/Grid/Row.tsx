@@ -1,9 +1,7 @@
 import * as React from 'react';
 import styled from '../sc-utils';
 import Col, { IColProps } from './Col';
-
-// Defines the total number of columns in a grid row.
-export const GRID_COLUMN_MAX = 24;
+import { GRID_COLUMN_MAX } from './util';
 
 const GridRow = styled.div`
     display: grid;

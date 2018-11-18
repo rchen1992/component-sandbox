@@ -1,6 +1,6 @@
 import * as React from 'react';
 import sc, { styledComponentWithProps } from '../sc-utils';
-import { GRID_COLUMN_MAX } from './Row';
+import { GRID_COLUMN_MAX } from './util';
 
 export interface IColProps {
     span?: number;
