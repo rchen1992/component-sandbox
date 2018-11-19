@@ -8,7 +8,16 @@ const GridRow = styled.div`
     grid-template-columns: repeat(${GRID_COLUMN_MAX}, 1fr);
 `;
 
-const Row: React.FunctionComponent<IWithStyles> = props => {
+interface IRowProps extends IWithStyles {
+    children?: React.ReactNode;
+}
+
+/**
+ * Note: there is currently a TypeScript bug with passing refs to styled-components,
+ * so we are currently using type `any` for the ref.
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/issues/28884
+ */
+const Row = React.forwardRef<any, IRowProps>((props, ref) => {
     const children: React.ReactElement<IColProps>[] = [];
     let colSpanTotal = 1;
 
@@ -44,10 +53,10 @@ const Row: React.FunctionComponent<IWithStyles> = props => {
     }
 
     return (
-        <GridRow style={props.style} className={props.className}>
+        <GridRow ref={ref} style={props.style} className={props.className}>
             {children}
         </GridRow>
     );
-};
+});
 
 export default Row;

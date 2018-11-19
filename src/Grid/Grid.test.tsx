@@ -35,6 +35,16 @@ describe('Grid', () => {
         expect(container.innerHTML).toMatch('background-color: red');
     });
 
+    test('should be able to pass refs to Row', () => {
+        const ref = React.createRef<any>();
+        render(
+            <Row ref={ref}>
+                <Col>Hello</Col>
+            </Row>
+        );
+        expect(ref.current.innerHTML).toMatch('Hello');
+    });
+
     describe('Column positioning', () => {
         test('a Row and Col with no props should span the full grid', () => {
             const { getByTestId } = render(
