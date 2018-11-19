@@ -42,6 +42,14 @@ export function styledComponentWithProps<T, U extends HTMLElement = HTMLElement>
     return styledFunction;
 }
 
+/**
+ * Interface for component that accepts className or style object as props.
+ */
+export interface IWithStyles {
+    className?: string;
+    style?: React.CSSProperties;
+}
+
 // Re-export theme interface for easier access
 export { ITheme };
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cleanup } from 'react-testing-library';
+import { cleanup, render } from 'react-testing-library';
 import { Row, Col } from './index';
 import { expectRenderError, expectConsoleError } from '../../tests/testUtils';
 import { GRID_COLUMN_MAX } from './util';
@@ -21,5 +21,16 @@ describe('Grid', () => {
             </Row>,
             `Column span total has exceeded the grid max of ${GRID_COLUMN_MAX} columns.`
         );
+    });
+
+    test('should be able to apply className to Row', () => {
+        const className = 'helloworld';
+        const { container } = render(<Row className={className} />);
+        expect(container.querySelector('.helloworld')).toBeTruthy();
+    });
+
+    test('should be able to apply style to Row', () => {
+        const { container } = render(<Row style={{ backgroundColor: 'red' }} />);
+        expect(container.innerHTML).toMatch('background-color: red');
     });
 });

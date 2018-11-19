@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from '../sc-utils';
+import styled, { IWithStyles } from '../sc-utils';
 import Col, { IColProps } from './Col';
 import { GRID_COLUMN_MAX } from './util';
 
@@ -8,26 +8,31 @@ const GridRow = styled.div`
     grid-template-columns: repeat(${GRID_COLUMN_MAX}, 1fr);
 `;
 
-const Row: React.FunctionComponent = props => {
+const Row: React.FunctionComponent<IWithStyles> = props => {
     const children: React.ReactElement<IColProps>[] = [];
     let colSpanTotal = 1;
 
     React.Children.toArray(props.children).forEach(child => {
+        // Disallow children type other than Col elements.
         if (!React.isValidElement(child) || child.type !== Col) {
             throw new Error('The only valid child to a Row element is a Col element.');
         }
 
         let col = child as React.ReactElement<IColProps>;
 
+        // Add offset to column span total
+        colSpanTotal += col.props.offset || (Col.defaultProps && Col.defaultProps.offset) || 0;
+
+        // Clone the column and pass it its grid column start position via props
         children.push(
             React.cloneElement(col, {
                 gridColumnStart: colSpanTotal,
             })
         );
 
+        // Add column span to column span total
         colSpanTotal +=
             col.props.span || (Col.defaultProps && Col.defaultProps.span) || GRID_COLUMN_MAX;
-        colSpanTotal += col.props.offset || (Col.defaultProps && Col.defaultProps.offset) || 0;
     });
 
     /**
@@ -38,7 +43,11 @@ const Row: React.FunctionComponent = props => {
         console.error(`Column span total has exceeded the grid max of ${GRID_COLUMN_MAX} columns.`);
     }
 
-    return <GridRow>{children}</GridRow>;
+    return (
+        <GridRow style={props.style} className={props.className}>
+            {children}
+        </GridRow>
+    );
 };
 
 export default Row;
