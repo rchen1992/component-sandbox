@@ -2,7 +2,11 @@ import * as React from 'react';
 import { createGlobalStyle, ThemeProvider } from './sc-utils';
 import ElementTheme from './style/themes/ElementTheme';
 
-const GlobalStyle = createGlobalStyle`
+interface IGlobalStyleProps {
+    suppressMultiMountWarning: boolean;
+}
+
+const GlobalStyle = createGlobalStyle<IGlobalStyleProps>`
     body {
         font-family: Roboto;
         font-size: ${({ theme }) => theme && theme.fontSize};
@@ -16,7 +20,7 @@ const Provider: React.FunctionComponent = props => (
     <ThemeProvider theme={ElementTheme}>
         <div>
             {props.children}
-            <GlobalStyle />
+            <GlobalStyle suppressMultiMountWarning />
         </div>
     </ThemeProvider>
 );
