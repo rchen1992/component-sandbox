@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { cleanup } from 'react-testing-library';
-import { Row } from './index';
-import expectRenderError from '../../tests/expectRenderError';
+import { Row, Col } from './index';
+import { expectRenderError, expectConsoleError } from '../../tests/testUtils';
+import { GRID_COLUMN_MAX } from './util';
 
 afterEach(cleanup);
 
@@ -10,6 +11,15 @@ describe('Grid', () => {
         expectRenderError(
             <Row>Hello</Row>,
             'The only valid child to a Row element is a Col element.'
+        );
+    });
+
+    test('should have console error when the total span of all columns in a row exceeds the grid max', () => {
+        expectConsoleError(
+            <Row>
+                <Col span={GRID_COLUMN_MAX + 1}>Hello</Col>
+            </Row>,
+            `Column span total has exceeded the grid max of ${GRID_COLUMN_MAX} columns.`
         );
     });
 });

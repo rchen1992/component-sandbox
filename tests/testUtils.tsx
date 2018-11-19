@@ -14,7 +14,7 @@ import GenericErrorBoundary from '../src/GenericErrorBoundary';
  * This helps alleviate that problem.
  * More details here: https://github.com/facebook/react/issues/11098#issuecomment-412682721
  */
-export default function expectRenderError(element: any, expectedError: string) {
+export function expectRenderError(element: any, expectedError: string) {
     // Record all errors.
     let topLevelErrors: Error[] = [];
     function handleTopLevelError(event: ErrorEvent) {
@@ -36,4 +36,22 @@ export default function expectRenderError(element: any, expectedError: string) {
 
     expect(topLevelErrors.length).toBe(1);
     expect(topLevelErrors[0].message).toContain(expectedError);
+}
+
+/**
+ * Helper function that renders an element and expects a given
+ * error message to be logged to console.error.
+ * Temporarily mocks console.error and then restores it at the end.
+ */
+export function expectConsoleError(element: any, errorMessage: string) {
+    const originalConsoleError = console.error;
+    let errors: string[] = [];
+    console.error = jest.fn(error => errors.push(error));
+
+    render(element);
+
+    expect(errors).toContain(errorMessage);
+
+    // Restore console error
+    console.error = originalConsoleError;
 }
