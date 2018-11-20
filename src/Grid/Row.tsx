@@ -1,15 +1,30 @@
 import * as React from 'react';
-import styled, { IWithStyles } from '../sc-utils';
+import sc, { css, IWithStyles, styledComponentWithProps } from '../sc-utils';
 import Col, { IColProps } from './Col';
 import { GRID_COLUMN_MAX } from './util';
+
+interface IGridRowProps {
+    gutter?: number;
+}
+
+const styled = {
+    div: styledComponentWithProps<IGridRowProps, HTMLDivElement>(sc.div),
+};
 
 const GridRow = styled.div`
     display: grid;
     grid-template-columns: repeat(${GRID_COLUMN_MAX}, 1fr);
+
+    ${props =>
+        props.gutter &&
+        css`
+            grid-column-gap: ${props.gutter}px;
+        `};
 `;
 
 interface IRowProps extends IWithStyles {
     children?: React.ReactNode;
+    gutter?: number;
 }
 
 /**
@@ -53,7 +68,7 @@ const Row = React.forwardRef<any, IRowProps>((props, ref) => {
     }
 
     return (
-        <GridRow ref={ref} style={props.style} className={props.className}>
+        <GridRow ref={ref} style={props.style} className={props.className} gutter={props.gutter}>
             {children}
         </GridRow>
     );

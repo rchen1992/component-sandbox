@@ -149,4 +149,35 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Gutters
+|--------------------------------------------------
+*/
+stories.add(
+    'Gutters',
+    () => (
+        <Row gutter={20} {...getRowStyle()}>
+            <Col {...getColStyle(darkGray)} span={6} />
+            <Col {...getColStyle(gray)} span={6} />
+            <Col {...getColStyle(lightGray)} span={6} />
+            <Col {...getColStyle(darkGray)} span={6} />
+        </Row>
+    ),
+    wInfo(`
+        ### Notes
+        
+        Use gutters to give spacing between each column.
+        
+        ### Usage
+        ~~~js
+        <Row gutter={20}>
+            <Col span={6}></Col>
+            <Col span={6}></Col>
+            <Col span={6}></Col>
+            <Col span={6}></Col>
+        </Row>
+        ~~~`)
+);
+
 export default stories;
