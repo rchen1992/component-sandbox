@@ -5,13 +5,16 @@ export interface IColProps {
     span?: number;
     offset?: number;
     gridColumnStart?: number;
+    tag?: string;
 }
 
 const styled = {
     div: styledComponentWithProps<IColProps, HTMLDivElement>(sc.div),
 };
 
-const Col = styled.div`
+const Col = styled.div.attrs({
+    as: (props: IColProps) => props.tag,
+})`
     grid-column-start: ${props => props.gridColumnStart};
     grid-column-end: span ${props => props.span};
 `;

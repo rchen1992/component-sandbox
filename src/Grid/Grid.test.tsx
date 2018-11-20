@@ -45,6 +45,28 @@ describe('Grid', () => {
         expect(ref.current.innerHTML).toMatch('Hello');
     });
 
+    test('should render Row as a div by default', () => {
+        const { container } = render(<Row />);
+        expect(container.getElementsByTagName('div')).toHaveLength(1);
+    });
+
+    test('should be able to render Row with custom element tag', () => {
+        const tag = 'section';
+        const { container } = render(<Row tag={tag} />);
+        expect(container.getElementsByTagName(tag)).toHaveLength(1);
+    });
+
+    test('should render Col as a div by default', () => {
+        const { container } = render(<Col />);
+        expect(container.getElementsByTagName('div')).toHaveLength(1);
+    });
+
+    test('should be able to render Col with custom element tag', () => {
+        const tag = 'button';
+        const { container } = render(<Col tag={tag} />);
+        expect(container.getElementsByTagName(tag)).toHaveLength(1);
+    });
+
     describe('Column positioning', () => {
         test('a Row and Col with no props should span the full grid', () => {
             const { getByTestId } = render(

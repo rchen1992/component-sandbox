@@ -25,6 +25,7 @@ const GridRow = styled.div`
 interface IRowProps extends IWithStyles {
     children?: React.ReactNode;
     gutter?: number;
+    tag?: string;
 }
 
 /**
@@ -68,7 +69,13 @@ const Row = React.forwardRef<any, IRowProps>((props, ref) => {
     }
 
     return (
-        <GridRow ref={ref} style={props.style} className={props.className} gutter={props.gutter}>
+        <GridRow
+            ref={ref}
+            as={props.tag}
+            style={props.style}
+            className={props.className}
+            gutter={props.gutter}
+        >
             {children}
         </GridRow>
     );

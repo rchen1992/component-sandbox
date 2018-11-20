@@ -6,6 +6,7 @@ import { storiesOf } from '@storybook/react';
 import { wInfo } from '../src/utils';
 import { Row, Col } from '../src/Grid';
 import { GRID_COLUMN_MAX } from '../src/Grid/util';
+import { action } from '@storybook/addon-actions';
 
 const darkGray = 'hsl(215, 23%, 67%)';
 const gray = 'hsl(212, 28%, 86%)';
@@ -66,11 +67,11 @@ stories.add(
     wInfo(`
         ### Notes
 
-        A grid uses ${GRID_COLUMN_MAX} columns.
+        A grid uses **${GRID_COLUMN_MAX}** columns.
 
         A Row with a Col (no props) will span the entirety of the grid.
         
-        Use span to change column width.
+        Use **\`span\`** to change column width.
         
         ### Usage
         ~~~js
@@ -127,7 +128,7 @@ stories.add(
     wInfo(`
         ### Notes
         
-        Use offset to give spacing to the left side of a column.
+        Use **\`offset\`** to give spacing to the left side of a column.
         
         ### Usage
         ~~~js
@@ -167,7 +168,7 @@ stories.add(
     wInfo(`
         ### Notes
         
-        Use gutters to give spacing between each column.
+        Use **\`gutter\`** to give spacing between each column.
         
         ### Usage
         ~~~js
@@ -176,6 +177,39 @@ stories.add(
             <Col span={6}></Col>
             <Col span={6}></Col>
             <Col span={6}></Col>
+        </Row>
+        ~~~`)
+);
+
+/**
+|--------------------------------------------------
+| Custom Tag
+|--------------------------------------------------
+*/
+stories.add(
+    'Custom Tag',
+    () => (
+        <Row tag="section" {...getRowStyle()}>
+            <Col {...getColStyle(darkGray)} span={4} tag="button" onClick={action('onClick')}>
+                Hello
+            </Col>
+        </Row>
+    ),
+    wInfo(`
+        ### Notes
+
+        By default, Rows and Cols are rendered as divs.
+        
+        You can use the **\`tag\`** prop to change the element tag of a Col or Row.
+
+        In the example above, we are rendering the row as a **\`section\`** and the Col as a **\`button\`**.
+        
+        ### Usage
+        ~~~js
+        <Row tag="section">
+            <Col tag="button" span={4} onClick={() => {})}>
+                Hello
+            </Col>
         </Row>
         ~~~`)
 );
