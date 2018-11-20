@@ -3123,13 +3123,24 @@ exports[`Storyshots Components/Grid Gutters 1`] = `
 }
 
 .c2 {
+  grid-column-start: 7;
+  grid-column-end: span 6;
+}
+
+.c3 {
   grid-column-start: 13;
+  grid-column-end: span 6;
+}
+
+.c4 {
+  grid-column-start: 19;
   grid-column-end: span 6;
 }
 
 .c0 {
   display: grid;
   grid-template-columns: repeat(24,1fr);
+  grid-column-gap: 20px;
 }
 
 <div>
@@ -3218,11 +3229,35 @@ exports[`Storyshots Components/Grid Gutters 1`] = `
         />
         <div
           className="c2"
-          offset={6}
+          offset={0}
           span={6}
           style={
             Object {
               "backgroundColor": "hsl(212, 28%, 86%)",
+              "borderRadius": "4px",
+              "height": "40px",
+            }
+          }
+        />
+        <div
+          className="c3"
+          offset={0}
+          span={6}
+          style={
+            Object {
+              "backgroundColor": "hsl(222, 33%, 92%)",
+              "borderRadius": "4px",
+              "height": "40px",
+            }
+          }
+        />
+        <div
+          className="c4"
+          offset={0}
+          span={6}
+          style={
+            Object {
+              "backgroundColor": "hsl(215, 23%, 67%)",
               "borderRadius": "4px",
               "height": "40px",
             }
@@ -3283,7 +3318,7 @@ exports[`Storyshots Components/Grid Gutters 1`] = `
               }
             }
           >
-            Use offset to give spacing to the left side of a column.
+            Use gutters to give spacing between each column.
           </div>
           <h3
             id="notes-usage"
@@ -3323,20 +3358,11 @@ exports[`Storyshots Components/Grid Gutters 1`] = `
                 }
               }
             >
-              &lt;Row&gt;
+              &lt;Row gutter={20}&gt;
     &lt;Col span={6}&gt;&lt;/Col&gt;
-    &lt;Col span={6} offset={6}&gt;&lt;/Col&gt;
-&lt;/Row&gt;
-&lt;Row&gt;
-    &lt;Col span={6} offset={6}&gt;&lt;/Col&gt;
-    &lt;Col span={6} offset={6}&gt;&lt;/Col&gt;
-&lt;/Row&gt;
-&lt;Row&gt;
-    &lt;Col span={12} offset={6}&gt;&lt;/Col&gt;
-&lt;/Row&gt;
-&lt;Row&gt;
-    &lt;Col span={2}&gt;&lt;/Col&gt;
-    &lt;Col span={2} offset={20}&gt;&lt;/Col&gt;
+    &lt;Col span={6}&gt;&lt;/Col&gt;
+    &lt;Col span={6}&gt;&lt;/Col&gt;
+    &lt;Col span={6}&gt;&lt;/Col&gt;
 &lt;/Row&gt;
             </code>
           </pre>
