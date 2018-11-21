@@ -1,4 +1,4 @@
-import sc, { css, styledComponentWithProps, ITheme } from '../sc-utils';
+import styled, { css, ITheme } from '../sc-utils';
 import getBasicButtonTypeCss from './basicButtonTypes';
 import getPlainButtonTypeCss from './plainButtonTypes';
 import ButtonSizeCss, { ButtonSize } from './buttonSizes';
@@ -22,11 +22,7 @@ export interface IButtonPropsAndTheme extends IButtonProps {
  */
 export type ButtonCssFunction = (props: IButtonPropsAndTheme) => InterpolationValue[] | undefined;
 
-const styled = {
-    button: styledComponentWithProps<IButtonProps, HTMLButtonElement>(sc.button),
-};
-
-export default styled.button`
+export default styled<IButtonProps, 'button'>('button')`
     /**
      * Default styling
      */

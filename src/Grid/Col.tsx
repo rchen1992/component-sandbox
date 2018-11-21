@@ -1,4 +1,4 @@
-import sc, { styledComponentWithProps } from '../sc-utils';
+import styled from '../sc-utils';
 import { GRID_COLUMN_MAX } from './util';
 
 export interface IColProps {
@@ -8,11 +8,7 @@ export interface IColProps {
     tag?: string;
 }
 
-const styled = {
-    div: styledComponentWithProps<IColProps, HTMLDivElement>(sc.div),
-};
-
-const Col = styled.div.attrs({
+const Col = styled.div.attrs<IColProps>({
     as: (props: IColProps) => props.tag,
 })`
     grid-column-start: ${props => props.gridColumnStart};
