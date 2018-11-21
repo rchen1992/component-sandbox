@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as styledComponents from 'styled-components';
-import { ThemedStyledComponentsModule, ThemedStyledFunction } from 'styled-components';
+import { ThemedStyledComponentsModule } from 'styled-components';
 import { ITheme } from './style/themes/theme-types';
 
 /**
@@ -20,27 +20,6 @@ export const {
     keyframes,
     ThemeProvider,
 } = styledComponents as ThemedStyledComponentsModule<ITheme>;
-
-/**
- * A temporary StyledFunction type that includes our theme type.
- * We use this in our helper function `styledComponentWithProps` to include the theme type
- * in our styled components.
- *
- * Note: this is not necessary if we always use the theme-aware exports when
- * dealing with styled components. However, if you happen to pass in a
- * styled component function from the original package, it will be missing the theme type.
- * This makes extra sure that the theme will be always be available.
- */
-type StyledFunction<T> = ThemedStyledFunction<T, ITheme>;
-
-/**
- * Wraps a styled-components function with prop types, including theme.
- */
-export function styledComponentWithProps<T, U extends HTMLElement = HTMLElement>(
-    styledFunction: StyledFunction<React.HTMLProps<U>>
-): StyledFunction<T & React.HTMLProps<U>> {
-    return styledFunction;
-}
 
 /**
  * Interface for component that accepts className or style object as props.
