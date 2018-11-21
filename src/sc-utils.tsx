@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as styledComponents from 'styled-components';
-import { ThemedStyledComponentsModule } from 'styled-components';
+import { ThemedStyledComponentsModule, ThemedCssFunction } from 'styled-components';
 import { ITheme } from './style/themes/theme-types';
 
 /**
@@ -20,6 +20,28 @@ export const {
     keyframes,
     ThemeProvider,
 } = styledComponents as ThemedStyledComponentsModule<ITheme>;
+
+/**
+ * Screen sizes.
+ */
+const screenSizes = {
+    sm: 768,
+    md: 992,
+    lg: 1200,
+    xl: 1920,
+};
+
+/**
+ * Iterate through the screenSizes and create a media template
+ */
+export const media = Object.keys(screenSizes).reduce((queries, breakpoint) => {
+    queries[breakpoint] = (strings: TemplateStringsArray, ...interpolations: styledComponents.SimpleInterpolation[]) => css`
+        @media (min-width: ${screenSizes[breakpoint]}px) {
+            ${css(strings, ...interpolations)}
+        }
+    `;
+    return queries;
+}, {} as { [key: string]: ThemedCssFunction<ITheme> });
 
 /**
  * Interface for component that accepts className or style object as props.
