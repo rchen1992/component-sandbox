@@ -1,5 +1,5 @@
 import * as React from 'react';
-import sc, { css, IWithStyles, styledComponentWithProps } from '../sc-utils';
+import styled, { css, IWithStyles } from '../sc-utils';
 import Col, { IColProps } from './Col';
 import { GRID_COLUMN_MAX } from './util';
 
@@ -7,11 +7,7 @@ interface IGridRowProps {
     gutter?: number;
 }
 
-const styled = {
-    div: styledComponentWithProps<IGridRowProps, HTMLDivElement>(sc.div),
-};
-
-const GridRow = styled.div`
+const GridRow = styled<IGridRowProps, 'div'>('div')`
     display: grid;
     grid-template-columns: repeat(${GRID_COLUMN_MAX}, 1fr);
 
