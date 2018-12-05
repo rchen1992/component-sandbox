@@ -47,7 +47,14 @@ const Row = React.forwardRef<any, IRowProps>((props, ref) => {
         // Clone the column and pass it its grid column start position via props
         children.push(
             React.cloneElement(col, {
-                gridColumnStart: colSpanTotal,
+                gridColumnStart: {
+                    xs: colSpanTotal,
+                    sm: colSpanTotal,
+                    md: colSpanTotal,
+                    lg: colSpanTotal,
+                    xl: colSpanTotal,
+                    default: colSpanTotal,
+                },
             })
         );
 
