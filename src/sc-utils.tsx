@@ -24,7 +24,7 @@ export const {
 /**
  * Screen sizes.
  */
-const screenSizes = {
+export const screenSizes = {
     sm: 768,
     md: 992,
     lg: 1200,
@@ -34,14 +34,20 @@ const screenSizes = {
 /**
  * Iterate through the screenSizes and create a media template
  */
-export const media = Object.keys(screenSizes).reduce((queries, breakpoint) => {
-    queries[breakpoint] = (strings: TemplateStringsArray, ...interpolations: styledComponents.SimpleInterpolation[]) => css`
-        @media (min-width: ${screenSizes[breakpoint]}px) {
-            ${css(strings, ...interpolations)}
-        }
-    `;
-    return queries;
-}, {} as { [key: string]: ThemedCssFunction<ITheme> });
+export const media = Object.keys(screenSizes).reduce(
+    (queries, breakpoint) => {
+        queries[breakpoint] = (
+            strings: TemplateStringsArray,
+            ...interpolations: styledComponents.SimpleInterpolation[]
+        ) => css`
+            @media (min-width: ${screenSizes[breakpoint]}px) {
+                ${css(strings, ...interpolations)}
+            }
+        `;
+        return queries;
+    },
+    {} as { [key: string]: ThemedCssFunction<ITheme> }
+);
 
 /**
  * Interface for component that accepts className or style object as props.

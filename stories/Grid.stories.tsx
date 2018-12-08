@@ -214,4 +214,29 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Responsive
+|--------------------------------------------------
+*/
+stories.add(
+    'Responsive',
+    () => (
+        <Row {...getRowStyle()}>
+            <Col {...getColStyle(darkGray)} xs={4} sm={12} />
+        </Row>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`xs\`**, **\`sm\`**, **\`md\`**, **\`lg\`**, **\`xl\`** to specify a responsive span of a column.
+        
+        ### Usage
+        ~~~js
+        <Row {...getRowStyle()}>
+            <Col {...getColStyle(darkGray)} xs={4} />
+        </Row>
+        ~~~`)
+);
+
 export default stories;
