@@ -1,7 +1,7 @@
-import styled, { css } from '../sc-utils';
+import styled, { css, media } from '../sc-utils';
 import { GRID_COLUMN_MAX } from './util';
 
-interface IColStartPositions {
+export interface IColStartPositions {
     xs?: number;
     sm?: number;
     md?: number;
@@ -14,7 +14,7 @@ interface IColStartPositions {
  * Media props (xs, sm, md...) can either be a number representing the span
  * or an object specifying both span and offset
  */
-type IColMediaProp = number | { span?: number, offset?: number };
+export type IColMediaProp = number | { span?: number; offset?: number };
 
 export interface IColProps {
     span?: number;
@@ -39,11 +39,21 @@ const Col = styled.div.attrs<IColProps>({
         css`
             grid-column-start: ${props => props.gridColumnStart && props.gridColumnStart.xs};
             grid-column-end: span
-                ${props => (
-                    typeof props.xs === 'number' 
+                ${props =>
+                    typeof props.xs === 'number'
                         ? props.xs
-                        : props.xs && props.xs && props.xs.span
-                )};
+                        : props.xs && props.xs && props.xs.span};
+        `}
+
+    ${props =>
+        props.sm &&
+        media.sm`
+            grid-column-start: ${props => props.gridColumnStart && props.gridColumnStart.sm};
+            grid-column-end: span
+                ${props =>
+                    typeof props.sm === 'number'
+                        ? props.sm
+                        : props.sm && props.sm && props.sm.span};
         `}
 `;
 

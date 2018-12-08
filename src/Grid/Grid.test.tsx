@@ -3,7 +3,16 @@ import { cleanup, render } from 'react-testing-library';
 import { Row, Col } from './index';
 import { expectRenderError, expectConsoleError } from '../../tests/testUtils';
 import { GRID_COLUMN_MAX } from './util';
+import { screenSizes } from '../sc-utils';
 import 'jest-styled-components';
+
+const setWindowWidth = (width: number) => {
+    Object.defineProperty(window, 'innerWidth', {
+        configurable: true,
+        writable: true,
+        value: width,
+    });
+};
 
 afterEach(cleanup);
 
@@ -120,6 +129,84 @@ describe('Grid', () => {
             expect(col2).toHaveStyleRule('grid-column-end', 'span 4');
             expect(col3).toHaveStyleRule('grid-column-start', '21');
             expect(col3).toHaveStyleRule('grid-column-end', 'span 4');
+        });
+    });
+
+    describe('Responsive column positioning', () => {
+        afterEach(() => {
+            // Reset any changes to window width
+            // setWindowWidth(1024);
+        });
+
+        test('should be able to pass responsive span prop for column', () => {
+            const { getByTestId } = render(
+                <Row>
+                    <Col data-testid="col1" xs={12} />
+                </Row>
+            );
+
+            const col1 = getByTestId('col1');
+
+            expect(col1).toHaveStyleRule('grid-column-start', '1');
+            expect(col1).toHaveStyleRule('grid-column-end', 'span 12');
+        });
+
+        test('should be able to pass an object specifying span as responsive column prop', () => {
+            const { getByTestId } = render(
+                <Row>
+                    <Col data-testid="col1" xs={{ span: 12 }} />
+                </Row>
+            );
+
+            const col1 = getByTestId('col1');
+
+            expect(col1).toHaveStyleRule('grid-column-start', '1');
+            expect(col1).toHaveStyleRule('grid-column-end', 'span 12');
+        });
+
+        test('should render a column with different spans based on media props', () => {
+            const { getByTestId } = render(
+                <Row>
+                    <Col data-testid="col1" xs={4} sm={12} />
+                </Row>
+            );
+
+            const col1 = getByTestId('col1');
+
+            // By default, the window width will be 1024, so it should be using the `sm` breakpoint
+            expect(col1).toHaveStyleRule('grid-column-start', '1');
+            expect(col1).toHaveStyleRule('grid-column-end', 'span 12');
+
+            // Set window width to `xs` size, which is anything smaller than `sm`
+            setWindowWidth(screenSizes.sm - 1);
+
+            // Expect that the column is now using `xs` span
+            expect(col1).toHaveStyleRule('grid-column-start', '1');
+            expect(col1).toHaveStyleRule('grid-column-end', 'span 4');
+        });
+
+        test('should render a column that defaults any unspecified media props to the last valid media prop', () => {
+            /**
+             * create a column with xs={4} and xl={8}.
+             * At breakpoint `md` and `lg`, which are unspecified, they should both be using `xs`.
+             */
+        });
+
+        test('should render a column that defaults an unspecified media prop to the `span` prop when there is no last valid media prop', () => {
+            /**
+             * create a column with md={4} and span={12}.
+             * At breakpoint `xs`, which is unspecified, it should be using 12.
+             *
+             * create a column with md={4} and no span.
+             * At breakpoint `xs`, which is unspecified, it should be using the default column span.
+             */
+        });
+
+        test('should render multiple responsive columns with different breakpoints correctly', () => {
+            /**
+             * Create different combinations of columns with different breakpoints (some unspecified)
+             * and assert grid position values are correct based on screen size
+             */
         });
     });
 });
