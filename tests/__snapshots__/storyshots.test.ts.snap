@@ -3644,28 +3644,170 @@ exports[`Storyshots Components/Grid Gutters 1`] = `
 </div>
 `;
 
-exports[`Storyshots Components/Grid Responsive 1`] = `
+exports[`Storyshots Components/Grid Responsive Span 1`] = `
 .c1 {
   grid-column-start: 1;
+  grid-column-end: span 24;
+}
+
+.c2 {
+  grid-column-start: 25;
+  grid-column-end: span 24;
+}
+
+.c3 {
+  grid-column-start: 25;
+  grid-column-end: span 24;
+}
+
+.c4 {
+  grid-column-start: 25;
   grid-column-end: span 24;
 }
 
 .c0 {
   display: grid;
   grid-template-columns: repeat(24,1fr);
+  grid-column-gap: 10px;
 }
 
 @media (min-width:0px) {
   .c1 {
     grid-column-start: 1;
-    grid-column-end: span 4;
+    grid-column-end: span 8;
   }
 }
 
 @media (min-width:768px) {
   .c1 {
     grid-column-start: 1;
-    grid-column-end: span 12;
+    grid-column-end: span 6;
+  }
+}
+
+@media (min-width:992px) {
+  .c1 {
+    grid-column-start: 1;
+    grid-column-end: span 4;
+  }
+}
+
+@media (min-width:1200px) {
+  .c1 {
+    grid-column-start: 1;
+    grid-column-end: span 3;
+  }
+}
+
+@media (min-width:1920px) {
+  .c1 {
+    grid-column-start: 1;
+    grid-column-end: span 1;
+  }
+}
+
+@media (min-width:0px) {
+  .c2 {
+    grid-column-start: 9;
+    grid-column-end: span 4;
+  }
+}
+
+@media (min-width:768px) {
+  .c2 {
+    grid-column-start: 7;
+    grid-column-end: span 6;
+  }
+}
+
+@media (min-width:992px) {
+  .c2 {
+    grid-column-start: 5;
+    grid-column-end: span 8;
+  }
+}
+
+@media (min-width:1200px) {
+  .c2 {
+    grid-column-start: 4;
+    grid-column-end: span 9;
+  }
+}
+
+@media (min-width:1920px) {
+  .c2 {
+    grid-column-start: 2;
+    grid-column-end: span 11;
+  }
+}
+
+@media (min-width:0px) {
+  .c3 {
+    grid-column-start: 13;
+    grid-column-end: span 4;
+  }
+}
+
+@media (min-width:768px) {
+  .c3 {
+    grid-column-start: 13;
+    grid-column-end: span 6;
+  }
+}
+
+@media (min-width:992px) {
+  .c3 {
+    grid-column-start: 13;
+    grid-column-end: span 8;
+  }
+}
+
+@media (min-width:1200px) {
+  .c3 {
+    grid-column-start: 13;
+    grid-column-end: span 9;
+  }
+}
+
+@media (min-width:1920px) {
+  .c3 {
+    grid-column-start: 13;
+    grid-column-end: span 11;
+  }
+}
+
+@media (min-width:0px) {
+  .c4 {
+    grid-column-start: 17;
+    grid-column-end: span 8;
+  }
+}
+
+@media (min-width:768px) {
+  .c4 {
+    grid-column-start: 19;
+    grid-column-end: span 6;
+  }
+}
+
+@media (min-width:992px) {
+  .c4 {
+    grid-column-start: 21;
+    grid-column-end: span 4;
+  }
+}
+
+@media (min-width:1200px) {
+  .c4 {
+    grid-column-start: 22;
+    grid-column-end: span 3;
+  }
+}
+
+@media (min-width:1920px) {
+  .c4 {
+    grid-column-start: 24;
+    grid-column-end: span 1;
   }
 }
 
@@ -3725,7 +3867,7 @@ exports[`Storyshots Components/Grid Responsive 1`] = `
               }
             }
           >
-            Responsive
+            Responsive Span
           </h2>
         </div>
       </div>
@@ -3743,6 +3885,42 @@ exports[`Storyshots Components/Grid Responsive 1`] = `
       >
         <div
           className="c1"
+          offset={0}
+          span={24}
+          style={
+            Object {
+              "backgroundColor": "hsl(215, 23%, 67%)",
+              "borderRadius": "4px",
+              "height": "40px",
+            }
+          }
+        />
+        <div
+          className="c2"
+          offset={0}
+          span={24}
+          style={
+            Object {
+              "backgroundColor": "hsl(212, 28%, 86%)",
+              "borderRadius": "4px",
+              "height": "40px",
+            }
+          }
+        />
+        <div
+          className="c3"
+          offset={0}
+          span={24}
+          style={
+            Object {
+              "backgroundColor": "hsl(222, 33%, 92%)",
+              "borderRadius": "4px",
+              "height": "40px",
+            }
+          }
+        />
+        <div
+          className="c4"
           offset={0}
           span={24}
           style={
@@ -3878,8 +4056,11 @@ exports[`Storyshots Components/Grid Responsive 1`] = `
                 }
               }
             >
-              &lt;Row {...getRowStyle()}&gt;
-    &lt;Col {...getColStyle(darkGray)} xs={4} /&gt;
+              &lt;Row&gt;
+    &lt;Col xs={8} sm={6} md={4} lg={3} xl={1} /&gt;
+    &lt;Col xs={4} sm={6} md={8} lg={9} xl={11} /&gt;
+    &lt;Col xs={4} sm={6} md={8} lg={9} xl={11} /&gt;
+    &lt;Col xs={8} sm={6} md={4} lg={3} xl={1} /&gt;
 &lt;/Row&gt;
             </code>
           </pre>
