@@ -3,15 +3,37 @@ import { cleanup, render } from 'react-testing-library';
 import { Row, Col } from './index';
 import { expectRenderError, expectConsoleError } from '../../tests/testUtils';
 import { GRID_COLUMN_MAX } from './util';
-import { screenSizes } from '../sc-utils';
+import { css, media } from '../sc-utils';
 import 'jest-styled-components';
+import { addColSpanToPosition } from './Row';
+import { defaultColSpan } from './Col';
 
-const setWindowWidth = (width: number) => {
-    Object.defineProperty(window, 'innerWidth', {
-        configurable: true,
-        writable: true,
-        value: width,
+// Store clone of media object for restoring later.
+const originalMedia = { ...media };
+
+/**
+ * Restores media object to their original values.
+ */
+const restoreMockedBreakpoints = () => {
+    Object.keys(originalMedia).forEach(breakpoint => {
+        media[breakpoint] = originalMedia[breakpoint];
     });
+};
+
+/**
+ * Mocks a given breakpoint on the media object from sc-utils.
+ * The mocked breakpoint will be a normal styled-component css function instead
+ * of a media query specific css function.
+ *
+ * JSDOM doesn't work with media queries, so this allows us to choose
+ * one of the breakpoints to manually trigger.
+ *
+ * Caveat: this has to be run before the rendering of the component,
+ * since that is when the media object functions are run.
+ */
+const setMockedBreakpoint = (breakpoint: string) => {
+    restoreMockedBreakpoints();
+    media[breakpoint] = css;
 };
 
 afterEach(cleanup);
@@ -133,12 +155,8 @@ describe('Grid', () => {
     });
 
     describe('Responsive column positioning', () => {
-        afterEach(() => {
-            // Reset any changes to window width
-            // setWindowWidth(1024);
-        });
-
-        test('should be able to pass responsive span prop for column', () => {
+        test('should be able to pass media prop as a number to a column', () => {
+            setMockedBreakpoint('xs');
             const { getByTestId } = render(
                 <Row>
                     <Col data-testid="col1" xs={12} />
@@ -151,7 +169,8 @@ describe('Grid', () => {
             expect(col1).toHaveStyleRule('grid-column-end', 'span 12');
         });
 
-        test('should be able to pass an object specifying span as responsive column prop', () => {
+        test('should be able to pass an object instead of a number for media prop', () => {
+            setMockedBreakpoint('xs');
             const { getByTestId } = render(
                 <Row>
                     <Col data-testid="col1" xs={{ span: 12 }} />
@@ -165,41 +184,30 @@ describe('Grid', () => {
         });
 
         test('should render a column with different spans based on media props', () => {
+            setMockedBreakpoint('xs');
             const { getByTestId } = render(
                 <Row>
                     <Col data-testid="col1" xs={4} sm={12} />
                 </Row>
             );
-
             const col1 = getByTestId('col1');
 
-            // By default, the window width will be 1024, so it should be using the `sm` breakpoint
-            expect(col1).toHaveStyleRule('grid-column-start', '1');
-            expect(col1).toHaveStyleRule('grid-column-end', 'span 12');
-
-            // Set window width to `xs` size, which is anything smaller than `sm`
-            setWindowWidth(screenSizes.sm - 1);
-
-            // Expect that the column is now using `xs` span
+            // Expect column is using `xs` span
             expect(col1).toHaveStyleRule('grid-column-start', '1');
             expect(col1).toHaveStyleRule('grid-column-end', 'span 4');
-        });
 
-        test('should render a column that defaults any unspecified media props to the last valid media prop', () => {
-            /**
-             * create a column with xs={4} and xl={8}.
-             * At breakpoint `md` and `lg`, which are unspecified, they should both be using `xs`.
-             */
-        });
+            // Trigger `sm` media styles and render another column.
+            setMockedBreakpoint('sm');
+            const { getByTestId: getByTestIdForCol2 } = render(
+                <Row>
+                    <Col data-testid="col2" xs={4} sm={12} />
+                </Row>
+            );
+            const col2 = getByTestIdForCol2('col2');
 
-        test('should render a column that defaults an unspecified media prop to the `span` prop when there is no last valid media prop', () => {
-            /**
-             * create a column with md={4} and span={12}.
-             * At breakpoint `xs`, which is unspecified, it should be using 12.
-             *
-             * create a column with md={4} and no span.
-             * At breakpoint `xs`, which is unspecified, it should be using the default column span.
-             */
+            // Expect column is using `sm` span
+            expect(col2).toHaveStyleRule('grid-column-start', '1');
+            expect(col2).toHaveStyleRule('grid-column-end', 'span 12');
         });
 
         test('should render multiple responsive columns with different breakpoints correctly', () => {
@@ -207,6 +215,79 @@ describe('Grid', () => {
              * Create different combinations of columns with different breakpoints (some unspecified)
              * and assert grid position values are correct based on screen size
              */
+        });
+    });
+
+    describe('Grid Helpers', () => {
+        test('addColSpanToPosition should default any unspecified media props to the last valid media prop', () => {
+            /**
+             * Suppose we have a column with xs={4} and xl={8}.
+             * Breakpoints `md` and `lg` are unspecified.
+             * After calculating column positioning,
+             * `md` and `lg` should both be using the same value as `xs`.
+             */
+            const props = { xs: 4, xl: 8 };
+
+            let colPositions = {
+                xs: 1,
+                sm: 1,
+                md: 1,
+                lg: 1,
+                xl: 1,
+                default: 1,
+            };
+
+            addColSpanToPosition(colPositions, props);
+
+            expect(colPositions.md).toEqual(colPositions.xs);
+            expect(colPositions.lg).toEqual(colPositions.xs);
+        });
+
+        test('addColSpanToPosition should default any unspecified media prop to the `span` prop when there is no last valid media prop', () => {
+            /**
+             * Suppose we have a column with md={4} and span={12}.
+             * Breakpoint `xs` is unspecified, so there is no valid last media prop.
+             * Therefore, it should default to same value as the span` prop.
+             */
+            const props = { md: 4, span: 12 };
+
+            let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
+
+            addColSpanToPosition(colPositions, props);
+
+            // Add 1 because the col position for xs starts at 1
+            expect(colPositions.xs).toEqual(props.span + 1);
+        });
+
+        test('addColSpanToPosition should default any unspecified media prop to the default `span` when there is no last valid media prop nor `span` prop', () => {
+            /**
+             * create a column with md={4} and no span.
+             * At breakpoint `xs`, which is unspecified, it should be using the default column span.
+             */
+            /**
+             * Suppose we have a column with md={4} and no span prop.
+             * Breakpoint `xs` is unspecified, so there is no valid last media prop nor a `span` prop.
+             * Therefore, it should default to same value as the default `span`.
+             */
+            const props = { md: 4 };
+
+            let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
+
+            addColSpanToPosition(colPositions, props);
+
+            // Add 1 because the col position for xs starts at 1
+            expect(colPositions.xs).toEqual(defaultColSpan + 1);
+        });
+
+        test('addColSpanToPosition should set default span to the default when column has media prop', () => {
+            const props = { xs: 4 };
+
+            let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
+
+            addColSpanToPosition(colPositions, props);
+
+            // Add 1 because the col position starts at 1
+            expect(colPositions.default).toEqual(defaultColSpan + 1);
         });
     });
 });

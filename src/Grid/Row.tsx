@@ -1,17 +1,7 @@
 import * as React from 'react';
-import styled, { css, IWithStyles } from '../sc-utils';
-import Col, { IColProps, IColStartPositions, IColMediaProp } from './Col';
+import styled, { css, IWithStyles, MediaProp } from '../sc-utils';
+import Col, { IColProps, IColStartPositions, IColMediaProp, defaultColSpan } from './Col';
 import { GRID_COLUMN_MAX } from './util';
-
-const defaultColSpan = (Col.defaultProps && Col.defaultProps.span) || GRID_COLUMN_MAX;
-
-enum MediaProp {
-    xs = 'xs',
-    sm = 'sm',
-    md = 'md',
-    lg = 'lg',
-    xl = 'xl',
-}
 
 interface IGridRowProps {
     gutter?: number;
@@ -48,7 +38,7 @@ interface IRowProps extends IWithStyles {
  * Calculates span values for each breakpoint for a single column
  * and updates the column positioning object.
  */
-const addColSpanToPosition = (colPositions: IColStartPositions, props: IColProps) => {
+export const addColSpanToPosition = (colPositions: IColStartPositions, props: IColProps) => {
     // Indicates if this column has specified any media props.
     let hasMediaProp = false;
 
@@ -78,12 +68,13 @@ const addColSpanToPosition = (colPositions: IColStartPositions, props: IColProps
     Object.keys(MediaProp).forEach(media => {
         let mediaProp: IColMediaProp = props[media];
         if (mediaProp) {
-            let span = typeof mediaProp === 'number' ? mediaProp : mediaProp.span;
-            colPositions[media] += span || 0;
-            lastValidMediaPropValue = colPositions[media];
+            let span =
+                typeof mediaProp === 'number' ? mediaProp : (mediaProp && mediaProp.span) || 0;
+            colPositions[media] += span;
+            lastValidMediaPropValue = span;
             hasMediaProp = true;
         } else {
-            colPositions[media] = lastValidMediaPropValue;
+            colPositions[media] += lastValidMediaPropValue;
         }
     });
 
@@ -95,7 +86,7 @@ const addColSpanToPosition = (colPositions: IColStartPositions, props: IColProps
      * to exceed the grid column max.
      */
     if (hasMediaProp) {
-        colPositions.default = defaultColSpan;
+        colPositions.default += defaultColSpan;
     } else {
         colPositions.default += props.span || defaultColSpan;
     }
