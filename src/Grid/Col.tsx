@@ -1,5 +1,38 @@
-import styled, { css, media } from '../sc-utils';
+import styled, { media, MediaProp } from '../sc-utils';
 import { GRID_COLUMN_MAX } from './util';
+import { InterpolationValue } from 'styled-components';
+
+/**
+ * Returns all media queries for all breakpoints for a column.
+ */
+const colMediaQueries = (props: IColProps): InterpolationValue[] => {
+    return Object.keys(MediaProp).reduce(
+        (result, breakpoint) => {
+            result.push(...colMediaQuery(props, breakpoint));
+            return result;
+        },
+        [] as InterpolationValue[]
+    );
+};
+
+/**
+ * Returns media query that sets start and span for a column at a specific breakpoint.
+ */
+const colMediaQuery = (props: IColProps, breakpoint: string): InterpolationValue[] => {
+    if (props[breakpoint]) {
+        return media[breakpoint]`
+                grid-column-start: ${props.gridColumnStart && props.gridColumnStart[breakpoint]};
+                grid-column-end: span
+                    ${
+                        typeof props[breakpoint] === 'number'
+                            ? props[breakpoint]
+                            : props[breakpoint] && props[breakpoint].span
+                    };
+            `;
+    }
+
+    return [];
+};
 
 export interface IColStartPositions {
     xs?: number;
@@ -34,32 +67,14 @@ const Col = styled.div.attrs<IColProps>({
     grid-column-start: ${props => props.gridColumnStart && props.gridColumnStart.default};
     grid-column-end: span ${props => props.span};
 
-    ${props =>
-        props.xs &&
-        css`
-            grid-column-start: ${props => props.gridColumnStart && props.gridColumnStart.xs};
-            grid-column-end: span
-                ${props =>
-                    typeof props.xs === 'number'
-                        ? props.xs
-                        : props.xs && props.xs && props.xs.span};
-        `}
-
-    ${props =>
-        props.sm &&
-        media.sm`
-            grid-column-start: ${props => props.gridColumnStart && props.gridColumnStart.sm};
-            grid-column-end: span
-                ${props =>
-                    typeof props.sm === 'number'
-                        ? props.sm
-                        : props.sm && props.sm && props.sm.span};
-        `}
+    ${colMediaQueries}
 `;
 
 Col.defaultProps = {
     span: GRID_COLUMN_MAX,
     offset: 0,
 };
+
+export const defaultColSpan = (Col.defaultProps && Col.defaultProps.span) || GRID_COLUMN_MAX;
 
 export default Col;

@@ -3644,6 +3644,252 @@ exports[`Storyshots Components/Grid Gutters 1`] = `
 </div>
 `;
 
+exports[`Storyshots Components/Grid Responsive 1`] = `
+.c1 {
+  grid-column-start: 1;
+  grid-column-end: span 24;
+}
+
+.c0 {
+  display: grid;
+  grid-template-columns: repeat(24,1fr);
+}
+
+@media (min-width:0px) {
+  .c1 {
+    grid-column-start: 1;
+    grid-column-end: span 4;
+  }
+}
+
+@media (min-width:768px) {
+  .c1 {
+    grid-column-start: 1;
+    grid-column-end: span 12;
+  }
+}
+
+<div>
+  <div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
+            }
+          }
+        >
+          <h1
+            style={
+              Object {
+                "display": "inline",
+                "fontSize": "25px",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
+              }
+            }
+          >
+            Components/Grid
+          </h1>
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            Responsive
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <div
+        className="c0"
+        style={
+          Object {
+            "marginBottom": "20px",
+          }
+        }
+      >
+        <div
+          className="c1"
+          offset={0}
+          span={24}
+          style={
+            Object {
+              "backgroundColor": "hsl(215, 23%, 67%)",
+              "borderRadius": "4px",
+              "height": "40px",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "marginBottom": 0,
+            }
+          }
+        >
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            Use 
+            <strong>
+              <code>
+                xs
+              </code>
+            </strong>
+            , 
+            <strong>
+              <code>
+                sm
+              </code>
+            </strong>
+            , 
+            <strong>
+              <code>
+                md
+              </code>
+            </strong>
+            , 
+            <strong>
+              <code>
+                lg
+              </code>
+            </strong>
+            , 
+            <strong>
+              <code>
+                xl
+              </code>
+            </strong>
+             to specify a responsive span of a column.
+          </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
+            className="language-js"
+            style={
+              Object {
+                "backgroundColor": "#fafafa",
+                "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
+              }
+            }
+          >
+            <code
+              className="language-js"
+              style={
+                Object {
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                }
+              }
+            >
+              &lt;Row {...getRowStyle()}&gt;
+    &lt;Col {...getColStyle(darkGray)} xs={4} /&gt;
+&lt;/Row&gt;
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Storyshots Welcome to your new Storybook🎊 1`] = `
 <div>
   <div>
