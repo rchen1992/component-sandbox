@@ -86,7 +86,7 @@ export const addColSpanToPosition = (colPositions: IColStartPositions, props: IC
      * to exceed the grid column max.
      */
     if (hasMediaProp) {
-        colPositions.default += defaultColSpan;
+        colPositions.default = defaultColSpan + 1;
     } else {
         colPositions.default += props.span || defaultColSpan;
     }

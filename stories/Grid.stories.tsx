@@ -220,21 +220,27 @@ stories.add(
 |--------------------------------------------------
 */
 stories.add(
-    'Responsive',
+    'Responsive Span',
     () => (
-        <Row {...getRowStyle()}>
-            <Col {...getColStyle(darkGray)} xs={4} sm={12} />
+        <Row {...getRowStyle()} gutter={10}>
+            <Col {...getColStyle(darkGray)} xs={8} sm={6} md={4} lg={3} xl={1} />
+            <Col {...getColStyle(gray)} xs={4} sm={6} md={8} lg={9} xl={11} />
+            <Col {...getColStyle(lightGray)} xs={4} sm={6} md={8} lg={9} xl={11} />
+            <Col {...getColStyle(darkGray)} xs={8} sm={6} md={4} lg={3} xl={1} />
         </Row>
     ),
     wInfo(`
         ### Notes
 
         Use **\`xs\`**, **\`sm\`**, **\`md\`**, **\`lg\`**, **\`xl\`** to specify a responsive span of a column.
-        
+
         ### Usage
         ~~~js
-        <Row {...getRowStyle()}>
-            <Col {...getColStyle(darkGray)} xs={4} />
+        <Row>
+            <Col xs={8} sm={6} md={4} lg={3} xl={1} />
+            <Col xs={4} sm={6} md={8} lg={9} xl={11} />
+            <Col xs={4} sm={6} md={8} lg={9} xl={11} />
+            <Col xs={8} sm={6} md={4} lg={3} xl={1} />
         </Row>
         ~~~`)
 );
