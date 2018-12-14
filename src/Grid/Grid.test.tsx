@@ -35,7 +35,10 @@ const setMockedBreakpoint = (breakpoint: string) => {
     media[breakpoint] = css;
 };
 
-afterEach(cleanup);
+afterEach(() => {
+    restoreMockedBreakpoints();
+    cleanup();
+});
 
 describe('Grid', () => {
     test('should throw error when attempting to render children to a Row that is not a Col', () => {
@@ -59,7 +62,7 @@ describe('Grid', () => {
             <Row>
                 <Col span={GRID_COLUMN_MAX + 1}>Hello</Col>
             </Row>,
-            `Column span total has exceeded the grid max of ${GRID_COLUMN_MAX} columns.`
+            `Column span total for screen size \`xs\` has exceeded the grid max of ${GRID_COLUMN_MAX} columns.`
         );
     });
 
@@ -107,6 +110,10 @@ describe('Grid', () => {
     });
 
     describe('Column positioning', () => {
+        // Internally, column styles are behind media queries,
+        // so we need to manually trigger the default one.
+        beforeEach(() => setMockedBreakpoint('xs'));
+
         test('a Row and Col with no props should span the full grid', () => {
             const { getByTestId } = render(
                 <Row>
@@ -244,18 +251,6 @@ describe('Grid', () => {
             expect(colPositions.lg).toEqual(colPositions.xs);
             expect(colSpans.md).toEqual(colSpans.xs);
             expect(colSpans.lg).toEqual(colSpans.xs);
-        });
-
-        test('addColSpan should set default span to the default when column has media prop', () => {
-            const props = { xs: 4 };
-
-            let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
-            let colSpans = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
-
-            addColSpan(colPositions, colSpans, props);
-
-            expect(colPositions.default).toEqual(25);
-            expect(colSpans.default).toEqual(24);
         });
     });
 });

@@ -1,16 +1,11 @@
 import styled, { media, screenSizes } from '../sc-utils';
 import { GRID_COLUMN_MAX } from './util';
 import { InterpolationValue } from 'styled-components';
-import { hasMediaProp } from './Row';
 
 /**
  * Returns all media queries for all breakpoints for a column.
  */
 const colMediaQueries = (props: IColProps): InterpolationValue[] => {
-    if (!hasMediaProp(props)) {
-        return [];
-    }
-
     return Object.keys(screenSizes).reduce(
         (result, breakpoint) => {
             result.push(...colMediaQuery(props, breakpoint));
@@ -37,7 +32,6 @@ export interface IColMediaValues {
     md?: number;
     lg?: number;
     xl?: number;
-    default: number;
 }
 
 /**
@@ -62,9 +56,6 @@ export interface IColProps {
 const Col = styled.div.attrs<IColProps>({
     as: (props: IColProps) => props.tag,
 })`
-    grid-column-start: ${props => props.gridColumnStart && props.gridColumnStart.default};
-    grid-column-end: span ${props => props.span};
-
     ${colMediaQueries}
 `;
 
