@@ -67,16 +67,12 @@ export const addColSpan = (
                 colSpans[media] = lastValidMediaPropValue;
             }
         });
-
-        colPositions.default = defaultColSpan + 1;
-        colSpans.default = defaultColSpan;
     } else {
-        /**
-         * If this column has media props but no `span` prop,
-         * we should not be incrementing the default span, or else it will be inaccurate.
-         */
-        colPositions.default += props.span || defaultColSpan;
-        colSpans.default = props.span || defaultColSpan;
+        // Update all breakpoints by the same span
+        Object.keys(screenSizes).forEach(media => {
+            colPositions[media] += props.span || defaultColSpan;
+            colSpans[media] = props.span || defaultColSpan;
+        });
     }
 };
 
@@ -108,9 +104,12 @@ export const addColOffsetToPosition = (colPositions: IColMediaValues, props: ICo
                 colPositions[media] += lastValidMediaPropOffset;
             }
         });
+    } else {
+        // Update all breakpoints by the same offset
+        Object.keys(screenSizes).forEach(media => {
+            colPositions[media] += props.offset || defaultColOffset;
+        });
     }
-
-    colPositions.default += props.offset || defaultColOffset;
 };
 
 /**
@@ -162,7 +161,7 @@ interface IRowProps extends IWithStyles {
  */
 const Row = React.forwardRef<any, IRowProps>((props, ref) => {
     const children: React.ReactElement<IColProps>[] = [];
-    let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
+    let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1 };
 
     React.Children.toArray(props.children).forEach(child => {
         // Disallow children type other than Col elements.
@@ -184,7 +183,7 @@ const Row = React.forwardRef<any, IRowProps>((props, ref) => {
         let gridColumnStart = { ...colPositions };
 
         // Add column spans to position and span objects.
-        let colSpans = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
+        let colSpans = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1 };
         addColSpan(colPositions, colSpans, col.props);
 
         // Clone the column and pass it position and span objects.
@@ -200,9 +199,13 @@ const Row = React.forwardRef<any, IRowProps>((props, ref) => {
      * Check if total col span has exceeded the grid column max col span.
      * We add +1 to GRID_COLUMN_MAX because the grid goes from 1-25.
      */
-    if (colPositions.default > GRID_COLUMN_MAX + 1) {
-        console.error(`Column span total has exceeded the grid max of ${GRID_COLUMN_MAX} columns.`);
-    }
+    Object.keys(colPositions).forEach(media => {
+        if (colPositions[media] > GRID_COLUMN_MAX + 1) {
+            console.error(
+                `Column span total for screen size \`${media}\` has exceeded the grid max of ${GRID_COLUMN_MAX} columns.`
+            );
+        }
+    });
 
     return (
         <GridRow

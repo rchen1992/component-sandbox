@@ -254,7 +254,7 @@ stories.add(
     'Responsive Offset',
     () => (
         <Row {...getRowStyle()} gutter={10}>
-            <Col {...getColStyle(darkGray)} xs={8} md={4} />
+            <Col {...getColStyle(darkGray)} span={12} />
             <Col {...getColStyle(gray)} xs={4} sm={6} lg={10} />
         </Row>
     ),
