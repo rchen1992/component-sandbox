@@ -234,6 +234,18 @@ stories.add(
 
         Use **\`xs\`**, **\`sm\`**, **\`md\`**, **\`lg\`**, **\`xl\`** to specify a responsive span of a column.
 
+        Screen sizes:
+
+        **\`xs\`**: <768px
+
+        **\`sm\`**: >=768px
+
+        **\`md\`**: >=992px
+
+        **\`lg\`**: >=1200px
+
+        **\`xl\`**: >=1920px
+
         ### Usage
         ~~~js
         <Row>
@@ -254,20 +266,31 @@ stories.add(
     'Responsive Offset',
     () => (
         <Row {...getRowStyle()} gutter={10}>
-            <Col {...getColStyle(darkGray)} span={12} />
-            <Col {...getColStyle(gray)} xs={4} sm={6} lg={10} />
+            <Col
+                {...getColStyle(gray)}
+                xs={{ span: 12, offset: 2 }}
+                sm={{ span: 10, offset: 4 }}
+                md={{ span: 8, offset: 6 }}
+                lg={{ span: 6, offset: 8 }}
+                xl={{ span: 4, offset: 10 }}
+            />
         </Row>
     ),
     wInfo(`
         ### Notes
 
-        Use **\`xs\`**, **\`sm\`**, **\`md\`**, **\`lg\`**, **\`xl\`** to specify a responsive span of a column.
+        You can use an object to specify both **\`span\`** and **\`offset\`** for each breakpoint.
 
         ### Usage
         ~~~js
         <Row>
-            <Col xs={8} md={4} />
-            <Col xs={4} sm={6} lg={10} />
+            <Col
+                xs={{ span: 12, offset: 2 }}
+                sm={{ span: 10, offset: 4 }}
+                md={{ span: 8, offset: 6 }}
+                lg={{ span: 6, offset: 8 }}
+                xl={{ span: 4, offset: 10 }}
+            />
         </Row>
         ~~~`)
 );
