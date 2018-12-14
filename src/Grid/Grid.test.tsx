@@ -2,10 +2,9 @@ import * as React from 'react';
 import { cleanup, render } from 'react-testing-library';
 import { Row, Col } from './index';
 import { expectRenderError, expectConsoleError } from '../../tests/testUtils';
-import { GRID_COLUMN_MAX } from './util';
+import { GRID_COLUMN_MAX, addColSpan } from './util';
 import { css, media } from '../sc-utils';
 import 'jest-styled-components';
-import { addColSpan } from './Row';
 
 // Store clone of media object for restoring later.
 const originalMedia = { ...media };
