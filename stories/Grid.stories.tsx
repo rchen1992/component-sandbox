@@ -216,7 +216,7 @@ stories.add(
 
 /**
 |--------------------------------------------------
-| Responsive
+| Responsive Span
 |--------------------------------------------------
 */
 stories.add(
@@ -241,6 +241,33 @@ stories.add(
             <Col xs={4} sm={6} md={8} lg={9} xl={11} />
             <Col xs={4} sm={6} md={8} lg={9} xl={11} />
             <Col xs={8} sm={6} md={4} lg={3} xl={1} />
+        </Row>
+        ~~~`)
+);
+
+/**
+|--------------------------------------------------
+| Responsive Offset
+|--------------------------------------------------
+*/
+stories.add(
+    'Responsive Offset',
+    () => (
+        <Row {...getRowStyle()} gutter={10}>
+            <Col {...getColStyle(darkGray)} xs={8} md={4} />
+            <Col {...getColStyle(gray)} xs={4} sm={6} lg={10} />
+        </Row>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`xs\`**, **\`sm\`**, **\`md\`**, **\`lg\`**, **\`xl\`** to specify a responsive span of a column.
+
+        ### Usage
+        ~~~js
+        <Row>
+            <Col xs={8} md={4} />
+            <Col xs={4} sm={6} lg={10} />
         </Row>
         ~~~`)
 );

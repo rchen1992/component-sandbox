@@ -21,14 +21,6 @@ export const {
     ThemeProvider,
 } = styledComponents as ThemedStyledComponentsModule<ITheme>;
 
-export enum MediaProp {
-    xs = 'xs',
-    sm = 'sm',
-    md = 'md',
-    lg = 'lg',
-    xl = 'xl',
-}
-
 /**
  * Screen sizes.
  */

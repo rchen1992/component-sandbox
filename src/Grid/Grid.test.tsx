@@ -5,8 +5,7 @@ import { expectRenderError, expectConsoleError } from '../../tests/testUtils';
 import { GRID_COLUMN_MAX } from './util';
 import { css, media } from '../sc-utils';
 import 'jest-styled-components';
-import { addColSpanToPosition } from './Row';
-import { defaultColSpan } from './Col';
+import { addColSpan } from './Row';
 
 // Store clone of media object for restoring later.
 const originalMedia = { ...media };
@@ -43,6 +42,15 @@ describe('Grid', () => {
         expectRenderError(
             <Row>Hello</Row>,
             'The only valid child to a Row element is a Col element.'
+        );
+    });
+
+    test('should throw error when attempting to render Col with media props without specifying xs', () => {
+        expectRenderError(
+            <Row>
+                <Col md={4} />
+            </Row>,
+            '`xs` prop must be defined when using media props.'
         );
     });
 
@@ -155,71 +163,70 @@ describe('Grid', () => {
     });
 
     describe('Responsive column positioning', () => {
+        /**
+         * Helper that mocks triggering a media breakpoint and
+         * then asserts that the column position is correct based on media prop.
+         */
+        const assertColumnPositionForBreakpoint = (
+            element: React.ReactElement<any>,
+            breakpoint: string,
+            expectedColStart: number,
+            expectedColSpan: number
+        ) => {
+            // Add data test ID to element so we can grab it from DOM later.
+            const dataTestId = 'col';
+            let colElement = React.cloneElement(element, { 'data-testid': 'col' });
+
+            // Mock media breakpoint
+            setMockedBreakpoint(breakpoint);
+
+            // Render column
+            const { getByTestId } = render(<Row>{colElement}</Row>);
+            const col = getByTestId(dataTestId);
+
+            // Assert column positioning is correct
+            expect(col).toHaveStyleRule('grid-column-start', expectedColStart.toString());
+            expect(col).toHaveStyleRule('grid-column-end', `span ${expectedColSpan}`);
+
+            // Clean up the DOM in case we run this more than once in a test,
+            // we don't want to create multiple columns with the same test ID.
+            cleanup();
+        };
+
         test('should be able to pass media prop as a number to a column', () => {
-            setMockedBreakpoint('xs');
-            const { getByTestId } = render(
-                <Row>
-                    <Col data-testid="col1" xs={12} />
-                </Row>
-            );
-
-            const col1 = getByTestId('col1');
-
-            expect(col1).toHaveStyleRule('grid-column-start', '1');
-            expect(col1).toHaveStyleRule('grid-column-end', 'span 12');
+            assertColumnPositionForBreakpoint(<Col xs={12} />, 'xs', 1, 12);
         });
 
         test('should be able to pass an object instead of a number for media prop', () => {
-            setMockedBreakpoint('xs');
-            const { getByTestId } = render(
-                <Row>
-                    <Col data-testid="col1" xs={{ span: 12 }} />
-                </Row>
-            );
-
-            const col1 = getByTestId('col1');
-
-            expect(col1).toHaveStyleRule('grid-column-start', '1');
-            expect(col1).toHaveStyleRule('grid-column-end', 'span 12');
+            assertColumnPositionForBreakpoint(<Col xs={{ span: 12 }} />, 'xs', 1, 12);
         });
 
         test('should render a column with different spans based on media props', () => {
-            setMockedBreakpoint('xs');
-            const { getByTestId } = render(
-                <Row>
-                    <Col data-testid="col1" xs={4} sm={12} />
-                </Row>
-            );
-            const col1 = getByTestId('col1');
-
-            // Expect column is using `xs` span
-            expect(col1).toHaveStyleRule('grid-column-start', '1');
-            expect(col1).toHaveStyleRule('grid-column-end', 'span 4');
-
-            // Trigger `sm` media styles and render another column.
-            setMockedBreakpoint('sm');
-            const { getByTestId: getByTestIdForCol2 } = render(
-                <Row>
-                    <Col data-testid="col2" xs={4} sm={12} />
-                </Row>
-            );
-            const col2 = getByTestIdForCol2('col2');
-
-            // Expect column is using `sm` span
-            expect(col2).toHaveStyleRule('grid-column-start', '1');
-            expect(col2).toHaveStyleRule('grid-column-end', 'span 12');
+            const col = <Col xs={4} sm={12} />;
+            assertColumnPositionForBreakpoint(col, 'xs', 1, 4);
+            assertColumnPositionForBreakpoint(col, 'sm', 1, 12);
         });
 
-        test('should render multiple responsive columns with different breakpoints correctly', () => {
-            /**
-             * Create different combinations of columns with different breakpoints (some unspecified)
-             * and assert grid position values are correct based on screen size
-             */
+        test('setting an offset prop should affect positioning of column that uses media props', () => {
+            const col = <Col xs={4} md={6} offset={4} />;
+            assertColumnPositionForBreakpoint(col, 'xs', 5, 4);
+            assertColumnPositionForBreakpoint(col, 'md', 5, 6);
+        });
+
+        test('should be able to set offsets that are specific to each media prop, which should override the general offset prop', () => {
+            const col = <Col xs={{ span: 4, offset: 4 }} md={{ span: 4, offset: 8 }} offset={2} />;
+            assertColumnPositionForBreakpoint(col, 'xs', 5, 4);
+            assertColumnPositionForBreakpoint(col, 'md', 9, 4);
+        });
+
+        test('should ignore generic span/offset when media prop span/offset are set', () => {
+            const col = <Col span={12} offset={8} xs={{ span: 4, offset: 2 }} />;
+            assertColumnPositionForBreakpoint(col, 'xs', 3, 4);
         });
     });
 
     describe('Grid Helpers', () => {
-        test('addColSpanToPosition should default any unspecified media props to the last valid media prop', () => {
+        test('addColSpan should default any unspecified media props to the last valid media prop', () => {
             /**
              * Suppose we have a column with xs={4} and xl={8}.
              * Breakpoints `md` and `lg` are unspecified.
@@ -228,66 +235,27 @@ describe('Grid', () => {
              */
             const props = { xs: 4, xl: 8 };
 
-            let colPositions = {
-                xs: 1,
-                sm: 1,
-                md: 1,
-                lg: 1,
-                xl: 1,
-                default: 1,
-            };
+            let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
+            let colSpans = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
 
-            addColSpanToPosition(colPositions, props);
+            addColSpan(colPositions, colSpans, props);
 
             expect(colPositions.md).toEqual(colPositions.xs);
             expect(colPositions.lg).toEqual(colPositions.xs);
+            expect(colSpans.md).toEqual(colSpans.xs);
+            expect(colSpans.lg).toEqual(colSpans.xs);
         });
 
-        test('addColSpanToPosition should default any unspecified media prop to the `span` prop when there is no last valid media prop', () => {
-            /**
-             * Suppose we have a column with md={4} and span={12}.
-             * Breakpoint `xs` is unspecified, so there is no valid last media prop.
-             * Therefore, it should default to same value as the span` prop.
-             */
-            const props = { md: 4, span: 12 };
-
-            let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
-
-            addColSpanToPosition(colPositions, props);
-
-            // Add 1 because the col position for xs starts at 1
-            expect(colPositions.xs).toEqual(props.span + 1);
-        });
-
-        test('addColSpanToPosition should default any unspecified media prop to the default `span` when there is no last valid media prop nor `span` prop', () => {
-            /**
-             * create a column with md={4} and no span.
-             * At breakpoint `xs`, which is unspecified, it should be using the default column span.
-             */
-            /**
-             * Suppose we have a column with md={4} and no span prop.
-             * Breakpoint `xs` is unspecified, so there is no valid last media prop nor a `span` prop.
-             * Therefore, it should default to same value as the default `span`.
-             */
-            const props = { md: 4 };
-
-            let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
-
-            addColSpanToPosition(colPositions, props);
-
-            // Add 1 because the col position for xs starts at 1
-            expect(colPositions.xs).toEqual(defaultColSpan + 1);
-        });
-
-        test('addColSpanToPosition should set default span to the default when column has media prop', () => {
+        test('addColSpan should set default span to the default when column has media prop', () => {
             const props = { xs: 4 };
 
             let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
+            let colSpans = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, default: 1 };
 
-            addColSpanToPosition(colPositions, props);
+            addColSpan(colPositions, colSpans, props);
 
-            // Add 1 because the col position starts at 1
-            expect(colPositions.default).toEqual(defaultColSpan + 1);
+            expect(colPositions.default).toEqual(25);
+            expect(colSpans.default).toEqual(24);
         });
     });
 });
