@@ -5119,6 +5119,199 @@ exports[`Storyshots Components/Grid Responsive Span 1`] = `
 </div>
 `;
 
+exports[`Storyshots Components/Switch Default 1`] = `
+.c0 {
+  position: relative;
+}
+
+.c1 {
+  display: hidden;
+}
+
+.c2 {
+  width: 50px;
+  background-color: red;
+}
+
+<div>
+  <div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "borderBottom": "1px solid #eee",
+              "marginBottom": 10,
+              "paddingBottom": 0,
+              "paddingTop": 0,
+            }
+          }
+        >
+          <h1
+            style={
+              Object {
+                "display": "inline",
+                "fontSize": "25px",
+                "margin": 0,
+                "marginRight": "20px",
+                "padding": 0,
+              }
+            }
+          >
+            Components/Switch
+          </h1>
+          <h2
+            style={
+              Object {
+                "color": "#999",
+                "display": "inline",
+                "fontSize": "22px",
+                "fontWeight": 400,
+                "margin": "0 0 10px 0",
+                "padding": 0,
+              }
+            }
+          >
+            Default
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div
+      style={Object {}}
+    >
+      <label
+        className="c0"
+      >
+        <input
+          className="c1"
+          type="checkbox"
+        />
+        <span
+          className="c2"
+        />
+      </label>
+    </div>
+    <div>
+      <div
+        style={
+          Object {
+            "WebkitFontSmoothing": "antialiased",
+            "backgroundColor": "#eee",
+            "border": "1px solid #eee",
+            "borderRadius": "2px",
+            "color": "#444",
+            "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+            "fontSize": "15px",
+            "fontWeight": 300,
+            "lineHeight": "2",
+            "marginBottom": "20px",
+            "marginTop": "20px",
+            "padding": "0px 5px",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "marginBottom": 0,
+            }
+          }
+        >
+          <h3
+            id="notes"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Notes
+          </h3>
+          <div
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "15px",
+              }
+            }
+          >
+            Default Switch.
+          </div>
+          <h3
+            id="notes-usage"
+            style={
+              Object {
+                "WebkitFontSmoothing": "antialiased",
+                "color": "#444",
+                "fontFamily": "-apple-system, \\".SFNSText-Regular\\", \\"San Francisco\\", BlinkMacSystemFont, \\"Segoe UI\\", \\"Roboto\\", \\"Oxygen\\", \\"Ubuntu\\", \\"Cantarell\\", \\"Fira Sans\\", \\"Droid Sans\\", \\"Helvetica Neue\\", \\"Lucida Grande\\", \\"Arial\\", sans-serif",
+                "fontSize": "22px",
+                "fontWeight": 600,
+                "margin": 0,
+                "padding": 0,
+                "textTransform": "uppercase",
+              }
+            }
+          >
+            Usage
+          </h3>
+          <pre
+            className="language-js"
+            style={
+              Object {
+                "backgroundColor": "#fafafa",
+                "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                "lineHeight": 1.5,
+                "overflowX": "scroll",
+                "padding": ".5rem",
+              }
+            }
+          >
+            <code
+              className="language-js"
+              style={
+                Object {
+                  "backgroundColor": "#fafafa",
+                  "fontFamily": "Menlo, Monaco, \\"Courier New\\", monospace",
+                }
+              }
+            >
+              &lt;Switch /&gt;
+            </code>
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Storyshots Welcome to your new Storybook🎊 1`] = `
 <div>
   <div>
