@@ -11,28 +11,61 @@ import { wInfo } from '../src/utils';
 
 const stories = storiesOf('Components/Switch', module) as any;
 
+// const Container = styled.div`
+//     padding-bottom: 10px;
+// `;
+
 /**
 |--------------------------------------------------
-| Default
+| Basic
 |--------------------------------------------------
 */
 stories.add(
-    'Default',
+    'Basic',
     () => (
         <>
-            <Switch defaultValue={false} offColor='red' onColor='green' />
+            <Switch defaultValue={false} />
             <Switch defaultValue={true} />
-            <Switch value={true} />
         </>
     ),
     wInfo(`
         ### Notes
 
-        Default Switch.
+        Basic Switch. 
+        
+        Use **\`defaultValue\`** to set a default starting on/off state.
+        
+        Use **\`value\`** to force an on or off state.
 
         ### Usage
         ~~~js
-        <Switch />
+        <Switch defaultValue={false} />
+        <Switch defaultValue={true} />
+        ~~~`)
+);
+
+/**
+|--------------------------------------------------
+| Colors
+|--------------------------------------------------
+*/
+stories.add(
+    'Colors',
+    () => (
+        <>
+            <Switch defaultValue={false} offColor="#F3451F" onColor="#2ECC71" />
+            <Switch defaultValue={true} offColor="#F7DC6F" onColor="#BB8FCE" />
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`onColor\`** and **\`offColor\`** to set the colors for the on/off states.
+
+        ### Usage
+        ~~~js
+        <Switch defaultValue={false} offColor="#F3451F" onColor="#2ECC71" />
+        <Switch defaultValue={true} offColor="#F7DC6F" onColor="#BB8FCE" />
         ~~~`)
 );
 
