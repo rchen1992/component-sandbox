@@ -12,8 +12,9 @@ const Slider = styled<ISwitchProps, 'span'>('span')`
     height: 27px;
     display: inline-block;
     border-radius: 20px;
-    background-color: ${props =>
-        props.value ? props.theme.primaryColor : props.theme.infoColorAccent};
+    background-color: ${props => props.value 
+        ? props.onColor || props.theme.primaryColor
+        : props.offColor || props.theme.infoColorAccent};
     position: relative;
     transition: background-color 400ms;
     cursor: pointer;
@@ -36,6 +37,8 @@ const Slider = styled<ISwitchProps, 'span'>('span')`
 interface ISwitchProps {
     value?: boolean;
     defaultValue?: boolean;
+    onColor?: string;
+    offColor?: string;
 }
 
 const Switch: React.FunctionComponent<ISwitchProps> = props => {
@@ -54,7 +57,7 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
     return (
         <label>
             <Input type="checkbox" defaultChecked={finalValue} />
-            <Slider onClick={toggleValue} value={finalValue} />
+            <Slider onClick={toggleValue} value={finalValue} onColor={props.onColor} offColor={props.offColor} />
         </label>
     );
 };

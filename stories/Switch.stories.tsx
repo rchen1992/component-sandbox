@@ -20,7 +20,7 @@ stories.add(
     'Default',
     () => (
         <>
-            <Switch defaultValue={false} />
+            <Switch defaultValue={false} offColor='red' onColor='green' />
             <Switch defaultValue={true} />
             <Switch value={true} />
         </>
