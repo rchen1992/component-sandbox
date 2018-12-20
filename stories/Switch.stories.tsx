@@ -69,4 +69,27 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Text
+|--------------------------------------------------
+*/
+stories.add(
+    'Text',
+    () => (
+        <>
+            <Switch defaultValue={false} offText="This is off" onText="This is on" />
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`offText\`** and **\`onText\`** to set text descriptions for the on/off states.
+
+        ### Usage
+        ~~~js
+        <Switch defaultValue={false} offText='Pay by year' onText='Pay by month' />
+        ~~~`)
+);
+
 export default stories;
