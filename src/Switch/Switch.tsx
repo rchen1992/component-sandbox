@@ -9,7 +9,7 @@ const Input = styled.input`
 
 const Slider = styled<ISwitchProps, 'span'>('span')`
     width: 50px;
-    height: 27px;
+    height: 26px;
     display: inline-block;
     border-radius: 20px;
     background-color: ${props => props.value 
@@ -21,17 +21,33 @@ const Slider = styled<ISwitchProps, 'span'>('span')`
 
     &::before {
         content: '';
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         border-radius: 50%;
         display: inline-block;
         background-color: white;
         position: relative;
         top: 4px;
         left: 4px;
-        transform: ${props => (props.value ? 'translateX(22px)' : 'none')};
+        transform: ${props => (props.value ? 'translateX(24px)' : 'none')};
         transition: transform 400ms;
     }
+`;
+
+const Text = styled<ISwitchProps, 'span'>('span')`
+    font-weight: 500;
+    font-family: system-ui;
+    transition: color 400ms;
+`;
+
+const OnText = styled(Text)`
+    margin-left: 6px;
+    color:  ${props => props.value ? props.theme.linkColor : 'black'};
+`;
+
+const OffText = styled(Text)`
+    margin-right: 6px;
+    color:  ${props => !props.value ? props.theme.linkColor : 'black'};
 `;
 
 interface ISwitchProps {
@@ -39,6 +55,8 @@ interface ISwitchProps {
     defaultValue?: boolean;
     onColor?: string;
     offColor?: string;
+    onText?: string;
+    offText?: string;
 }
 
 const Switch: React.FunctionComponent<ISwitchProps> = props => {
@@ -57,7 +75,9 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
     return (
         <label>
             <Input type="checkbox" defaultChecked={finalValue} />
+            {props.offText && <OffText value={finalValue}>{props.offText}</OffText>}
             <Slider onClick={toggleValue} value={finalValue} onColor={props.onColor} offColor={props.offColor} />
+            {props.onText && <OnText value={finalValue}>{props.onText}</OnText>}
         </label>
     );
 };

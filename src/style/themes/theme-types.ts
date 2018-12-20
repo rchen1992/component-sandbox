@@ -29,6 +29,7 @@ export interface IThemeColors {
     dangerColorLight: string;
     dangerColorHighlight: string;
     dangerColorDark: string;
+    linkColor: string;
 }
 
 /**
