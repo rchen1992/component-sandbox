@@ -22,6 +22,7 @@ stories.add(
         <>
             <Switch defaultValue={false} />
             <Switch defaultValue={true} />
+            <Switch value={true} />
         </>
     ),
     wInfo(`

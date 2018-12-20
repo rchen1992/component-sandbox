@@ -41,10 +41,20 @@ interface ISwitchProps {
 const Switch: React.FunctionComponent<ISwitchProps> = props => {
     const [value, setValue] = React.useState(props.defaultValue);
 
+    // The switch's value will be forced if we provide a `value` prop.
+    const finalValue = props.value || value;
+
+    function toggleValue() {
+        // Don't toggle if we are forcing the value.
+        if (!props.value) {
+            setValue(!value);
+        }
+    }
+
     return (
         <label>
-            <Input type="checkbox" defaultChecked={props.defaultValue} />
-            <Slider onClick={() => setValue(!value)} value={value} />
+            <Input type="checkbox" defaultChecked={finalValue} />
+            <Slider onClick={toggleValue} value={finalValue} />
         </label>
     );
 };
