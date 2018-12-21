@@ -92,4 +92,27 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Disabled
+|--------------------------------------------------
+*/
+stories.add(
+    'Disabled',
+    () => (
+        <>
+            <Switch defaultValue={false} disabled />
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`disabled\`** to set disabled switch state.
+
+        ### Usage
+        ~~~js
+        <Switch defaultValue={false} disabled />
+        ~~~`)
+);
+
 export default stories;
