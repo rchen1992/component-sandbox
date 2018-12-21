@@ -24,7 +24,7 @@ stories.add(
     'Basic',
     () => (
         <>
-            <Switch defaultValue={false} />
+            <Switch />
             <Switch defaultValue={true} />
         </>
     ),
@@ -39,7 +39,7 @@ stories.add(
 
         ### Usage
         ~~~js
-        <Switch defaultValue={false} />
+        <Switch />
         <Switch defaultValue={true} />
         ~~~`)
 );
@@ -53,7 +53,7 @@ stories.add(
     'Colors',
     () => (
         <>
-            <Switch defaultValue={false} offColor="#F3451F" onColor="#2ECC71" />
+            <Switch offColor="#F3451F" onColor="#2ECC71" />
             <Switch defaultValue={true} offColor="#F7DC6F" onColor="#BB8FCE" />
         </>
     ),
@@ -64,7 +64,7 @@ stories.add(
 
         ### Usage
         ~~~js
-        <Switch defaultValue={false} offColor="#F3451F" onColor="#2ECC71" />
+        <Switch offColor="#F3451F" onColor="#2ECC71" />
         <Switch defaultValue={true} offColor="#F7DC6F" onColor="#BB8FCE" />
         ~~~`)
 );
@@ -78,7 +78,7 @@ stories.add(
     'Text',
     () => (
         <>
-            <Switch defaultValue={false} offText="This is off" onText="This is on" />
+            <Switch offText="This is off" onText="This is on" />
         </>
     ),
     wInfo(`
@@ -88,7 +88,7 @@ stories.add(
 
         ### Usage
         ~~~js
-        <Switch defaultValue={false} offText='Pay by year' onText='Pay by month' />
+        <Switch offText='Pay by year' onText='Pay by month' />
         ~~~`)
 );
 
@@ -101,7 +101,7 @@ stories.add(
     'Disabled',
     () => (
         <>
-            <Switch defaultValue={false} disabled />
+            <Switch disabled />
         </>
     ),
     wInfo(`
@@ -111,7 +111,7 @@ stories.add(
 
         ### Usage
         ~~~js
-        <Switch defaultValue={false} disabled />
+        <Switch disabled />
         ~~~`)
 );
 
