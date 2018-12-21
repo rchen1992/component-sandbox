@@ -17,13 +17,20 @@ const Slider = styled<ISliderProps, 'span'>('span')`
     height: 26px;
     display: inline-block;
     border-radius: 20px;
-    background-color: ${props =>
-        props.value
-            ? props.aliasForOnColor || props.theme.primaryColor
-            : props.offColor || props.theme.infoColorAccent};
     position: relative;
     transition: background-color 400ms;
-    cursor: pointer;
+    cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+    background-color: ${props => {
+        if (props.value) {
+            return props.aliasForOnColor || props.theme.primaryColor;
+        }
+
+        if (props.disabled) {
+            return props.theme.infoColorLightAccent;
+        }
+
+        return props.offColor || props.theme.infoColorAccent;
+    }};
 
     &::before {
         content: '';
@@ -48,12 +55,12 @@ const Text = styled<ISwitchProps, 'span'>('span')`
 
 const OnText = styled(Text)`
     margin-left: 6px;
-    color:  ${props => props.value ? props.theme.linkColor : 'black'};
+    color: ${props => (props.value ? props.theme.linkColor : 'black')};
 `;
 
 const OffText = styled(Text)`
     margin-right: 6px;
-    color:  ${props => !props.value ? props.theme.linkColor : 'black'};
+    color: ${props => (!props.value ? props.theme.linkColor : 'black')};
 `;
 
 interface ISwitchProps {
@@ -63,6 +70,7 @@ interface ISwitchProps {
     offColor?: string;
     onText?: string;
     offText?: string;
+    disabled?: boolean;
 }
 
 const Switch: React.FunctionComponent<ISwitchProps> = props => {
@@ -73,16 +81,22 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
 
     function toggleValue() {
         // Don't toggle if we are forcing the value.
-        if (!props.value) {
+        if (!props.disabled && !props.value) {
             setValue(!value);
         }
     }
 
     return (
         <label>
-            <Input type="checkbox" defaultChecked={finalValue} />
+            <Input type="checkbox" defaultChecked={finalValue} disabled={!!props.disabled} />
             {props.offText && <OffText value={finalValue}>{props.offText}</OffText>}
-            <Slider onClick={toggleValue} value={finalValue} aliasForOnColor={props.onColor} offColor={props.offColor} />
+            <Slider
+                onClick={toggleValue}
+                value={finalValue}
+                aliasForOnColor={props.onColor}
+                offColor={props.offColor}
+                disabled={props.disabled}
+            />
             {props.onText && <OnText value={finalValue}>{props.onText}</OnText>}
         </label>
     );
