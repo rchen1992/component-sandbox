@@ -74,7 +74,7 @@ interface ISwitchProps {
 }
 
 const Switch: React.FunctionComponent<ISwitchProps> = props => {
-    const [value, setValue] = React.useState(props.defaultValue);
+    const [value, setValue] = React.useState(!!props.defaultValue);
 
     // The switch's value will be forced if we provide a `value` prop.
     const finalValue = props.value || value;
@@ -96,6 +96,7 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
                 aliasForOnColor={props.onColor}
                 offColor={props.offColor}
                 disabled={props.disabled}
+                data-testid="switch-slider"
             />
             {props.onText && <OnText value={finalValue}>{props.onText}</OnText>}
         </label>
