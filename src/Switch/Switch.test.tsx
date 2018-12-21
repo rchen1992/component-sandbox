@@ -32,20 +32,20 @@ describe('Switch', () => {
         expect(input.checked).toBeTruthy();
     });
 
-    // test('should be able to set forced value', () => {
-    //     const { container } = render(<Switch value={true} />);
+    test('should be able to set forced value', () => {
+        const { container, getByTestId } = render(<Switch value={true} />);
 
-    //     // Check that switch starts as on
-    //     const input = container.querySelector('input') as HTMLInputElement;
-    //     expect(input).toBeTruthy();
-    //     expect(input.checked).toBeTruthy();
+        // Check that switch starts as on
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input).toBeTruthy();
+        expect(input.checked).toBeTruthy();
 
-    //     // Click switch
-    //     fireEvent.click(container.firstElementChild as Element);
+        // Click switch
+        fireEvent.click(getByTestId('switch-slider'));
 
-    //     // Check that it's still on
-    //     expect(input.checked).toBeTruthy();
-    // });
+        // Check that it's still on
+        expect(input.checked).toBeTruthy();
+    });
 
     test('should be able to set off-state color and on-state color', () => {
         const offColor = 'red';
