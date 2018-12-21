@@ -7,14 +7,20 @@ const Input = styled.input`
     height: 0;
 `;
 
-const Slider = styled<ISwitchProps, 'span'>('span')`
+interface ISliderProps extends ISwitchProps {
+    // Alias for the onColor prop, since using onColor emits a React warning.
+    aliasForOnColor?: string;
+}
+
+const Slider = styled<ISliderProps, 'span'>('span')`
     width: 50px;
     height: 26px;
     display: inline-block;
     border-radius: 20px;
-    background-color: ${props => props.value 
-        ? props.onColor || props.theme.primaryColor
-        : props.offColor || props.theme.infoColorAccent};
+    background-color: ${props =>
+        props.value
+            ? props.aliasForOnColor || props.theme.primaryColor
+            : props.offColor || props.theme.infoColorAccent};
     position: relative;
     transition: background-color 400ms;
     cursor: pointer;
@@ -76,7 +82,7 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
         <label>
             <Input type="checkbox" defaultChecked={finalValue} />
             {props.offText && <OffText value={finalValue}>{props.offText}</OffText>}
-            <Slider onClick={toggleValue} value={finalValue} onColor={props.onColor} offColor={props.offColor} />
+            <Slider onClick={toggleValue} value={finalValue} aliasForOnColor={props.onColor} offColor={props.offColor} />
             {props.onText && <OnText value={finalValue}>{props.onText}</OnText>}
         </label>
     );
