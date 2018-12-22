@@ -51,6 +51,7 @@ const Text = styled<ISwitchProps, 'span'>('span')`
     font-weight: 500;
     font-family: system-ui;
     transition: color 400ms;
+    cursor: pointer;
 `;
 
 const OnText = styled(Text)`
@@ -71,13 +72,14 @@ interface ISwitchProps {
     onText?: string;
     offText?: string;
     disabled?: boolean;
+    onClick?: React.MouseEventHandler;
 }
 
 const Switch: React.FunctionComponent<ISwitchProps> = props => {
     const [value, setValue] = React.useState(!!props.defaultValue);
 
     // The switch's value will be forced if we provide a `value` prop.
-    const finalValue = props.value || value;
+    const finalValue = props.value !== undefined ? !!props.value : value;
 
     function toggleValue() {
         // Don't toggle if we are forcing the value.
@@ -86,12 +88,32 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
         }
     }
 
+    function onClick(e: React.MouseEvent) {
+        /**
+         * Prevent default click.
+         * Since this handler is attached to `label`,
+         * clicks will also click on the `input`, which will trigger 2 click events.
+         */
+        e.preventDefault();
+
+        // If we were provided a click handler from a parent component, call it now.
+        if (props.onClick) {
+            props.onClick(e);
+        }
+
+        toggleValue();
+    }
+
     return (
-        <label>
-            <Input type="checkbox" defaultChecked={finalValue} disabled={!!props.disabled} />
+        <label onClick={onClick}>
+            <Input
+                type="checkbox"
+                checked={finalValue}
+                disabled={!!props.disabled}
+                onChange={toggleValue}
+            />
             {props.offText && <OffText value={finalValue}>{props.offText}</OffText>}
             <Slider
-                onClick={toggleValue}
                 value={finalValue}
                 aliasForOnColor={props.onColor}
                 offColor={props.offColor}
