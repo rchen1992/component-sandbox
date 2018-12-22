@@ -110,7 +110,7 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
                 type="checkbox"
                 checked={finalValue}
                 disabled={!!props.disabled}
-                onChange={toggleValue}
+                onChange={() => {}} // to silence warning; not needed because input is hidden and onChange will never fire
             />
             {props.offText && <OffText value={finalValue}>{props.offText}</OffText>}
             <Slider
