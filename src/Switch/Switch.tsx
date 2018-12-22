@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from '../sc-utils';
+import { lighten } from 'polished';
 
 const Input = styled.input`
     opacity: 0;
@@ -21,15 +22,16 @@ const Slider = styled<ISliderProps, 'span'>('span')`
     transition: background-color 400ms;
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
     background-color: ${props => {
+        let color = props.offColor || props.theme.infoColorAccent;
         if (props.value) {
-            return props.aliasForOnColor || props.theme.primaryColor;
+            color = props.aliasForOnColor || props.theme.primaryColor;
         }
 
         if (props.disabled) {
-            return props.theme.infoColorLightAccent;
+            color = lighten(0.1, color);
         }
 
-        return props.offColor || props.theme.infoColorAccent;
+        return color;
     }};
 
     &::before {

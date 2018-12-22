@@ -98,6 +98,7 @@ stories.add(
     () => (
         <>
             <Switch disabled />
+            <Switch disabled defaultValue={true} />
         </>
     ),
     wInfo(`
@@ -108,6 +109,7 @@ stories.add(
         ### Usage
         ~~~js
         <Switch disabled />
+        <Switch disabled defaultValue={true} />
         ~~~`)
 );
 

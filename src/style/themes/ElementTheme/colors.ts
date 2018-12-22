@@ -10,7 +10,6 @@ import {
     blue,
 } from '../../colors';
 import { IThemeColors } from '../theme-types';
-import { lighten } from 'polished';
 
 const defaultPrimaryColor = elementBlue;
 
@@ -49,8 +48,6 @@ const {
     dark: dangerColorDark,
 } = getColorShades(elementRed);
 
-const infoColorLightAccent = lighten(0.1, infoColorAccent);
-
 const ElementColors: IThemeColors = {
     defaultBorderColor: lightGray,
     secondaryTextColor: gray,
@@ -66,7 +63,6 @@ const ElementColors: IThemeColors = {
     successColorDark,
     infoColor: elementGray,
     infoColorAccent,
-    infoColorLightAccent,
     infoColorLight,
     infoColorHighlight,
     infoColorDark,

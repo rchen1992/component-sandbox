@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-testing-library';
 import GenericErrorBoundary from '../src/GenericErrorBoundary';
+import Provider from 'Provider';
 
 /**
  * Helper function that asserts an element will fail rendering with a given error message.
@@ -54,4 +55,12 @@ export function expectConsoleError(element: any, errorMessage: string) {
 
     // Restore console error
     console.error = originalConsoleError;
+}
+
+/**
+ * Renders any element with our Provider.
+ * Use this to allow elements in tests to access the theme.
+ */
+export function renderWithProvider(element: any) {
+    return render(<Provider>{element}</Provider>);
 }
