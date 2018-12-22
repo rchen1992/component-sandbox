@@ -16,7 +16,6 @@ export interface IThemeColors {
     successColorDark: string;
     infoColor: string;
     infoColorAccent: string;
-    infoColorLightAccent: string;
     infoColorLight: string;
     infoColorHighlight: string;
     infoColorDark: string;

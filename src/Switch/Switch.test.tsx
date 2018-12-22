@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cleanup, render, fireEvent } from 'react-testing-library';
 import Switch from './index';
-// import { expectRenderError, expectConsoleError } from '../../tests/testUtils';
+import { renderWithProvider } from '../../tests/testUtils';
 import 'jest-styled-components';
 
 afterEach(cleanup);
@@ -70,7 +70,12 @@ describe('Switch', () => {
     });
 
     test('should be able to set disabled state', () => {
-        const { container } = render(<Switch disabled />);
+        /**
+         * Render with provider because the disabled state lightens the
+         * color of the on/off state, and by default the Switch gets
+         * colors from the theme, which is on the provider.
+         */
+        const { container } = renderWithProvider(<Switch disabled />);
 
         // Check that switch starts as off
         const input = container.querySelector('input') as HTMLInputElement;
