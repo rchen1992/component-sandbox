@@ -3,11 +3,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Switch from '../src/Switch';
 import { wInfo } from '../src/utils';
-// import { action } from '@storybook/addon-actions';
-
-// const actions = {
-//     onClick: action('onClick'),
-// };
+import { action } from '@storybook/addon-actions';
 
 const stories = storiesOf('Components/Switch', module) as any;
 
@@ -112,6 +108,45 @@ stories.add(
         ### Usage
         ~~~js
         <Switch disabled />
+        ~~~`)
+);
+
+/**
+|--------------------------------------------------
+| Events
+|--------------------------------------------------
+*/
+// const Comp = () => {
+//     const [value, setValue] = React.useState(true);
+//     return (
+//         <div>
+//             <Switch value={value} onClick={() => setValue(!value)} />
+//         </div>
+//     );
+// };
+
+stories.add(
+    'Events',
+    () => (
+        <>
+            <Switch
+                onClick={e => {
+                    console.log('click Switch');
+                    action('onClick')(e);
+                }}
+            />
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        You can use **\`onClick\`** event handlers.
+
+        ### Usage
+        ~~~js
+        <Switch
+            onClick={() => console.log('click Switch')}
+        />
         ~~~`)
 );
 

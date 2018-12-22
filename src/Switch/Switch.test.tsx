@@ -28,20 +28,18 @@ describe('Switch', () => {
 
         // Check that switch is rendered as on
         const input = container.querySelector('input') as HTMLInputElement;
-        expect(input).toBeTruthy();
         expect(input.checked).toBeTruthy();
     });
 
     test('should be able to set forced value', () => {
-        const { container, getByTestId } = render(<Switch value={true} />);
+        const { container } = render(<Switch value={true} />);
 
         // Check that switch starts as on
         const input = container.querySelector('input') as HTMLInputElement;
-        expect(input).toBeTruthy();
         expect(input.checked).toBeTruthy();
 
-        // Click switch
-        fireEvent.click(getByTestId('switch-slider'));
+        // Click on switch
+        fireEvent.click(container.firstElementChild as Element);
 
         // Check that it's still on
         expect(input.checked).toBeTruthy();
@@ -83,5 +81,24 @@ describe('Switch', () => {
 
         // Check that it's does nothing
         expect(input.checked).toBeFalsy();
+    });
+
+    test('should be able to attach onClick handler and still be able to toggle switch', () => {
+        const onClick = jest.fn();
+
+        const { container } = render(<Switch onClick={onClick} />);
+
+        // Check that switch is initially off
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input.checked).toBeFalsy();
+
+        // Click switch
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Check that it's now on
+        expect(input.checked).toBeTruthy();
+
+        // Check that onClick was called
+        expect(onClick).toHaveBeenCalledTimes(1);
     });
 });
