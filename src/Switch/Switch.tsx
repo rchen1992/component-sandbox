@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from '../sc-utils';
+import styled, { IWithStyles } from '../sc-utils';
 import { lighten } from 'polished';
 
 const Input = styled.input`
@@ -66,7 +66,7 @@ const OffText = styled(Text)`
     color: ${props => (!props.value ? props.theme.linkColor : 'black')};
 `;
 
-interface ISwitchProps {
+interface ISwitchProps extends IWithStyles {
     value?: boolean;
     defaultValue?: boolean;
     onColor?: string;
@@ -116,6 +116,8 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
             />
             {props.offText && <OffText value={finalValue}>{props.offText}</OffText>}
             <Slider
+                className={props.className}
+                style={props.style}
                 value={finalValue}
                 aliasForOnColor={props.onColor}
                 offColor={props.offColor}

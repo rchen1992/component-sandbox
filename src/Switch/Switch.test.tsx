@@ -106,4 +106,18 @@ describe('Switch', () => {
         // Check that onClick was called
         expect(onClick).toHaveBeenCalledTimes(1);
     });
+
+    test('should be able to apply className to slider', () => {
+        const className = 'helloworld';
+        const { container } = render(<Switch className={className} />);
+        expect(container.querySelector(`.${className}`)).toBeTruthy();
+    });
+
+    test('should be able to apply style object to slider', () => {
+        const style = {
+            backgroundColor: 'orange',
+        };
+        const { getByTestId } = render(<Switch style={style} />);
+        expect(getByTestId('switch-slider').style.backgroundColor).toEqual(style.backgroundColor);
+    });
 });
