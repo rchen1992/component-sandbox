@@ -130,4 +130,10 @@ describe('Switch', () => {
         expect(elements).toBeTruthy();
         expect(elements).toHaveLength(2);
     });
+
+    test('should be able to pass ref to access input', () => {
+        const ref = React.createRef<any>();
+        render(<Switch ref={ref} />);
+        expect(ref.current instanceof HTMLInputElement).toBeTruthy();
+    });
 });
