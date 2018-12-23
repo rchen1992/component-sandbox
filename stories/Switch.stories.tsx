@@ -7,9 +7,9 @@ import { action } from '@storybook/addon-actions';
 
 const stories = storiesOf('Components/Switch', module) as any;
 
-// const Container = styled.div`
-//     padding-bottom: 10px;
-// `;
+const formatStyles = {
+    marginRight: '8px',
+};
 
 /**
 |--------------------------------------------------
@@ -20,7 +20,7 @@ stories.add(
     'Basic',
     () => (
         <>
-            <Switch />
+            <Switch style={formatStyles} />
             <Switch defaultValue={true} />
         </>
     ),
@@ -49,7 +49,7 @@ stories.add(
     'Colors',
     () => (
         <>
-            <Switch offColor="#F3451F" onColor="#2ECC71" />
+            <Switch offColor="#F3451F" onColor="#2ECC71" style={formatStyles} />
             <Switch defaultValue={true} offColor="#F7DC6F" onColor="#BB8FCE" />
         </>
     ),
@@ -103,7 +103,7 @@ stories.add(
     'Disabled',
     () => (
         <>
-            <Switch disabled />
+            <Switch disabled style={formatStyles} />
             <Switch disabled defaultValue={true} />
         </>
     ),
@@ -142,7 +142,9 @@ stories.add(
                     console.log('click Switch');
                     action('onClick')(e);
                 }}
+                style={formatStyles}
             />
+            <Switch allowFocus />
         </>
     ),
     wInfo(`
