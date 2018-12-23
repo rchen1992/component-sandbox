@@ -78,7 +78,12 @@ interface ISwitchProps extends IWithStyles {
     onClick?: React.MouseEventHandler;
 }
 
-const Switch: React.FunctionComponent<ISwitchProps> = props => {
+/**
+ * Note: there is currently a TypeScript bug with passing refs to styled-components,
+ * so we are currently using type `any` for the ref.
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/issues/28884
+ */
+const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
     const [value, setValue] = React.useState(!!props.defaultValue);
 
     // The switch's value will be forced if we provide a `value` prop.
@@ -110,6 +115,7 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
     return (
         <label onClick={onClick}>
             <Input
+                ref={ref}
                 type="checkbox"
                 checked={finalValue}
                 disabled={!!props.disabled}
@@ -139,6 +145,6 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
             )}
         </label>
     );
-};
+});
 
 export default Switch;
