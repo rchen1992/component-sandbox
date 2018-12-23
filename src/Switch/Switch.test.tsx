@@ -150,4 +150,18 @@ describe('Switch', () => {
         // Check that input is now focused
         expect(input).toBe(document.activeElement);
     });
+
+    test('should not focus on input when switch is clicked and allowFocus is false', () => {
+        const { container } = render(<Switch />);
+
+        // Check that input is not the focused element
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input).not.toBe(document.activeElement);
+
+        // Click switch
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Check that input is still not focused
+        expect(input).not.toBe(document.activeElement);
+    });
 });
