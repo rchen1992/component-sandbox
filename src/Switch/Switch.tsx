@@ -35,7 +35,7 @@ interface ISliderProps extends ISwitchProps {
 }
 
 const Slider = styled<ISliderProps, 'span'>('span')`
-    width: ${props => props.theme.defaultSwitchWidth};
+    width: ${props => (props.width ? `${props.width}px` : props.theme.defaultSwitchWidth)};
     height: 26px;
     display: inline-block;
     border-radius: 20px;
@@ -70,7 +70,7 @@ const Slider = styled<ISliderProps, 'span'>('span')`
                 return 'none';
             }
 
-            const width = stripUnit(props.theme.defaultSwitchWidth) as number;
+            const width = props.width || (stripUnit(props.theme.defaultSwitchWidth) as number);
             const length = stripUnit(props.theme.defaultSwitchCoreLength) as number;
             const padding = stripUnit(props.theme.defaultSwitchCorePadding) as number;
 
@@ -107,6 +107,7 @@ interface ISwitchProps extends IWithStyles {
     disabled?: boolean;
     textClassName?: string;
     allowFocus?: boolean;
+    width?: number;
     onFocus?: React.FocusEventHandler;
     onBlur?: React.FocusEventHandler;
     onClick?: React.MouseEventHandler;
@@ -181,6 +182,7 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
                 aliasForOnColor={props.onColor}
                 offColor={props.offColor}
                 disabled={props.disabled}
+                width={props.width}
                 data-testid="switch-slider"
             />
 
