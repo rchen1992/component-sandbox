@@ -74,6 +74,7 @@ interface ISwitchProps extends IWithStyles {
     onText?: string;
     offText?: string;
     disabled?: boolean;
+    textClassName?: string;
     onClick?: React.MouseEventHandler;
 }
 
@@ -114,7 +115,13 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
                 disabled={!!props.disabled}
                 onChange={() => {}} // to silence warning; not needed because input is hidden and onChange will never fire
             />
-            {props.offText && <OffText value={finalValue}>{props.offText}</OffText>}
+
+            {props.offText && (
+                <OffText className={props.textClassName} value={finalValue}>
+                    {props.offText}
+                </OffText>
+            )}
+
             <Slider
                 className={props.className}
                 style={props.style}
@@ -124,7 +131,12 @@ const Switch: React.FunctionComponent<ISwitchProps> = props => {
                 disabled={props.disabled}
                 data-testid="switch-slider"
             />
-            {props.onText && <OnText value={finalValue}>{props.onText}</OnText>}
+
+            {props.onText && (
+                <OnText className={props.textClassName} value={finalValue}>
+                    {props.onText}
+                </OnText>
+            )}
         </label>
     );
 };
