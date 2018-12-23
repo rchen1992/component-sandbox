@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
-import { lighten } from 'polished';
+import { lighten, stripUnit } from 'polished';
 
 interface ILabelProps {
     onClick?: React.MouseEventHandler;
@@ -35,7 +35,7 @@ interface ISliderProps extends ISwitchProps {
 }
 
 const Slider = styled<ISliderProps, 'span'>('span')`
-    width: 50px;
+    width: ${props => props.theme.defaultSwitchWidth};
     height: 26px;
     display: inline-block;
     border-radius: 20px;
@@ -57,15 +57,25 @@ const Slider = styled<ISliderProps, 'span'>('span')`
 
     &::before {
         content: '';
-        width: 18px;
-        height: 18px;
+        width: ${props => props.theme.defaultSwitchCoreLength};
+        height: ${props => props.theme.defaultSwitchCoreLength};
         border-radius: 50%;
         display: inline-block;
         background-color: white;
         position: relative;
-        top: 4px;
-        left: 4px;
-        transform: ${props => (props.value ? 'translateX(24px)' : 'none')};
+        top: ${props => props.theme.defaultSwitchCorePadding};
+        left: ${props => props.theme.defaultSwitchCorePadding};
+        transform: ${props => {
+            if (!props.value) {
+                return 'none';
+            }
+
+            const width = stripUnit(props.theme.defaultSwitchWidth) as number;
+            const length = stripUnit(props.theme.defaultSwitchCoreLength) as number;
+            const padding = stripUnit(props.theme.defaultSwitchCorePadding) as number;
+
+            return `translateX(${width - (2 * padding + length)}px)`;
+        }};
         transition: transform 400ms;
     }
 `;
