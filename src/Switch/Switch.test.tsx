@@ -192,4 +192,10 @@ describe('Switch', () => {
         // Check that handler was called
         expect(onBlur).toHaveBeenCalledTimes(1);
     });
+
+    test('should be able to set custom width', () => {
+        const { getByTestId } = render(<Switch width={100} />);
+        const slider = getByTestId('switch-slider');
+        expect(slider).toHaveStyleRule('width', '100px');
+    });
 });
