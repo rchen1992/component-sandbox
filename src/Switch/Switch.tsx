@@ -97,6 +97,8 @@ interface ISwitchProps extends IWithStyles {
     disabled?: boolean;
     textClassName?: string;
     allowFocus?: boolean;
+    onFocus?: React.FocusEventHandler;
+    onBlur?: React.FocusEventHandler;
     onClick?: React.MouseEventHandler;
 }
 
@@ -157,6 +159,8 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
                 checked={finalValue}
                 disabled={!!props.disabled}
                 allowFocus={props.allowFocus}
+                onFocus={props.onFocus}
+                onBlur={props.onBlur}
                 onChange={() => {}} // to silence warning; not needed because input is hidden and onChange will never fire
             />
 

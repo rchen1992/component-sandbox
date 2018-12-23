@@ -137,25 +137,49 @@ stories.add(
     'Events',
     () => (
         <>
-            <Switch
-                onClick={e => {
-                    console.log('click Switch');
-                    action('onClick')(e);
-                }}
-                style={formatStyles}
-            />
-            <Switch allowFocus />
+            <div style={{ marginBottom: '10px' }}>
+                <Switch
+                    onClick={e => {
+                        console.log('click Switch');
+                        action('onClick')(e);
+                    }}
+                    style={formatStyles}
+                />
+                <span>&lt;-- logs to console on click</span>
+            </div>
+            <div>
+                <Switch
+                    allowFocus
+                    onFocus={e => {
+                        console.log('focus Switch');
+                        action('onFocus')(e);
+                    }}
+                    onBlur={e => {
+                        console.log('blur Switch');
+                        action('onBlur')(e);
+                    }}
+                    style={formatStyles}
+                />
+                <span>&lt;-- logs to console on focus/blur</span>
+            </div>
         </>
     ),
     wInfo(`
         ### Notes
 
-        You can use **\`onClick\`** event handlers.
+        You can set **\`onClick\`**, **\`onFocus\`**, and **\`onBlur\`** event handlers.
+
+        In order to use focus/blur handlers, you need to set **\`allowFocus\`**.
 
         ### Usage
         ~~~js
         <Switch
             onClick={() => console.log('click Switch')}
+        />
+        <Switch
+            allowFocus
+            onFocus={() => console.log('focus Switch')}
+            onBlur={() => console.log('blur Switch')}
         />
         ~~~`)
 );

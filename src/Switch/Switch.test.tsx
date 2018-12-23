@@ -164,4 +164,32 @@ describe('Switch', () => {
         // Check that input is still not focused
         expect(input).not.toBe(document.activeElement);
     });
+
+    test('should be able to attach onFocus handler', () => {
+        const onFocus = jest.fn();
+
+        const { container } = render(<Switch allowFocus onFocus={onFocus} />);
+
+        // Click switch
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Check that handler was called
+        expect(onFocus).toHaveBeenCalledTimes(1);
+    });
+
+    test('should be able to attach onBlur handler', () => {
+        const onBlur = jest.fn();
+
+        const { container } = render(<Switch allowFocus onBlur={onBlur} />);
+
+        // Click switch
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Blur input
+        const input = container.querySelector('input') as HTMLInputElement;
+        input.blur();
+
+        // Check that handler was called
+        expect(onBlur).toHaveBeenCalledTimes(1);
+    });
 });
