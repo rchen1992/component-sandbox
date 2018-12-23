@@ -120,4 +120,14 @@ describe('Switch', () => {
         const { getByTestId } = render(<Switch style={style} />);
         expect(getByTestId('switch-slider').style.backgroundColor).toEqual(style.backgroundColor);
     });
+
+    test('should be able to apply textClassName to both text descriptions', () => {
+        const textClassName = 'helloworld';
+        const { container } = render(
+            <Switch offText="hello" onText="world" textClassName={textClassName} />
+        );
+        const elements = container.getElementsByClassName(textClassName);
+        expect(elements).toBeTruthy();
+        expect(elements).toHaveLength(2);
+    });
 });

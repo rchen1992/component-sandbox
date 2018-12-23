@@ -74,7 +74,7 @@ stories.add(
     'Text',
     () => (
         <>
-            <Switch offText="This is off" onText="This is on" />
+            <Switch offText="This is off" onText="This is on" textClassName="my-text" />
         </>
     ),
     wInfo(`
@@ -82,9 +82,15 @@ stories.add(
 
         Use **\`offText\`** and **\`onText\`** to set text descriptions for the on/off states.
 
+        Use **\`textClassName\`** to set a className on the both text elements.
+
         ### Usage
         ~~~js
-        <Switch offText='Pay by year' onText='Pay by month' />
+        <Switch
+            offText="This is off"
+            onText="This is on"
+            textClassName="my-text"
+        />
         ~~~`)
 );
 
