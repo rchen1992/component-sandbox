@@ -2,10 +2,31 @@ import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import { lighten } from 'polished';
 
-const Input = styled.input`
+interface ILabelProps {
+    onClick?: React.MouseEventHandler;
+}
+
+const Label = styled<ILabelProps, 'label'>('label')`
+    position: relative;
+`;
+
+interface IInputProps {
+    allowFocus?: boolean;
+}
+
+const Input = styled<IInputProps, 'input'>('input')`
     opacity: 0;
-    width: 0;
-    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    /* The input must be on the page for it to be focused. */
+    display: ${props => (props.allowFocus ? 'initial' : 'none')};
+
+    /* When input is focused, put a focus ring around the slider */
+    &:focus + span {
+        box-shadow: 0 0 2px ${props => props.theme.linkColor};
+    }
 `;
 
 interface ISliderProps extends ISwitchProps {
@@ -75,6 +96,7 @@ interface ISwitchProps extends IWithStyles {
     offText?: string;
     disabled?: boolean;
     textClassName?: string;
+    allowFocus?: boolean;
     onClick?: React.MouseEventHandler;
 }
 
@@ -85,9 +107,13 @@ interface ISwitchProps extends IWithStyles {
  */
 const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
     const [value, setValue] = React.useState(!!props.defaultValue);
+    const ownRef = React.useRef(null);
 
     // The switch's value will be forced if we provide a `value` prop.
     const finalValue = props.value !== undefined ? !!props.value : value;
+
+    // Use passed in ref or our own ref.
+    const inputRef = ref || ownRef;
 
     function toggleValue() {
         // Don't toggle if we are forcing the value.
@@ -110,23 +136,29 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
         }
 
         toggleValue();
+
+        if (props.allowFocus) {
+            let clickedRef = inputRef as any;
+            clickedRef.current.focus();
+        }
     }
 
     return (
-        <label onClick={onClick}>
-            <Input
-                ref={ref}
-                type="checkbox"
-                checked={finalValue}
-                disabled={!!props.disabled}
-                onChange={() => {}} // to silence warning; not needed because input is hidden and onChange will never fire
-            />
-
+        <Label onClick={onClick}>
             {props.offText && (
                 <OffText className={props.textClassName} value={finalValue}>
                     {props.offText}
                 </OffText>
             )}
+
+            <Input
+                ref={inputRef}
+                type="checkbox"
+                checked={finalValue}
+                disabled={!!props.disabled}
+                allowFocus={props.allowFocus}
+                onChange={() => {}} // to silence warning; not needed because input is hidden and onChange will never fire
+            />
 
             <Slider
                 className={props.className}
@@ -143,7 +175,7 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
                     {props.onText}
                 </OnText>
             )}
-        </label>
+        </Label>
     );
 });
 
