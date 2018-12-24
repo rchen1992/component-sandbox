@@ -11,6 +11,7 @@ const Label = styled<ILabelProps, 'label'>('label')`
 `;
 
 interface IInputProps {
+    value?: string | number;
     allowFocus?: boolean;
 }
 
@@ -97,6 +98,15 @@ const OffText = styled(Text)`
     color: ${props => (!props.checked ? props.theme.linkColor : 'black')};
 `;
 
+interface ISwitchData {
+    checked: boolean;
+    value: string | number;
+}
+
+interface IClickHandlerWithData<T> {
+    (e: React.MouseEvent, data: T): void;
+}
+
 interface ISwitchProps extends IWithStyles {
     checked?: boolean;
     defaultChecked?: boolean;
@@ -108,9 +118,11 @@ interface ISwitchProps extends IWithStyles {
     textClassName?: string;
     allowFocus?: boolean;
     width?: number;
+    onValue?: string | number;
+    offValue?: string | number;
     onFocus?: React.FocusEventHandler;
     onBlur?: React.FocusEventHandler;
-    onClick?: React.MouseEventHandler;
+    onClick?: IClickHandlerWithData<ISwitchData>;
 }
 
 /**
@@ -128,11 +140,8 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
     // Use passed in ref or our own ref.
     const inputRef = ref || ownRef;
 
-    function toggle() {
-        // Don't toggle if we are forcing the checked state.
-        if (!props.disabled && !props.checked) {
-            setChecked(!checked);
-        }
+    function getValue(checked: boolean) {
+        return checked ? props.onValue || 'on' : props.offValue || 'off';
     }
 
     function onClick(e: React.MouseEvent) {
@@ -143,16 +152,27 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
          */
         e.preventDefault();
 
-        // If we were provided a click handler from a parent component, call it now.
-        if (props.onClick) {
-            props.onClick(e);
+        // Don't toggle if we are forcing the checked state.
+        if (!props.disabled && !props.checked) {
+            setChecked(prevChecked => !prevChecked);
         }
-
-        toggle();
 
         if (props.allowFocus) {
             let clickedRef = inputRef as any;
             clickedRef.current.focus();
+        }
+
+        // If we were provided a click handler from a parent component, call it now.
+        if (props.onClick) {
+            /**
+             * Note: the setChecked above is async, so the `checked` we reference here is
+             * not updated yet. Therefore, we have to flip the `checked` flag manually.
+             */
+            const newChecked = props.checked !== undefined ? props.checked : !checked;
+            props.onClick(e, {
+                checked: newChecked,
+                value: getValue(newChecked),
+            });
         }
     }
 
@@ -167,6 +187,7 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
             <Input
                 ref={inputRef}
                 type="checkbox"
+                value={getValue(finalChecked)}
                 checked={finalChecked}
                 disabled={!!props.disabled}
                 allowFocus={props.allowFocus}

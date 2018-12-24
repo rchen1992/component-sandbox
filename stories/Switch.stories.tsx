@@ -67,6 +67,63 @@ stories.add(
 
 /**
 |--------------------------------------------------
+| Values
+|--------------------------------------------------
+*/
+const offValue = 'value is off';
+const onValue = 'value is on';
+const SwitchValueDisplay = () => {
+    const [value, setValue] = React.useState(offValue);
+    return (
+        <>
+            <div>{value}</div>
+            <Switch
+                offValue={offValue}
+                onValue={onValue}
+                onClick={(e, data) => setValue(data.value as string)}
+            />
+        </>
+    );
+};
+stories.add(
+    'Values',
+    () => <SwitchValueDisplay />,
+    wInfo(`
+        ### Notes
+
+        Use **\`offValue\`** and **\`onValue\`** to set the value for the on/off states of the switch input.
+
+        ### Usage
+        ~~~js
+        <Switch
+            offValue="value is off"
+            onValue="value is on"
+        />
+        ~~~
+
+        ### Sample code
+        ~~~js
+        const offValue = 'value is off';
+        const onValue = 'value is on';
+
+        const SwitchValueDisplay = () => {
+            const [value, setValue] = React.useState(offValue);
+            return (
+                <>
+                    <div>{value}</div>
+                    <Switch
+                        offValue={offValue}
+                        onValue={onValue}
+                        onClick={(e, data) => setValue(data.value)}
+                    />
+                </>
+            );
+        };
+        ~~~`)
+);
+
+/**
+|--------------------------------------------------
 | Width
 |--------------------------------------------------
 */
@@ -153,8 +210,8 @@ stories.add(
         <>
             <div style={{ marginBottom: '10px' }}>
                 <Switch
-                    onClick={e => {
-                        console.log('click Switch');
+                    onClick={(e, data) => {
+                        console.log('click Switch', data);
                         action('onClick')(e);
                     }}
                     style={formatStyles}
