@@ -44,7 +44,7 @@ const Slider = styled<ISliderProps, 'span'>('span')`
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
     background-color: ${props => {
         let color = props.offColor || props.theme.infoColorAccent;
-        if (props.value) {
+        if (props.checked) {
             color = props.aliasForOnColor || props.theme.primaryColor;
         }
 
@@ -66,7 +66,7 @@ const Slider = styled<ISliderProps, 'span'>('span')`
         top: ${props => props.theme.defaultSwitchCorePadding};
         left: ${props => props.theme.defaultSwitchCorePadding};
         transform: ${props => {
-            if (!props.value) {
+            if (!props.checked) {
                 return 'none';
             }
 
@@ -89,17 +89,17 @@ const Text = styled<ISwitchProps, 'span'>('span')`
 
 const OnText = styled(Text)`
     margin-left: 6px;
-    color: ${props => (props.value ? props.theme.linkColor : 'black')};
+    color: ${props => (props.checked ? props.theme.linkColor : 'black')};
 `;
 
 const OffText = styled(Text)`
     margin-right: 6px;
-    color: ${props => (!props.value ? props.theme.linkColor : 'black')};
+    color: ${props => (!props.checked ? props.theme.linkColor : 'black')};
 `;
 
 interface ISwitchProps extends IWithStyles {
-    value?: boolean;
-    defaultValue?: boolean;
+    checked?: boolean;
+    defaultChecked?: boolean;
     onColor?: string;
     offColor?: string;
     onText?: string;
@@ -119,19 +119,19 @@ interface ISwitchProps extends IWithStyles {
  * https://github.com/DefinitelyTyped/DefinitelyTyped/issues/28884
  */
 const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
-    const [value, setValue] = React.useState(!!props.defaultValue);
+    const [checked, setChecked] = React.useState(!!props.defaultChecked);
     const ownRef = React.useRef(null);
 
-    // The switch's value will be forced if we provide a `value` prop.
-    const finalValue = props.value !== undefined ? !!props.value : value;
+    // The switch's checked state will be forced if we provide a `checked` prop.
+    const finalChecked = props.checked !== undefined ? !!props.checked : checked;
 
     // Use passed in ref or our own ref.
     const inputRef = ref || ownRef;
 
-    function toggleValue() {
-        // Don't toggle if we are forcing the value.
-        if (!props.disabled && !props.value) {
-            setValue(!value);
+    function toggle() {
+        // Don't toggle if we are forcing the checked state.
+        if (!props.disabled && !props.checked) {
+            setChecked(!checked);
         }
     }
 
@@ -148,7 +148,7 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
             props.onClick(e);
         }
 
-        toggleValue();
+        toggle();
 
         if (props.allowFocus) {
             let clickedRef = inputRef as any;
@@ -159,7 +159,7 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
     return (
         <Label onClick={onClick}>
             {props.offText && (
-                <OffText className={props.textClassName} value={finalValue}>
+                <OffText className={props.textClassName} checked={finalChecked}>
                     {props.offText}
                 </OffText>
             )}
@@ -167,7 +167,7 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
             <Input
                 ref={inputRef}
                 type="checkbox"
-                checked={finalValue}
+                checked={finalChecked}
                 disabled={!!props.disabled}
                 allowFocus={props.allowFocus}
                 onFocus={props.onFocus}
@@ -178,7 +178,7 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
             <Slider
                 className={props.className}
                 style={props.style}
-                value={finalValue}
+                checked={finalChecked}
                 aliasForOnColor={props.onColor}
                 offColor={props.offColor}
                 disabled={props.disabled}
@@ -187,7 +187,7 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
             />
 
             {props.onText && (
-                <OnText className={props.textClassName} value={finalValue}>
+                <OnText className={props.textClassName} checked={finalChecked}>
                     {props.onText}
                 </OnText>
             )}

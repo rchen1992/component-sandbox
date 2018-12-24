@@ -23,16 +23,16 @@ describe('Switch', () => {
         expect(input.checked).toBeTruthy();
     });
 
-    test('should be able to set default value', () => {
-        const { container } = render(<Switch defaultValue={true} />);
+    test('should be able to set default checked', () => {
+        const { container } = render(<Switch defaultChecked={true} />);
 
         // Check that switch is rendered as on
         const input = container.querySelector('input') as HTMLInputElement;
         expect(input.checked).toBeTruthy();
     });
 
-    test('should be able to set forced value', () => {
-        const { container } = render(<Switch value={true} />);
+    test('should be able to set forced checked', () => {
+        const { container } = render(<Switch checked={true} />);
 
         // Check that switch starts as on
         const input = container.querySelector('input') as HTMLInputElement;

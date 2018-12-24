@@ -21,7 +21,7 @@ stories.add(
     () => (
         <>
             <Switch style={formatStyles} />
-            <Switch defaultValue={true} />
+            <Switch defaultChecked={true} />
         </>
     ),
     wInfo(`
@@ -29,14 +29,14 @@ stories.add(
 
         Basic Switch. 
         
-        Use **\`defaultValue\`** to set a default starting on/off state.
+        Use **\`defaultChecked\`** to set a default starting on/off state.
         
-        Use **\`value\`** to force an on or off state.
+        Use **\`checked\`** to force an on or off state.
 
         ### Usage
         ~~~js
         <Switch />
-        <Switch defaultValue={true} />
+        <Switch defaultChecked={true} />
         ~~~`)
 );
 
@@ -50,7 +50,7 @@ stories.add(
     () => (
         <>
             <Switch offColor="#F3451F" onColor="#2ECC71" style={formatStyles} />
-            <Switch defaultValue={true} offColor="#F7DC6F" onColor="#BB8FCE" />
+            <Switch defaultChecked={true} offColor="#F7DC6F" onColor="#BB8FCE" />
         </>
     ),
     wInfo(`
@@ -61,7 +61,7 @@ stories.add(
         ### Usage
         ~~~js
         <Switch offColor="#F3451F" onColor="#2ECC71" />
-        <Switch defaultValue={true} offColor="#F7DC6F" onColor="#BB8FCE" />
+        <Switch defaultChecked={true} offColor="#F7DC6F" onColor="#BB8FCE" />
         ~~~`)
 );
 
@@ -127,7 +127,7 @@ stories.add(
     () => (
         <>
             <Switch disabled style={formatStyles} />
-            <Switch disabled defaultValue={true} />
+            <Switch disabled defaultChecked={true} />
         </>
     ),
     wInfo(`
@@ -138,7 +138,7 @@ stories.add(
         ### Usage
         ~~~js
         <Switch disabled />
-        <Switch disabled defaultValue={true} />
+        <Switch disabled defaultChecked={true} />
         ~~~`)
 );
 
@@ -147,15 +147,6 @@ stories.add(
 | Events
 |--------------------------------------------------
 */
-// const Comp = () => {
-//     const [value, setValue] = React.useState(true);
-//     return (
-//         <div>
-//             <Switch value={value} onClick={() => setValue(!value)} />
-//         </div>
-//     );
-// };
-
 stories.add(
     'Events',
     () => (
