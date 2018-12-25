@@ -208,4 +208,32 @@ describe('Switch', () => {
         const slider = getByTestId('switch-slider');
         expect(slider).toHaveStyleRule('width', '100px');
     });
+
+    test('providing onValue prop to input when switch is on should return that value', () => {
+        const onValue = 'testing on';
+        const { container } = render(<Switch defaultChecked onValue={onValue} />);
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input.value).toBe(onValue);
+    });
+
+    test('providing onValue prop to input when switch is on should not return that value', () => {
+        const onValue = 'testing on';
+        const { container } = render(<Switch onValue={onValue} />);
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input.value).not.toBe(onValue);
+    });
+
+    test('providing offValue prop to input when switch is off should return that value', () => {
+        const offValue = 'testing off';
+        const { container } = render(<Switch offValue={offValue} />);
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input.value).toBe(offValue);
+    });
+
+    test('providing offValue prop to input when switch is on should not return that value', () => {
+        const offValue = 'testing off';
+        const { container } = render(<Switch defaultChecked offValue={offValue} />);
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input.value).not.toBe(offValue);
+    });
 });
