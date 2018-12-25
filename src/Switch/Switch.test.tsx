@@ -184,6 +184,22 @@ describe('Switch', () => {
         expect(returnedPayload).toMatchObject({ checked: false, value: 'off' });
     });
 
+    test('onFocus should return forced data payload when checked prop is provided', () => {
+        let returnedPayload;
+        const onFocus = jest.fn().mockImplementation((e, data) => (returnedPayload = data));
+
+        // Start with switch ON
+        const { container } = render(<Switch allowFocus onFocus={onFocus} checked />);
+
+        // Click switch
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Check that handler was called
+        expect(onFocus).toHaveBeenCalledTimes(1);
+        // Check that the data still returns checked as true
+        expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
+    });
+
     test('should be able to attach onBlur handler', () => {
         let returnedPayload;
         const onBlur = jest.fn().mockImplementation((e, data) => (returnedPayload = data));
@@ -201,6 +217,26 @@ describe('Switch', () => {
         expect(onBlur).toHaveBeenCalledTimes(1);
         // Check that the data returned is accurate
         expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
+    });
+
+    test('onBlur should return forced data payload when checked prop is provided', () => {
+        let returnedPayload;
+        const onBlur = jest.fn().mockImplementation((e, data) => (returnedPayload = data));
+
+        // Start with switch ON
+        const { container } = render(<Switch allowFocus onBlur={onBlur} checked={false} />);
+
+        // Click switch
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Blur input
+        const input = container.querySelector('input') as HTMLInputElement;
+        input.blur();
+
+        // Check that handler was called
+        expect(onBlur).toHaveBeenCalledTimes(1);
+        // Check that the data still has checked as false
+        expect(returnedPayload).toMatchObject({ checked: false, value: 'off' });
     });
 
     test('should be able to set custom width', () => {
