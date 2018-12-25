@@ -1,6 +1,13 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 
+const Label = styled.label`
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    display: inline-block;
+`;
+
 const Box = styled<ICheckboxProps, 'span'>('span')`
     display: inline-block;
     position: relative;
@@ -10,8 +17,9 @@ const Box = styled<ICheckboxProps, 'span'>('span')`
     border-radius: 4px;
     border: 1px solid ${props => props.theme.primaryColor};
     box-sizing: border-box;
-    cursor: pointer;
     transition: background-color 100ms;
+    line-height: 1;
+    vertical-align: middle;
 
     &::after {
         content: '';
@@ -41,7 +49,16 @@ const Input = styled.input`
     height: 0;
 `;
 
+const BoxLabel = styled.span`
+    font-size: 14px;
+    font-family: system-ui;
+    padding-left: 5px;
+    position: relative;
+    top: 1px;
+`;
+
 interface ICheckboxProps extends IWithStyles {
+    children?: React.ReactNode;
     defaultChecked?: boolean;
     checked?: boolean;
 }
@@ -49,11 +66,16 @@ interface ICheckboxProps extends IWithStyles {
 const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
     const [checked, setChecked] = React.useState(props.defaultChecked);
 
+    function onClick() {
+        setChecked(!checked);
+    }
+
     return (
-        <label>
-            <Box checked={checked} onClick={() => setChecked(!checked)} />
+        <Label>
+            <Box checked={checked} onClick={onClick} />
+            <BoxLabel onClick={onClick}>{props.children}</BoxLabel>
             <Input type="checkbox" ref={ref} />
-        </label>
+        </Label>
     );
 });
 

@@ -20,7 +20,7 @@ stories.add(
     'Basic',
     () => (
         <>
-            <Checkbox />
+            <Checkbox defaultChecked>Hello World</Checkbox>
         </>
     ),
     wInfo(`
@@ -29,13 +29,10 @@ stories.add(
         Basic Checkbox. 
         
         Use **\`defaultChecked\`** to set a default starting on/off state.
-        
-        Use **\`checked\`** to force an on or off state.
 
         ### Usage
         ~~~js
-        <Switch />
-        <Switch defaultChecked={true} />
+        <Checkbox defaultChecked />
         ~~~`)
 );
 
