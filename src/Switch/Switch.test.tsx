@@ -89,7 +89,8 @@ describe('Switch', () => {
     });
 
     test('should be able to attach onClick handler and still be able to toggle switch', () => {
-        const onClick = jest.fn();
+        let returnedPayload;
+        const onClick = jest.fn().mockImplementation((e, data) => (returnedPayload = data));
 
         const { container } = render(<Switch onClick={onClick} />);
 
@@ -105,6 +106,9 @@ describe('Switch', () => {
 
         // Check that onClick was called
         expect(onClick).toHaveBeenCalledTimes(1);
+
+        // Check that the data returned is accurate
+        expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
     });
 
     test('should be able to apply className to slider', () => {
@@ -166,7 +170,8 @@ describe('Switch', () => {
     });
 
     test('should be able to attach onFocus handler', () => {
-        const onFocus = jest.fn();
+        let returnedPayload;
+        const onFocus = jest.fn().mockImplementation((e, data) => (returnedPayload = data));
 
         const { container } = render(<Switch allowFocus onFocus={onFocus} />);
 
@@ -175,10 +180,13 @@ describe('Switch', () => {
 
         // Check that handler was called
         expect(onFocus).toHaveBeenCalledTimes(1);
+        // Check that the data returned is accurate
+        expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
     });
 
     test('should be able to attach onBlur handler', () => {
-        const onBlur = jest.fn();
+        let returnedPayload;
+        const onBlur = jest.fn().mockImplementation((e, data) => (returnedPayload = data));
 
         const { container } = render(<Switch allowFocus onBlur={onBlur} />);
 
@@ -191,6 +199,8 @@ describe('Switch', () => {
 
         // Check that handler was called
         expect(onBlur).toHaveBeenCalledTimes(1);
+        // Check that the data returned is accurate
+        expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
     });
 
     test('should be able to set custom width', () => {
