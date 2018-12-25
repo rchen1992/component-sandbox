@@ -144,6 +144,10 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
     // Use passed in ref or our own ref.
     const inputRef = ref || ownRef;
 
+    /**
+     * Helper function to get the svalue of the input.
+     * Defaults to 'on' and 'off';
+     */
     function getValue(checked: boolean) {
         return checked ? props.onValue || 'on' : props.offValue || 'off';
     }
@@ -161,6 +165,9 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
             setChecked(prevChecked => !prevChecked);
         }
 
+        /**
+         * If we are allowing focus, focus on the input now.
+         */
         if (props.allowFocus) {
             let clickedRef = inputRef as any;
             clickedRef.current.focus();
@@ -183,6 +190,8 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
     function onFocus(e: React.FocusEvent) {
         if (props.onFocus) {
             /**
+             * TODO: investigate this issue.
+             *
              * We are returning the current state of checked in the payload
              * because the act of focusing may not flip the flag.
              *

@@ -252,7 +252,7 @@ describe('Switch', () => {
         expect(input.value).toBe(onValue);
     });
 
-    test('providing onValue prop to input when switch is on should not return that value', () => {
+    test('providing onValue prop to input when switch is off should not return that value', () => {
         const onValue = 'testing on';
         const { container } = render(<Switch onValue={onValue} />);
         const input = container.querySelector('input') as HTMLInputElement;
