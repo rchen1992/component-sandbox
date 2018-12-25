@@ -107,6 +107,10 @@ interface IClickHandlerWithData<T> {
     (e: React.MouseEvent, data: T): void;
 }
 
+interface IFocusHandlerWithData<T> {
+    (e: React.FocusEvent, data: T): void;
+}
+
 interface ISwitchProps extends IWithStyles {
     checked?: boolean;
     defaultChecked?: boolean;
@@ -120,8 +124,8 @@ interface ISwitchProps extends IWithStyles {
     width?: number;
     onValue?: string | number;
     offValue?: string | number;
-    onFocus?: React.FocusEventHandler;
-    onBlur?: React.FocusEventHandler;
+    onFocus?: IFocusHandlerWithData<ISwitchData>;
+    onBlur?: IFocusHandlerWithData<ISwitchData>;
     onClick?: IClickHandlerWithData<ISwitchData>;
 }
 
@@ -176,6 +180,22 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
         }
     }
 
+    function onFocus(e: React.FocusEvent) {
+        if (props.onFocus) {
+            const newChecked = props.checked !== undefined ? props.checked : !checked;
+            props.onFocus(e, { checked: newChecked, value: getValue(newChecked) });
+        }
+    }
+
+    function onBlur(e: React.FocusEvent) {
+        if (props.onBlur) {
+            props.onBlur(e, {
+                checked,
+                value: getValue(checked),
+            });
+        }
+    }
+
     return (
         <Label onClick={onClick}>
             {props.offText && (
@@ -191,8 +211,8 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
                 checked={finalChecked}
                 disabled={!!props.disabled}
                 allowFocus={props.allowFocus}
-                onFocus={props.onFocus}
-                onBlur={props.onBlur}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 onChange={() => {}} // to silence warning; not needed because input is hidden and onChange will never fire
             />
 

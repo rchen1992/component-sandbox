@@ -221,12 +221,12 @@ stories.add(
             <div>
                 <Switch
                     allowFocus
-                    onFocus={e => {
-                        console.log('focus Switch');
+                    onFocus={(e, data) => {
+                        console.log('focus Switch', data);
                         action('onFocus')(e);
                     }}
-                    onBlur={e => {
-                        console.log('blur Switch');
+                    onBlur={(e, data) => {
+                        console.log('blur Switch', data);
                         action('onBlur')(e);
                     }}
                     style={formatStyles}
