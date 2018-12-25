@@ -7,9 +7,9 @@ import { wInfo } from '../src/utils';
 
 const stories = storiesOf('Components/Checkbox', module) as any;
 
-// const formatStyles = {
-//     marginRight: '8px',
-// };
+const formatStyles = {
+    marginRight: '12px',
+};
 
 /**
 |--------------------------------------------------
@@ -20,7 +20,7 @@ stories.add(
     'Basic',
     () => (
         <>
-            <Checkbox defaultChecked>Hello World</Checkbox>
+            <Checkbox defaultChecked>Option 1</Checkbox>
         </>
     ),
     wInfo(`
@@ -32,7 +32,36 @@ stories.add(
 
         ### Usage
         ~~~js
-        <Checkbox defaultChecked />
+        <Checkbox defaultChecked>Option 1</Checkbox>
+        ~~~`)
+);
+
+/**
+|--------------------------------------------------
+| Disabled
+|--------------------------------------------------
+*/
+stories.add(
+    'Disabled',
+    () => (
+        <>
+            <Checkbox disabled style={formatStyles}>
+                Option 1
+            </Checkbox>
+            <Checkbox disabled defaultChecked>
+                Option 2
+            </Checkbox>
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`disabled\`** to set disabled state.
+
+        ### Usage
+        ~~~js
+        <Checkbox disabled>Option 1</Checkbox>
+        <Checkbox disabled defaultChecked>Option 2</Checkbox>
         ~~~`)
 );
 
