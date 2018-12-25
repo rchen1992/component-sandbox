@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 
-const Label = styled.label`
-    cursor: pointer;
+const Label = styled<ICheckboxProps, 'label'>('label')`
+    cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
     white-space: nowrap;
     position: relative;
     display: inline-block;
@@ -11,11 +11,26 @@ const Label = styled.label`
 const Box = styled<ICheckboxProps, 'span'>('span')`
     display: inline-block;
     position: relative;
-    background-color: ${props => (props.checked ? props.theme.primaryColor : 'white')};
+    background-color: ${props => {
+        if (props.checked) {
+            return props.disabled ? props.theme.infoColorAccent : props.theme.primaryColor;
+        } else {
+            return props.disabled ? props.theme.infoColorLight : 'white';
+        }
+    }};
     width: 18px;
     height: 18px;
     border-radius: 4px;
-    border: 1px solid ${props => props.theme.primaryColor};
+    border: 1px solid
+        ${props => {
+            if (props.checked) {
+                return props.disabled ? props.theme.infoColorAccent : props.theme.primaryColor;
+            } else {
+                return props.disabled
+                    ? props.theme.infoColorAccent
+                    : props.theme.defaultBorderColor;
+            }
+        }};
     box-sizing: border-box;
     transition: background-color 100ms;
     line-height: 1;
@@ -49,31 +64,37 @@ const Input = styled.input`
     height: 0;
 `;
 
-const BoxLabel = styled.span`
+const BoxLabel = styled<ICheckboxProps, 'span'>('span')`
     font-size: 14px;
     font-family: system-ui;
     padding-left: 5px;
     position: relative;
     top: 1px;
+    color: ${props => (props.disabled ? props.theme.infoColorAccent : 'black')};
 `;
 
 interface ICheckboxProps extends IWithStyles {
     children?: React.ReactNode;
     defaultChecked?: boolean;
     checked?: boolean;
+    disabled?: boolean;
 }
 
 const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
     const [checked, setChecked] = React.useState(props.defaultChecked);
 
     function onClick() {
-        setChecked(!checked);
+        if (!props.disabled) {
+            setChecked(!checked);
+        }
     }
 
     return (
-        <Label>
-            <Box checked={checked} onClick={onClick} />
-            <BoxLabel onClick={onClick}>{props.children}</BoxLabel>
+        <Label disabled={props.disabled} className={props.className} style={props.style}>
+            <Box checked={checked} disabled={props.disabled} onClick={onClick} />
+            <BoxLabel onClick={onClick} disabled={props.disabled}>
+                {props.children}
+            </BoxLabel>
             <Input type="checkbox" ref={ref} />
         </Label>
     );
