@@ -182,16 +182,26 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
 
     function onFocus(e: React.FocusEvent) {
         if (props.onFocus) {
-            const newChecked = props.checked !== undefined ? props.checked : !checked;
-            props.onFocus(e, { checked: newChecked, value: getValue(newChecked) });
+            /**
+             * We are returning the current state of checked in the payload
+             * because the act of focusing may not flip the flag.
+             *
+             * If an onClick occurs and toggles the checked state, this onFocus will not reflect the new checked state.
+             */
+            const finalChecked = props.checked !== undefined ? !!props.checked : checked;
+            props.onFocus(e, {
+                checked: finalChecked,
+                value: getValue(finalChecked),
+            });
         }
     }
 
     function onBlur(e: React.FocusEvent) {
         if (props.onBlur) {
+            const finalChecked = props.checked !== undefined ? !!props.checked : checked;
             props.onBlur(e, {
-                checked,
-                value: getValue(checked),
+                checked: finalChecked,
+                value: getValue(finalChecked),
             });
         }
     }

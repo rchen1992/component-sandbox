@@ -181,7 +181,7 @@ describe('Switch', () => {
         // Check that handler was called
         expect(onFocus).toHaveBeenCalledTimes(1);
         // Check that the data returned is accurate
-        expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
+        expect(returnedPayload).toMatchObject({ checked: false, value: 'off' });
     });
 
     test('should be able to attach onBlur handler', () => {
