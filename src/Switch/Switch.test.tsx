@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { cleanup, render, fireEvent } from 'react-testing-library';
 import Switch from './index';
-import { renderWithProvider } from '../../tests/testUtils';
+import { renderWithProvider, testComponentCanHandleStyles } from '../../tests/testUtils';
 import 'jest-styled-components';
 
 afterEach(cleanup);
 
 describe('Switch', () => {
+    testComponentCanHandleStyles(<Switch />);
+
     test('should be able to toggle switch', () => {
         const { container } = render(<Switch />);
         expect(container.firstElementChild).toBeTruthy();
@@ -109,20 +111,6 @@ describe('Switch', () => {
 
         // Check that the data returned is accurate
         expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
-    });
-
-    test('should be able to apply className to slider', () => {
-        const className = 'helloworld';
-        const { container } = render(<Switch className={className} />);
-        expect(container.querySelector(`.${className}`)).toBeTruthy();
-    });
-
-    test('should be able to apply style object to slider', () => {
-        const style = {
-            backgroundColor: 'orange',
-        };
-        const { getByTestId } = render(<Switch style={style} />);
-        expect(getByTestId('switch-slider').style.backgroundColor).toEqual(style.backgroundColor);
     });
 
     test('should be able to apply textClassName to both text descriptions', () => {

@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { cleanup, render } from 'react-testing-library';
 import { Row, Col } from './index';
-import { expectRenderError, expectConsoleError } from '../../tests/testUtils';
+import {
+    expectRenderError,
+    expectConsoleError,
+    testComponentCanHandleStyles,
+} from '../../tests/testUtils';
 import { GRID_COLUMN_MAX, addColSpan } from './util';
 import { css, media } from '../sc-utils';
 import 'jest-styled-components';
@@ -40,6 +44,8 @@ afterEach(() => {
 });
 
 describe('Grid', () => {
+    testComponentCanHandleStyles(<Row />);
+
     test('should throw error when attempting to render children to a Row that is not a Col', () => {
         expectRenderError(
             <Row>Hello</Row>,
@@ -63,17 +69,6 @@ describe('Grid', () => {
             </Row>,
             `Column span total for screen size \`xs\` has exceeded the grid max of ${GRID_COLUMN_MAX} columns.`
         );
-    });
-
-    test('should be able to apply className to Row', () => {
-        const className = 'helloworld';
-        const { container } = render(<Row className={className} />);
-        expect(container.querySelector('.helloworld')).toBeTruthy();
-    });
-
-    test('should be able to apply style to Row', () => {
-        const { container } = render(<Row style={{ backgroundColor: 'red' }} />);
-        expect(container.innerHTML).toMatch('background-color: red');
     });
 
     test('should be able to pass refs to Row', () => {
