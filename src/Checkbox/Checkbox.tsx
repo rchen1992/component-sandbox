@@ -78,6 +78,7 @@ interface ICheckboxProps extends IWithStyles {
     defaultChecked?: boolean;
     checked?: boolean;
     disabled?: boolean;
+    value?: string | number;
 }
 
 const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
@@ -95,7 +96,7 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
             <BoxLabel onClick={onClick} disabled={props.disabled}>
                 {props.children}
             </BoxLabel>
-            <Input type="checkbox" ref={ref} />
+            <Input type="checkbox" ref={ref} value={props.value} />
         </Label>
     );
 });
