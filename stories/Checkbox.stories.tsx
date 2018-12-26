@@ -69,4 +69,33 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Indeterminate
+|--------------------------------------------------
+*/
+stories.add(
+    'Indeterminate',
+    () => (
+        <>
+            <Checkbox indeterminate style={formatStyles}>
+                Option 1
+            </Checkbox>
+            <Checkbox indeterminate disabled>
+                Option 2
+            </Checkbox>
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`indeterminate\`** to set an indeterminate state.
+
+        ### Usage
+        ~~~js
+        <Checkbox indeterminate>Option 1</Checkbox>
+        <Checkbox indeterminate disabled >Option 2</Checkbox>
+        ~~~`)
+);
+
 export default stories;

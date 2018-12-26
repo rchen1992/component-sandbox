@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled, { IWithStyles } from '../sc-utils';
+import styled, { IWithStyles, css } from '../sc-utils';
 
 const Label = styled<ICheckboxProps, 'label'>('label')`
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -12,7 +12,7 @@ const Box = styled<ICheckboxProps, 'span'>('span')`
     display: inline-block;
     position: relative;
     background-color: ${props => {
-        if (props.checked) {
+        if (props.checked || props.indeterminate) {
             return props.disabled ? props.theme.infoColorAccent : props.theme.primaryColor;
         } else {
             return props.disabled ? props.theme.infoColorLight : 'white';
@@ -23,7 +23,7 @@ const Box = styled<ICheckboxProps, 'span'>('span')`
     border-radius: 4px;
     border: 1px solid
         ${props => {
-            if (props.checked) {
+            if (props.checked || props.indeterminate) {
                 return props.disabled ? props.theme.infoColorAccent : props.theme.primaryColor;
             } else {
                 return props.disabled
@@ -36,23 +36,39 @@ const Box = styled<ICheckboxProps, 'span'>('span')`
     line-height: 1;
     vertical-align: middle;
 
-    &::after {
-        content: '';
-        width: 4px;
-        height: 8px;
-        border: 2px solid white;
-        border-left: none;
-        border-top: none;
-        position: absolute;
-        top: 1px;
-        left: 5px;
-        z-index: 1;
-        transform: ${props =>
-            props.checked ? 'rotate(45deg) scaleY(1)' : 'rotate(45deg) scaleY(0)'};
-        transform-origin: center;
-        box-sizing: content-box;
-        transition: transform 200ms ease-out;
-    }
+    ${props =>
+        props.indeterminate
+            ? css`
+                  &::before {
+                      content: '';
+                      display: block;
+                      position: absolute;
+                      border: 1px solid white;
+                      top: 50%;
+                      left: 3px;
+                      right: 3px;
+                      margin-top: -1px;
+                  }
+              `
+            : css`
+                  &::after {
+                      content: '';
+                      width: 4px;
+                      height: 8px;
+                      border: 2px solid white;
+                      border-left: none;
+                      border-top: none;
+                      position: absolute;
+                      top: 1px;
+                      left: 5px;
+                      z-index: 1;
+                      transform: ${props =>
+                          props.checked ? 'rotate(45deg) scaleY(1)' : 'rotate(45deg) scaleY(0)'};
+                      transform-origin: center;
+                      box-sizing: content-box;
+                      transition: transform 200ms ease-out;
+                  }
+              `}
 `;
 
 const Input = styled.input`
@@ -79,6 +95,7 @@ interface ICheckboxProps extends IWithStyles {
     checked?: boolean;
     disabled?: boolean;
     value?: string | number;
+    indeterminate?: boolean;
 }
 
 const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
@@ -104,7 +121,7 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
             style={props.style}
             onClick={onClick}
         >
-            <Box checked={checked} disabled={props.disabled} />
+            <Box checked={checked} disabled={props.disabled} indeterminate={props.indeterminate} />
             <BoxLabel disabled={props.disabled}>{props.children}</BoxLabel>
             <Input
                 type="checkbox"
