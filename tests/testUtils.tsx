@@ -64,3 +64,38 @@ export function expectConsoleError(element: any, errorMessage: string) {
 export function renderWithProvider(element: any) {
     return render(<Provider>{element}</Provider>);
 }
+
+/**
+ * Runs tests to check if a component can handle applying className and style object.
+ */
+export function testComponentCanHandleStyles(element: any) {
+    test('should be able to apply className', () => {
+        testElementCanAttachClassName(element);
+    });
+
+    test('should be able to apply style object', () => {
+        testElementCanAttachStyleObject(element);
+    });
+}
+
+/**
+ * Test case that checks whether an element can apply a className.
+ */
+export function testElementCanAttachClassName(element: any) {
+    const className = 'testclassname';
+    let elementWithClassName = React.cloneElement(element, { className: className });
+    const { container } = render(elementWithClassName);
+    expect(container.querySelector(`.${className}`)).toBeTruthy();
+}
+
+/**
+ * Test case that checks whether an element can apply a style object.
+ */
+export function testElementCanAttachStyleObject(element: any) {
+    const style = {
+        backgroundColor: 'orange',
+    };
+    let elementWithStyle = React.cloneElement(element, { style: style });
+    const { container } = render(elementWithStyle);
+    expect(container.innerHTML).toMatch('background-color: orange');
+}

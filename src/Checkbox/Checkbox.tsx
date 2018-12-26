@@ -82,21 +82,37 @@ interface ICheckboxProps extends IWithStyles {
 }
 
 const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
-    const [checked, setChecked] = React.useState(props.defaultChecked);
+    const [checked, setChecked] = React.useState(!!props.defaultChecked);
 
-    function onClick() {
+    function onClick(e: React.MouseEvent) {
+        /**
+         * Prevent default click.
+         * Since this handler is attached to `label`,
+         * clicks will also click on the `input`, which will trigger 2 click events.
+         */
+        e.preventDefault();
+
         if (!props.disabled) {
-            setChecked(!checked);
+            setChecked(prevChecked => !prevChecked);
         }
     }
 
     return (
-        <Label disabled={props.disabled} className={props.className} style={props.style}>
-            <Box checked={checked} disabled={props.disabled} onClick={onClick} />
-            <BoxLabel onClick={onClick} disabled={props.disabled}>
-                {props.children}
-            </BoxLabel>
-            <Input type="checkbox" ref={ref} value={props.value} />
+        <Label
+            disabled={props.disabled}
+            className={props.className}
+            style={props.style}
+            onClick={onClick}
+        >
+            <Box checked={checked} disabled={props.disabled} />
+            <BoxLabel disabled={props.disabled}>{props.children}</BoxLabel>
+            <Input
+                type="checkbox"
+                checked={checked}
+                ref={ref}
+                value={props.value}
+                onChange={() => {}}
+            />
         </Label>
     );
 });
