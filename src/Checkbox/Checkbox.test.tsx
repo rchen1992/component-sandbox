@@ -62,6 +62,13 @@ describe('Checkbox', () => {
         expect(input.checked).toBeFalsy();
     });
 
+    test('should be able to set value on input', () => {
+        const value = 'checkboxvalue';
+        const { container } = render(<Checkbox value={value} />);
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input.value).toBe(value);
+    });
+
     test('should be able to pass ref to input', () => {
         const ref = React.createRef();
         render(<Checkbox ref={ref} defaultChecked />);
