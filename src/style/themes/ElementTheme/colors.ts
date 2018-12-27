@@ -7,6 +7,7 @@ import {
     elementRed,
     lightGray,
     gray,
+    blue,
 } from '../../colors';
 import { IThemeColors } from '../theme-types';
 
@@ -75,6 +76,7 @@ const ElementColors: IThemeColors = {
     dangerColorLight,
     dangerColorHighlight,
     dangerColorDark,
+    linkColor: blue,
 };
 
 export default ElementColors;

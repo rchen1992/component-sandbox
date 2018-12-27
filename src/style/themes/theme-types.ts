@@ -29,6 +29,7 @@ export interface IThemeColors {
     dangerColorLight: string;
     dangerColorHighlight: string;
     dangerColorDark: string;
+    linkColor: string;
 }
 
 /**
@@ -38,4 +39,7 @@ export interface ITheme extends IThemeColors {
     fontSize: string;
     defaultButtonVerticalPadding: string;
     defaultButtonHorizontalPadding: string;
+    defaultSwitchWidth: string;
+    defaultSwitchCoreLength: string;
+    defaultSwitchCorePadding: string;
 }
