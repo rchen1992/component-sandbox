@@ -34,14 +34,14 @@ describe('Checkbox', () => {
 
     test('should toggle checkbox when clicking on label', () => {
         const label = 'hello world';
-        const { container, getByText } = render(<Checkbox>{label}</Checkbox>);
+        const { container, getByLabelText } = render(<Checkbox>{label}</Checkbox>);
 
         // Check that checkbox is initially off
         const input = container.querySelector('input') as HTMLInputElement;
         expect(input.checked).toBeFalsy();
 
         // Click checkbox label
-        const labelNode = getByText(label);
+        const labelNode = getByLabelText(label);
         fireEvent.click(labelNode);
 
         // Check that checkbox is now on
