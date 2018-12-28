@@ -104,25 +104,17 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
     const [checked, setChecked] = React.useState(!!props.defaultChecked);
 
     function onClick(e: React.MouseEvent) {
-        /**
-         * Prevent default click.
-         * Since this handler is attached to `label`,
-         * clicks will also click on the `input`, which will trigger 2 click events.
-         */
-        e.preventDefault();
-
         if (!props.disabled) {
             setChecked(prevChecked => !prevChecked);
         }
     }
 
+    function onChange(e: React.ChangeEvent) {
+        console.log(e);
+    }
+
     return (
-        <Label
-            disabled={props.disabled}
-            className={props.className}
-            style={props.style}
-            onClick={onClick}
-        >
+        <Label disabled={props.disabled} className={props.className} style={props.style}>
             <Box checked={checked} disabled={props.disabled} indeterminate={props.indeterminate} />
             <BoxLabel disabled={props.disabled}>{props.children}</BoxLabel>
             <Input
@@ -130,7 +122,8 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
                 checked={checked}
                 ref={ref}
                 value={props.value}
-                onChange={() => {}}
+                onChange={onChange}
+                onClick={onClick}
             />
         </Label>
     );
@@ -145,6 +138,10 @@ const CheckboxWithGroup = Checkbox as CheckboxWithRef & {
 };
 
 CheckboxWithGroup.Group = props => {
+    // function onChange(e: React.ChangeEvent) {
+    //     console.log('changing');
+    // }
+
     const children = React.Children.map(props.children, child => {
         if (!React.isValidElement(child) || child.type !== Checkbox) {
             throw new Error(
