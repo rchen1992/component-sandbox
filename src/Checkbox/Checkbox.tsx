@@ -94,9 +94,11 @@ interface ICheckboxProps extends IWithStyles {
     defaultChecked?: boolean;
     checked?: boolean;
     disabled?: boolean;
-    value?: string | number;
+    value?: string;
     indeterminate?: boolean;
 }
+
+type CheckboxWithRef = React.ForwardRefExoticComponent<ICheckboxProps & React.RefAttributes<any>>;
 
 const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
     const [checked, setChecked] = React.useState(!!props.defaultChecked);
@@ -134,4 +136,33 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
     );
 });
 
-export default Checkbox;
+interface ICheckboxGroupProps {
+    value?: string[];
+}
+
+const CheckboxWithGroup = Checkbox as CheckboxWithRef & {
+    Group: React.FunctionComponent<ICheckboxGroupProps>;
+};
+
+CheckboxWithGroup.Group = props => {
+    const children = React.Children.map(props.children, child => {
+        if (!React.isValidElement(child) || child.type !== Checkbox) {
+            throw new Error(
+                'The only valid child to a Checkbox Group element is a Checkbox element.'
+            );
+        }
+
+        let checkbox = child as React.ReactElement<ICheckboxProps>;
+        if (!props.value || checkbox.props.value === undefined) {
+            return child;
+        }
+
+        return React.cloneElement(checkbox, {
+            defaultChecked: props.value.includes(checkbox.props.value),
+        });
+    });
+
+    return <div>{children}</div>;
+};
+
+export default CheckboxWithGroup;
