@@ -98,4 +98,53 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Checkbox Group
+|--------------------------------------------------
+*/
+stories.add(
+    'Checkbox Group',
+    () => (
+        <Checkbox.Group value={['option1', 'option3', 'option6']}>
+            <Checkbox style={formatStyles} value="option1">
+                Option 1
+            </Checkbox>
+            <Checkbox style={formatStyles} value="option2">
+                Option 2
+            </Checkbox>
+            <Checkbox style={formatStyles} value="option3">
+                Option 3
+            </Checkbox>
+            <Checkbox style={formatStyles} value="option4">
+                Option 4
+            </Checkbox>
+            <Checkbox style={formatStyles} value="option5">
+                Option 5
+            </Checkbox>
+            <Checkbox value="option6">Option 6</Checkbox>
+        </Checkbox.Group>
+    ),
+    wInfo(`
+        ### Notes
+
+        A Checkbox Group manages multiple checkboxes.
+
+        Use the **\`value\`** prop on the checkbox group to specify an array of strings.
+        If the **\`value\`** of the checkbox exists in the **\`value\`** array of the checkbox group,
+        that checkbox will be checked.
+
+        ### Usage
+        ~~~js
+        <Checkbox.Group value={['option1', 'option3', 'option6']}>
+            <Checkbox value="option1">Option 1</Checkbox>
+            <Checkbox value="option2">Option 2</Checkbox>
+            <Checkbox value="option3">Option 3</Checkbox>
+            <Checkbox value="option4">Option 4</Checkbox>
+            <Checkbox value="option5">Option 5</Checkbox>
+            <Checkbox value="option6">Option 6</Checkbox>
+        </Checkbox.Group>
+        ~~~`)
+);
+
 export default stories;
