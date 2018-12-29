@@ -26,6 +26,20 @@ describe('Checkbox', () => {
         expect(input.checked).toBeTruthy();
     });
 
+    test('should be to render checkbox with forced checked state', () => {
+        const { container } = render(<Checkbox checked />);
+
+        // Check that checkbox is on
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input.checked).toBeTruthy();
+
+        // Click checkbox wrapper
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Check that it's still on
+        expect(input.checked).toBeTruthy();
+    });
+
     test('should be able to render checkbox with label', () => {
         const label = 'hello world';
         const { queryByText } = render(<Checkbox>{label}</Checkbox>);
@@ -75,6 +89,21 @@ describe('Checkbox', () => {
         expect(ref.current instanceof HTMLInputElement).toBeTruthy();
     });
 
+    test('should be able to attach onChange handler that provides checkbox data', () => {
+        let mockData;
+        const value = 'myvalue';
+        const onChange = jest.fn().mockImplementation((e, data) => {
+            mockData = data;
+        });
+        const { container } = render(<Checkbox value={value} onChange={onChange} />);
+
+        // Click checkbox wrapper
+        fireEvent.click(container.firstElementChild as Element);
+
+        expect(onChange).toHaveBeenCalledTimes(1);
+        expect(mockData).toMatchObject({ prevChecked: false, value });
+    });
+
     describe('Checkbox Group', () => {
         test('should throw error when trying to render a child element that is not a checkbox', () => {
             const element = (
@@ -96,21 +125,11 @@ describe('Checkbox', () => {
 
             const { getByText } = render(
                 <Checkbox.Group value={checkedBoxes}>
-                    <Checkbox value="option1" data-testid="option1">
-                        option1
-                    </Checkbox>
-                    <Checkbox value="option2" data-testid="option2">
-                        option2
-                    </Checkbox>
-                    <Checkbox value="option3" data-testid="option3">
-                        option3
-                    </Checkbox>
-                    <Checkbox value="option4" data-testid="option4">
-                        option4
-                    </Checkbox>
-                    <Checkbox value="option5" data-testid="option5">
-                        option5
-                    </Checkbox>
+                    <Checkbox value="option1">option1</Checkbox>
+                    <Checkbox value="option2">option2</Checkbox>
+                    <Checkbox value="option3">option3</Checkbox>
+                    <Checkbox value="option4">option4</Checkbox>
+                    <Checkbox value="option5">option5</Checkbox>
                 </Checkbox.Group>
             );
 
@@ -125,6 +144,32 @@ describe('Checkbox', () => {
                 let input = option.nextSibling as HTMLInputElement;
                 expect(input.checked).toBe(true);
             });
+        });
+
+        test('should be able to attach onChange handler that provides updated value list', () => {
+            let mockValue;
+            const onChange = jest.fn().mockImplementation(value => {
+                mockValue = value;
+            });
+            const checkedBoxes = ['option2', 'option5'];
+
+            const { getByLabelText } = render(
+                <Checkbox.Group value={checkedBoxes} onChange={onChange}>
+                    <Checkbox value="option1">option1</Checkbox>
+                    <Checkbox value="option2">option2</Checkbox>
+                    <Checkbox value="option3">option3</Checkbox>
+                    <Checkbox value="option4">option4</Checkbox>
+                    <Checkbox value="option5">option5</Checkbox>
+                </Checkbox.Group>
+            );
+
+            // Click on the first checkbox
+            let option1 = getByLabelText('option1');
+            fireEvent.click(option1);
+
+            // onChange handler should fire with updated value list
+            expect(onChange).toHaveBeenCalledTimes(1);
+            expect(mockValue).toEqual([...checkedBoxes, 'option1']);
         });
     });
 });
