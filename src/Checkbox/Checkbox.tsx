@@ -93,10 +93,11 @@ interface IChangeHandlerWithData<T> {
     (e: React.ChangeEvent, data: T): void;
 }
 
-interface ICheckboxData {
-    prevChecked: boolean;
-    value?: string;
-}
+/**
+|--------------------------------------------------
+| Checkbox
+|--------------------------------------------------
+*/
 
 interface ICheckboxProps extends IWithStyles {
     children?: React.ReactNode;
@@ -106,6 +107,11 @@ interface ICheckboxProps extends IWithStyles {
     value?: string;
     indeterminate?: boolean;
     onChange?: IChangeHandlerWithData<ICheckboxData>;
+}
+
+interface ICheckboxData {
+    prevChecked: boolean;
+    value?: string;
 }
 
 type CheckboxWithRef = React.ForwardRefExoticComponent<ICheckboxProps & React.RefAttributes<any>>;
@@ -149,6 +155,12 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
         </Label>
     );
 });
+
+/**
+|--------------------------------------------------
+| Checkbox Group
+|--------------------------------------------------
+*/
 
 interface ICheckboxGroupProps {
     value?: string[];
