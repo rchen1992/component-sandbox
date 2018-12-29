@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled, { IWithStyles, css } from '../sc-utils';
+import { IChangeHandlerWithData } from 'types';
 
 const Label = styled<ICheckboxProps, 'label'>('label')`
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -88,10 +89,6 @@ const BoxLabel = styled<ICheckboxProps, 'span'>('span')`
     top: 1px;
     color: ${props => (props.disabled ? props.theme.infoColorAccent : 'black')};
 `;
-
-interface IChangeHandlerWithData<T> {
-    (e: React.ChangeEvent, data: T): void;
-}
 
 /**
 |--------------------------------------------------
