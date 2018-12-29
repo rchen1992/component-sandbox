@@ -103,10 +103,16 @@ stories.add(
 | Checkbox Group
 |--------------------------------------------------
 */
-stories.add(
-    'Checkbox Group',
-    () => (
-        <Checkbox.Group value={['option1', 'option3', 'option6']}>
+const CheckboxGroupContainer = () => {
+    const [value, setValue] = React.useState(['option1', 'option3', 'option6']);
+
+    return (
+        <Checkbox.Group
+            value={value}
+            onChange={value => {
+                setValue(value);
+            }}
+        >
             <Checkbox style={formatStyles} value="option1">
                 Option 1
             </Checkbox>
@@ -124,7 +130,11 @@ stories.add(
             </Checkbox>
             <Checkbox value="option6">Option 6</Checkbox>
         </Checkbox.Group>
-    ),
+    );
+};
+stories.add(
+    'Checkbox Group',
+    () => <CheckboxGroupContainer />,
     wInfo(`
         ### Notes
 
@@ -134,17 +144,31 @@ stories.add(
         If the **\`value\`** of the checkbox exists in the **\`value\`** array of the checkbox group,
         that checkbox will be checked.
 
+        Attach an **\`onChange\`** handler to receive the updated **\`value\`** list whenever a checkbox changes.
+
         ### Usage
         ~~~js
-        <Checkbox.Group value={['option1', 'option3', 'option6']}>
-            <Checkbox value="option1">Option 1</Checkbox>
-            <Checkbox value="option2">Option 2</Checkbox>
-            <Checkbox value="option3">Option 3</Checkbox>
-            <Checkbox value="option4">Option 4</Checkbox>
-            <Checkbox value="option5">Option 5</Checkbox>
-            <Checkbox value="option6">Option 6</Checkbox>
-        </Checkbox.Group>
-        ~~~`)
+        const CheckboxGroupContainer = () => {
+            const [value, setValue] = React.useState(['option1', 'option3', 'option6']);
+
+            return (
+                <Checkbox.Group
+                    value={value}
+                    onChange={value => {
+                        setValue(value);
+                    }}
+                >
+                    <Checkbox value="option1">Option 1</Checkbox>
+                    <Checkbox value="option2">Option 2</Checkbox>
+                    <Checkbox value="option3">Option 3</Checkbox>
+                    <Checkbox value="option4">Option 4</Checkbox>
+                    <Checkbox value="option5">Option 5</Checkbox>
+                    <Checkbox value="option6">Option 6</Checkbox>
+                </Checkbox.Group>
+            );
+        };
+        ~~~
+        `)
 );
 
 export default stories;
