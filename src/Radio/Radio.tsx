@@ -25,12 +25,26 @@ const Circle = styled<IRadioProps, 'span'>('span')`
         ${props => !props.checked && `border-color: ${props.theme.primaryColor}`}
     }
 
+    /* Inner circle */
     &::after {
         content: '';
         width: 6px;
         height: 6px;
         border-radius: 50%;
         background-color: white;
+        /* 
+            The absolute positioning puts the top left corner of this inner circle
+            at the center of the parent circle. Thus, it does NOT center the inner circle itself.
+
+            In order to center the inner circle, we need to have the middle of this inner circle in
+            the same place as the middle of the parent, rather than the top left of the inner circle
+            at the middle of the parent.
+            To accomplish this, we need to shift it by it's radius, up and to the left.
+            
+            This is what the translate(-50%,-50%) does. When you use translate with a percentage,
+            the percentage actually refers to the element itself, rather than the parent. 
+            This means 50% is half of the circle, or the radius.
+        */
         position: absolute;
         top: 50%;
         left: 50%;
