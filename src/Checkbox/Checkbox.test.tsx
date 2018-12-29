@@ -171,5 +171,57 @@ describe('Checkbox', () => {
             expect(onChange).toHaveBeenCalledTimes(1);
             expect(mockValue).toEqual([...checkedBoxes, 'option1']);
         });
+
+        test('should be able to use min prop to enforce minimum number of checked boxes', () => {
+            let mockValue;
+            const onChange = jest.fn().mockImplementation(value => {
+                mockValue = value;
+            });
+            const checkedBoxes = ['option2', 'option5'];
+
+            const { getByLabelText } = render(
+                <Checkbox.Group min={2} value={checkedBoxes} onChange={onChange}>
+                    <Checkbox value="option1">option1</Checkbox>
+                    <Checkbox value="option2">option2</Checkbox>
+                    <Checkbox value="option3">option3</Checkbox>
+                    <Checkbox value="option4">option4</Checkbox>
+                    <Checkbox value="option5">option5</Checkbox>
+                </Checkbox.Group>
+            );
+
+            // Try to uncheck one of the checked boxes
+            let option = getByLabelText('option2');
+            fireEvent.click(option);
+
+            // onChange handler should fire with value list that is unchanged
+            expect(onChange).toHaveBeenCalledTimes(1);
+            expect(mockValue).toEqual(checkedBoxes);
+        });
+
+        test('should be able to use max prop to enforce maximum number of checked boxes', () => {
+            let mockValue;
+            const onChange = jest.fn().mockImplementation(value => {
+                mockValue = value;
+            });
+            const checkedBoxes = ['option2', 'option5'];
+
+            const { getByLabelText } = render(
+                <Checkbox.Group max={2} value={checkedBoxes} onChange={onChange}>
+                    <Checkbox value="option1">option1</Checkbox>
+                    <Checkbox value="option2">option2</Checkbox>
+                    <Checkbox value="option3">option3</Checkbox>
+                    <Checkbox value="option4">option4</Checkbox>
+                    <Checkbox value="option5">option5</Checkbox>
+                </Checkbox.Group>
+            );
+
+            // Try to check one of the unchecked boxes
+            let option = getByLabelText('option1');
+            fireEvent.click(option);
+
+            // onChange handler should fire with value list that is unchanged
+            expect(onChange).toHaveBeenCalledTimes(1);
+            expect(mockValue).toEqual(checkedBoxes);
+        });
     });
 });
