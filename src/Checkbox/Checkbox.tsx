@@ -152,6 +152,8 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
 
 interface ICheckboxGroupProps {
     value?: string[];
+    min?: number;
+    max?: number;
     onChange?: (value: string[]) => void;
 }
 
@@ -165,18 +167,30 @@ CheckboxWithGroup.Group = props => {
             return;
         }
 
+        let newValue = props.value || [];
+
+        // If checkbox doesn't have a value, simply call onChange with old value list.
+        if (!data.value) {
+            props.onChange(newValue);
+            return;
+        }
+
+        // Length restrictions for value list
+        const max = props.max !== undefined ? props.max : Number.MAX_SAFE_INTEGER;
+        const min = props.min !== undefined ? props.min : 0;
+
         /**
          * Calculate the new value list so we can pass it to the onChange prop.
+         *
+         * If checkbox is currently checked, we want to uncheck it.
+         * As long as we are above the minimum number of checked boxes, remove it from value list.
          */
-        let newValue = props.value || [];
-        if (data.value) {
-            // If checkbox is currently checked, we want to uncheck it. Remove it from value list.
-            if (data.prevChecked && newValue.includes(data.value)) {
-                newValue = newValue.filter(val => val !== data.value);
-            } else if (!data.prevChecked && !newValue.includes[data.value]) {
-                // Otherwise, if it is currently unchecked, we want to check it. Add it to value list.
-                newValue = [...newValue, data.value as string];
-            }
+        if (data.prevChecked && newValue.includes(data.value) && newValue.length > min) {
+            newValue = newValue.filter(val => val !== data.value);
+        } else if (!data.prevChecked && !newValue.includes[data.value] && newValue.length < max) {
+            // Otherwise, if it is currently unchecked, we want to check it.
+            // As long as we are under the maximum number of checked boxes, add it to value list.
+            newValue = [...newValue, data.value as string];
         }
 
         props.onChange(newValue);
