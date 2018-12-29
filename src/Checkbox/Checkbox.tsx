@@ -89,6 +89,15 @@ const BoxLabel = styled<ICheckboxProps, 'span'>('span')`
     color: ${props => (props.disabled ? props.theme.infoColorAccent : 'black')};
 `;
 
+interface IChangeHandlerWithData<T> {
+    (e: React.ChangeEvent, data: T): void;
+}
+
+interface ICheckboxData {
+    prevChecked: boolean;
+    value?: string;
+}
+
 interface ICheckboxProps extends IWithStyles {
     children?: React.ReactNode;
     defaultChecked?: boolean;
@@ -96,12 +105,15 @@ interface ICheckboxProps extends IWithStyles {
     disabled?: boolean;
     value?: string;
     indeterminate?: boolean;
+    onChange?: IChangeHandlerWithData<ICheckboxData>;
 }
 
 type CheckboxWithRef = React.ForwardRefExoticComponent<ICheckboxProps & React.RefAttributes<any>>;
 
 const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
     const [checked, setChecked] = React.useState(!!props.defaultChecked);
+
+    const finalChecked = props.checked === undefined ? checked : !!props.checked;
 
     function onClick(e: React.MouseEvent) {
         if (!props.disabled) {
@@ -110,20 +122,29 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
     }
 
     function onChange(e: React.ChangeEvent) {
-        console.log(e);
+        if (props.onChange) {
+            props.onChange(e, {
+                prevChecked: props.checked === undefined ? checked : !!props.checked,
+                value: props.value,
+            });
+        }
     }
 
     return (
         <Label disabled={props.disabled} className={props.className} style={props.style}>
-            <Box checked={checked} disabled={props.disabled} indeterminate={props.indeterminate} />
+            <Box
+                checked={finalChecked}
+                disabled={props.disabled}
+                indeterminate={props.indeterminate}
+            />
             <BoxLabel disabled={props.disabled}>{props.children}</BoxLabel>
             <Input
                 type="checkbox"
-                checked={checked}
+                checked={finalChecked}
                 ref={ref}
                 value={props.value}
                 onChange={onChange}
-                onClick={onClick}
+                onClick={onClick} // clicks on the parent label will trigger this onClick
             />
         </Label>
     );
@@ -131,6 +152,7 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
 
 interface ICheckboxGroupProps {
     value?: string[];
+    onChange?: (value: string[]) => void;
 }
 
 const CheckboxWithGroup = Checkbox as CheckboxWithRef & {
@@ -138,11 +160,29 @@ const CheckboxWithGroup = Checkbox as CheckboxWithRef & {
 };
 
 CheckboxWithGroup.Group = props => {
-    // function onChange(e: React.ChangeEvent) {
-    //     console.log('changing');
-    // }
+    function onChange(e: React.ChangeEvent, data: ICheckboxData) {
+        if (!props.onChange) {
+            return;
+        }
 
-    const children = React.Children.map(props.children, child => {
+        /**
+         * Calculate the new value list so we can pass it to the onChange prop.
+         */
+        let newValue = props.value || [];
+        if (data.value) {
+            // If checkbox is currently checked, we want to uncheck it. Remove it from value list.
+            if (data.prevChecked && newValue.includes(data.value)) {
+                newValue = newValue.filter(val => val !== data.value);
+            } else if (!data.prevChecked && !newValue.includes[data.value]) {
+                // Otherwise, if it is currently unchecked, we want to check it. Add it to value list.
+                newValue = [...newValue, data.value as string];
+            }
+        }
+
+        props.onChange(newValue);
+    }
+
+    const children = React.Children.map(props.children, (child, index) => {
         if (!React.isValidElement(child) || child.type !== Checkbox) {
             throw new Error(
                 'The only valid child to a Checkbox Group element is a Checkbox element.'
@@ -150,12 +190,25 @@ CheckboxWithGroup.Group = props => {
         }
 
         let checkbox = child as React.ReactElement<ICheckboxProps>;
-        if (!props.value || checkbox.props.value === undefined) {
+        if (!props.value) {
             return child;
         }
 
+        /**
+         * Check for checkbox value. If undefined, default it to the child's index.
+         */
+        let checkboxValue = checkbox.props.value;
+        if (checkboxValue === undefined) {
+            console.error(
+                'Every child of a checkbox group should have a `value` prop. If not specified, it will default to the index of the child.'
+            );
+            checkboxValue = index.toString();
+        }
+
         return React.cloneElement(checkbox, {
-            defaultChecked: props.value.includes(checkbox.props.value),
+            value: checkboxValue,
+            checked: props.value.includes(checkboxValue),
+            onChange,
         });
     });
 
