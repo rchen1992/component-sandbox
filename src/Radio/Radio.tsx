@@ -4,8 +4,8 @@ import { IChangeHandlerWithData } from 'types';
 
 const Label = styled<IRadioProps, 'label'>('label')`
     display: inline-block;
-    cursor: pointer;
     position: relative;
+    cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 `;
 
 const Circle = styled<IRadioProps, 'span'>('span')`
@@ -15,14 +15,28 @@ const Circle = styled<IRadioProps, 'span'>('span')`
     height: 18px;
     border-radius: 50%;
     border: 1px solid
-        ${props => (props.checked ? props.theme.primaryColor : props.theme.defaultBorderColor)};
-    background-color: ${props => (props.checked ? props.theme.primaryColor : 'white')};
+        ${props => {
+            if (props.checked) {
+                return props.disabled ? props.theme.infoColorAccent : props.theme.primaryColor;
+            } else {
+                return props.disabled
+                    ? props.theme.infoColorAccent
+                    : props.theme.defaultBorderColor;
+            }
+        }};
+    background-color: ${props => {
+        if (props.checked) {
+            return props.disabled ? props.theme.infoColorAccent : props.theme.primaryColor;
+        } else {
+            return props.disabled ? props.theme.infoColorLight : 'white';
+        }
+    }};
     box-sizing: border-box;
     vertical-align: middle;
     line-height: 1;
 
     &:hover {
-        ${props => !props.checked && `border-color: ${props.theme.primaryColor}`}
+        ${props => !props.checked && !props.disabled && `border-color: ${props.theme.primaryColor}`}
     }
 
     /* Inner circle */
@@ -40,7 +54,7 @@ const Circle = styled<IRadioProps, 'span'>('span')`
             the same place as the middle of the parent, rather than the top left of the inner circle
             at the middle of the parent.
             To accomplish this, we need to shift it by it's radius, up and to the left.
-            
+
             This is what the translate(-50%,-50%) does. When you use translate with a percentage,
             the percentage actually refers to the element itself, rather than the parent. 
             This means 50% is half of the circle, or the radius.
@@ -70,6 +84,7 @@ const CircleLabel = styled<IRadioProps, 'span'>('span')`
     font-family: system-ui;
     position: relative;
     top: 1px;
+    color: ${props => (props.disabled ? props.theme.infoColorAccent : 'black')};
 `;
 
 interface IRadioData {
@@ -79,12 +94,13 @@ interface IRadioData {
 interface IRadioProps extends IWithStyles {
     checked?: boolean;
     value?: string;
+    disabled?: boolean;
     onChange?: IChangeHandlerWithData<IRadioData>;
 }
 
 const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
     function onChange(e: React.ChangeEvent) {
-        if (props.onChange) {
+        if (!props.disabled && props.onChange) {
             props.onChange(e, {
                 value: props.value,
             });
@@ -92,8 +108,8 @@ const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
     }
 
     return (
-        <Label style={props.style} className={props.className}>
-            <Circle checked={props.checked} />
+        <Label style={props.style} className={props.className} disabled={props.disabled}>
+            <Circle checked={props.checked} disabled={props.disabled} />
             <Input
                 type="radio"
                 checked={props.checked}
@@ -101,7 +117,7 @@ const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
                 value={props.value}
                 onChange={onChange}
             />
-            <CircleLabel>{props.children}</CircleLabel>
+            <CircleLabel disabled={props.disabled}>{props.children}</CircleLabel>
         </Label>
     );
 });
