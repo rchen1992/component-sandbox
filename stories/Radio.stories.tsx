@@ -40,6 +40,7 @@ const BasicRadios = () => {
         </div>
     );
 };
+
 stories.add(
     'Basic',
     () => (
@@ -78,6 +79,26 @@ stories.add(
                 </div>
             );
         };
+        ~~~`)
+);
+
+/**
+|--------------------------------------------------
+| Disabled
+|--------------------------------------------------
+*/
+
+stories.add(
+    'Disabled',
+    () => <Radio disabled>Option</Radio>,
+    wInfo(`
+        ### Notes
+
+        Use **\`disabled\`** to set disabled state.
+
+        ### Usage
+        ~~~js
+        <Radio disabled>Option</Radio>
         ~~~`)
 );
 

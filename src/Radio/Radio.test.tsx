@@ -50,4 +50,17 @@ describe('Checkbox', () => {
         render(<Radio ref={ref}>Option</Radio>);
         expect(ref.current instanceof HTMLInputElement).toBeTruthy();
     });
+
+    test('should be able to set disabled state', () => {
+        const onChange = jest.fn();
+        const { container } = render(
+            <Radio disabled onChange={onChange}>
+                Option
+            </Radio>
+        );
+
+        fireEvent.click(container.firstElementChild as Element);
+
+        expect(onChange).not.toHaveBeenCalled();
+    });
 });
