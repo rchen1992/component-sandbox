@@ -110,6 +110,7 @@ const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
     return (
         <Label style={props.style} className={props.className} disabled={props.disabled}>
             <Circle checked={props.checked} disabled={props.disabled} />
+            <CircleLabel disabled={props.disabled}>{props.children}</CircleLabel>
             <Input
                 type="radio"
                 checked={props.checked}
@@ -117,9 +118,53 @@ const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
                 value={props.value}
                 onChange={onChange}
             />
-            <CircleLabel disabled={props.disabled}>{props.children}</CircleLabel>
         </Label>
     );
 });
 
-export default Radio;
+/**
+|--------------------------------------------------
+| Radio Group
+|--------------------------------------------------
+*/
+interface IRadioGroupProps {
+    value?: string;
+    onChange?: IChangeHandlerWithData<IRadioData>;
+}
+
+type RadioWithRef = React.ForwardRefExoticComponent<IRadioProps & React.RefAttributes<any>>;
+
+const RadioWithGroup = Radio as RadioWithRef & {
+    Group: React.FunctionComponent<IRadioGroupProps>;
+};
+
+RadioWithGroup.Group = props => {
+    /**
+     * We will be passing this to each of the individual Radio buttons in this group.
+     *
+     * When an onChange event occurs in one of the children, we will call the onChange
+     * handler for the group with the same arguments.
+     */
+    function onChange(e: React.ChangeEvent, data: IRadioData) {
+        if (props.onChange) {
+            props.onChange(e, data);
+        }
+    }
+
+    const children = React.Children.map(props.children, child => {
+        if (!React.isValidElement(child) || child.type !== Radio) {
+            throw new Error('The only valid child to a Radio Group element is a Radio element.');
+        }
+
+        let radio = child as React.ReactElement<IRadioProps>;
+
+        return React.cloneElement(radio, {
+            checked: props.value === radio.props.value,
+            onChange,
+        });
+    });
+
+    return <div>{children}</div>;
+};
+
+export default RadioWithGroup;
