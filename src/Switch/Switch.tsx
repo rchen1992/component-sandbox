@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import { lighten, stripUnit } from 'polished';
+import { IFocusHandlerWithData, IClickHandlerWithData } from 'types';
 
 interface ILabelProps {
     onClick?: React.MouseEventHandler;
@@ -101,14 +102,6 @@ const OffText = styled(Text)`
 interface ISwitchData {
     checked: boolean;
     value: string | number;
-}
-
-interface IClickHandlerWithData<T> {
-    (e: React.MouseEvent, data: T): void;
-}
-
-interface IFocusHandlerWithData<T> {
-    (e: React.FocusEvent, data: T): void;
 }
 
 interface ISwitchProps extends IWithStyles {
