@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { cleanup, render, fireEvent } from 'react-testing-library';
 import Switch from './index';
-import { renderWithProvider } from '../../tests/testUtils';
+import { renderWithProvider, testComponentCanHandleStyles } from '../../tests/testUtils';
 import 'jest-styled-components';
 
 afterEach(cleanup);
 
 describe('Switch', () => {
+    testComponentCanHandleStyles(<Switch />);
+
     test('should be able to toggle switch', () => {
         const { container } = render(<Switch />);
         expect(container.firstElementChild).toBeTruthy();
@@ -111,20 +113,6 @@ describe('Switch', () => {
         expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
     });
 
-    test('should be able to apply className to slider', () => {
-        const className = 'helloworld';
-        const { container } = render(<Switch className={className} />);
-        expect(container.querySelector(`.${className}`)).toBeTruthy();
-    });
-
-    test('should be able to apply style object to slider', () => {
-        const style = {
-            backgroundColor: 'orange',
-        };
-        const { getByTestId } = render(<Switch style={style} />);
-        expect(getByTestId('switch-slider').style.backgroundColor).toEqual(style.backgroundColor);
-    });
-
     test('should be able to apply textClassName to both text descriptions', () => {
         const textClassName = 'helloworld';
         const { container } = render(
@@ -181,6 +169,22 @@ describe('Switch', () => {
         // Check that handler was called
         expect(onFocus).toHaveBeenCalledTimes(1);
         // Check that the data returned is accurate
+        expect(returnedPayload).toMatchObject({ checked: false, value: 'off' });
+    });
+
+    test('onFocus should return forced data payload when checked prop is provided', () => {
+        let returnedPayload;
+        const onFocus = jest.fn().mockImplementation((e, data) => (returnedPayload = data));
+
+        // Start with switch ON
+        const { container } = render(<Switch allowFocus onFocus={onFocus} checked />);
+
+        // Click switch
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Check that handler was called
+        expect(onFocus).toHaveBeenCalledTimes(1);
+        // Check that the data still returns checked as true
         expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
     });
 
@@ -203,6 +207,26 @@ describe('Switch', () => {
         expect(returnedPayload).toMatchObject({ checked: true, value: 'on' });
     });
 
+    test('onBlur should return forced data payload when checked prop is provided', () => {
+        let returnedPayload;
+        const onBlur = jest.fn().mockImplementation((e, data) => (returnedPayload = data));
+
+        // Start with switch ON
+        const { container } = render(<Switch allowFocus onBlur={onBlur} checked={false} />);
+
+        // Click switch
+        fireEvent.click(container.firstElementChild as Element);
+
+        // Blur input
+        const input = container.querySelector('input') as HTMLInputElement;
+        input.blur();
+
+        // Check that handler was called
+        expect(onBlur).toHaveBeenCalledTimes(1);
+        // Check that the data still has checked as false
+        expect(returnedPayload).toMatchObject({ checked: false, value: 'off' });
+    });
+
     test('should be able to set custom width', () => {
         const { getByTestId } = render(<Switch width={100} />);
         const slider = getByTestId('switch-slider');
@@ -216,7 +240,7 @@ describe('Switch', () => {
         expect(input.value).toBe(onValue);
     });
 
-    test('providing onValue prop to input when switch is on should not return that value', () => {
+    test('providing onValue prop to input when switch is off should not return that value', () => {
         const onValue = 'testing on';
         const { container } = render(<Switch onValue={onValue} />);
         const input = container.querySelector('input') as HTMLInputElement;

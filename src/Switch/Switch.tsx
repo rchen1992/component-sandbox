@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import { lighten, stripUnit } from 'polished';
+import { IFocusHandlerWithData, IClickHandlerWithData } from 'types';
 
 interface ILabelProps {
     onClick?: React.MouseEventHandler;
@@ -103,14 +104,6 @@ interface ISwitchData {
     value: string | number;
 }
 
-interface IClickHandlerWithData<T> {
-    (e: React.MouseEvent, data: T): void;
-}
-
-interface IFocusHandlerWithData<T> {
-    (e: React.FocusEvent, data: T): void;
-}
-
 interface ISwitchProps extends IWithStyles {
     checked?: boolean;
     defaultChecked?: boolean;
@@ -144,6 +137,10 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
     // Use passed in ref or our own ref.
     const inputRef = ref || ownRef;
 
+    /**
+     * Helper function to get the svalue of the input.
+     * Defaults to 'on' and 'off';
+     */
     function getValue(checked: boolean) {
         return checked ? props.onValue || 'on' : props.offValue || 'off';
     }
@@ -161,6 +158,9 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
             setChecked(prevChecked => !prevChecked);
         }
 
+        /**
+         * If we are allowing focus, focus on the input now.
+         */
         if (props.allowFocus) {
             let clickedRef = inputRef as any;
             clickedRef.current.focus();
@@ -182,16 +182,28 @@ const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
 
     function onFocus(e: React.FocusEvent) {
         if (props.onFocus) {
-            const newChecked = props.checked !== undefined ? props.checked : !checked;
-            props.onFocus(e, { checked: newChecked, value: getValue(newChecked) });
+            /**
+             * TODO: investigate this issue.
+             *
+             * We are returning the current state of checked in the payload
+             * because the act of focusing may not flip the flag.
+             *
+             * If an onClick occurs and toggles the checked state, this onFocus will not reflect the new checked state.
+             */
+            const finalChecked = props.checked !== undefined ? !!props.checked : checked;
+            props.onFocus(e, {
+                checked: finalChecked,
+                value: getValue(finalChecked),
+            });
         }
     }
 
     function onBlur(e: React.FocusEvent) {
         if (props.onBlur) {
+            const finalChecked = props.checked !== undefined ? !!props.checked : checked;
             props.onBlur(e, {
-                checked,
-                value: getValue(checked),
+                checked: finalChecked,
+                value: getValue(finalChecked),
             });
         }
     }
