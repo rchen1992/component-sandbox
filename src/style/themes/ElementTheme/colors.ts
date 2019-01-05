@@ -6,6 +6,7 @@ import {
     elementOrange,
     elementRed,
     lightGray,
+    lightBlueGray,
     lightBlack,
     gray,
     blue,
@@ -79,6 +80,7 @@ const ElementColors: IThemeColors = {
     dangerColorHighlight,
     dangerColorDark,
     linkColor: blue,
+    disabledColor: lightBlueGray,
 };
 
 export default ElementColors;

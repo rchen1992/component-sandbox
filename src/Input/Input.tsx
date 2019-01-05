@@ -2,7 +2,7 @@
 import styled from '../sc-utils';
 
 interface IInputProps {
-    test?: boolean;
+    disabled?: boolean;
 }
 
 export default styled<IInputProps, 'input'>('input')`
@@ -11,7 +11,9 @@ export default styled<IInputProps, 'input'>('input')`
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    border: 1px solid ${props => props.theme.defaultBorderColor};
+    background-color: ${props => (props.disabled ? props.theme.disabledColor : 'white')};
+    border: 1px solid
+        ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.defaultBorderColor)};
     border-radius: 4px;
     box-sizing: border-box;
     height: 36px;
@@ -22,28 +24,29 @@ export default styled<IInputProps, 'input'>('input')`
     width: 180px;
     color: ${props => props.theme.defaultTextColor};
     transition: border-color 200ms;
+    cursor: ${props => (props.disabled ? 'not-allowed' : 'initial')};
 
     ::placeholder {
         /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: ${props => props.theme.infoColor};
+        color: ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.infoColor)};
         opacity: 1; /* Firefox */
     }
 
     :-ms-input-placeholder {
         /* Internet Explorer 10-11 */
-        color: ${props => props.theme.infoColor};
+        color: ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.infoColor)};
     }
 
     ::-ms-input-placeholder {
         /* Microsoft Edge */
-        color: ${props => props.theme.infoColor};
+        color: ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.infoColor)};
     }
 
     :hover {
-        border-color: ${props => props.theme.infoColor};
+        border-color: ${props => !props.disabled && props.theme.infoColor};
     }
 
     :focus {
-        border-color: ${props => props.theme.primaryColor};
+        border-color: ${props => !props.disabled && props.theme.primaryColor};
     }
 `;

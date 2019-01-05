@@ -29,4 +29,23 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Disabled
+|--------------------------------------------------
+*/
+stories.add(
+    'Disabled',
+    () => <Input placeholder="Please input" disabled />,
+    wInfo(`
+        ### Notes
+
+        Use **\`disabled\`** to set disabled state.
+        
+        ### Usage
+        ~~~js
+        <Input placeholder="Please input" disabled />
+        ~~~`)
+);
+
 export default stories;
