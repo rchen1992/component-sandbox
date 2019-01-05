@@ -6,6 +6,7 @@ import {
     elementOrange,
     elementRed,
     lightGray,
+    lightBlack,
     gray,
     blue,
 } from '../../colors';
@@ -50,6 +51,7 @@ const {
 
 const ElementColors: IThemeColors = {
     defaultBorderColor: lightGray,
+    defaultTextColor: lightBlack,
     secondaryTextColor: gray,
     primaryColor: defaultPrimaryColor,
     primaryColorAccent,

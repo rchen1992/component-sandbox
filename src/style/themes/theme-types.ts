@@ -3,6 +3,7 @@
  */
 export interface IThemeColors {
     defaultBorderColor: string;
+    defaultTextColor: string;
     secondaryTextColor: string;
     primaryColor: string;
     primaryColorAccent: string;
