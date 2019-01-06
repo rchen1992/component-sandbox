@@ -79,4 +79,27 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Prepend/Append
+|--------------------------------------------------
+*/
+stories.add(
+    'Prepend/Append',
+    () => (
+        <>
+            <Input placeholder="website" prepend="https://" append=".com" />
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`prepend\`** and **\`append\`** to prepend/append text to the input.
+
+        ### Usage
+        ~~~js
+        <Input placeholder="website" prepend="https://" append=".com" />
+        ~~~`)
+);
+
 export default stories;

@@ -1,49 +1,17 @@
-// import * as React from 'react';
-import styled, { css, ITheme } from '../sc-utils';
-import { InterpolationValue } from 'styled-components';
+import * as React from 'react';
+import styled, { css } from '../sc-utils';
+import { inputFontSize, inputHeight } from './inputSize';
 
-interface IInputProps {
+const borderRadius = '4px';
+
+export interface IInputProps {
     disabled?: boolean;
     inputSize?: string;
+    prepend?: React.ReactNode;
+    append?: React.ReactNode;
 }
 
-export enum InputSize {
-    large = 'large',
-    small = 'small',
-    mini = 'mini',
-}
-
-const InputSizeCss = (props: IInputProps & { theme: ITheme }): InterpolationValue[] | undefined => {
-    if (props.theme && props.inputSize) {
-        switch (props.inputSize) {
-            case InputSize.large:
-                return css`
-                    height: 42px;
-                    font-size: 16px;
-                `;
-            case InputSize.small:
-                return css`
-                    height: 30px;
-                    font-size: 13px;
-                `;
-            case InputSize.mini:
-                return css`
-                    height: 22px;
-                    font-size: 12px;
-                `;
-            default:
-                console.error(`Input size \`${props.inputSize}\` is not a valid input size.`);
-                return undefined;
-        }
-    }
-
-    return css`
-        height: 36px;
-        font-size: 14px;
-    `;
-};
-
-export default styled<IInputProps, 'input'>('input')`
+const Input = styled<IInputProps, 'input'>('input')`
     /* Remove native input css */
     appearance: none;
     -webkit-appearance: none;
@@ -52,9 +20,11 @@ export default styled<IInputProps, 'input'>('input')`
     background-color: ${props => (props.disabled ? props.theme.disabledColor : 'white')};
     border: 1px solid
         ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.defaultBorderColor)};
-    border-radius: 4px;
+    border-radius: ${borderRadius};
     box-sizing: border-box;
     padding: 3px 10px;
+    height: ${props => inputHeight(props)};
+    font-size: ${props => inputFontSize(props)};
     outline: none;
     line-height: 1;
     width: 180px;
@@ -62,8 +32,21 @@ export default styled<IInputProps, 'input'>('input')`
     transition: border-color 200ms;
     cursor: ${props => (props.disabled ? 'not-allowed' : 'initial')};
 
-    /* Resolve input size */
-    ${InputSizeCss}
+    /* If we have a prepended element, we need to reset the border corners of the left border. */
+    ${props =>
+        props.prepend &&
+        css`
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        `}
+
+    /* If we have an appended element, we need to reset the border corners of the right border. */
+    ${props =>
+        props.append &&
+        css`
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        `}
 
     ::placeholder {
         /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -89,3 +72,57 @@ export default styled<IInputProps, 'input'>('input')`
         border-color: ${props => !props.disabled && props.theme.primaryColor};
     }
 `;
+
+const Wrapper = styled.div`
+    display: inline-table;
+`;
+
+const Extension = styled<IInputProps, 'div'>('div')`
+    background-color: hsl(210, 100%, 99%);
+    border: 1px solid ${props => props.theme.defaultBorderColor};
+    display: table-cell;
+    border-radius: ${borderRadius};
+    padding: 0 10px;
+    color: ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.infoColor)};
+    font-family: system-ui;
+    font-size: ${props => inputFontSize(props)};
+    vertical-align: middle;
+`;
+
+const Prepend = styled(Extension)`
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+`;
+
+const Append = styled(Extension)`
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+`;
+
+type InputWrapperProps = IInputProps &
+    React.ClassAttributes<HTMLInputElement> &
+    React.InputHTMLAttributes<HTMLInputElement>;
+
+const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
+    const inputRef = ref as any;
+
+    return (
+        <Wrapper>
+            {props.prepend && (
+                <Prepend inputSize={props.inputSize} disabled={props.disabled}>
+                    {props.prepend}
+                </Prepend>
+            )}
+            <Input ref={inputRef} {...props} />
+            {props.append && (
+                <Append inputSize={props.inputSize} disabled={props.disabled}>
+                    {props.append}
+                </Append>
+            )}
+        </Wrapper>
+    );
+});
+
+export default InputWrapper;
