@@ -21,4 +21,16 @@ describe('Input', () => {
         const input = container.querySelector('input') as HTMLInputElement;
         expect(input.placeholder).toBe(placeholder);
     });
+
+    test('should be able to prepend text to input', () => {
+        const text = 'hello world';
+        const { getByText } = render(<Input prepend={text} />);
+        expect(getByText(text)).toBeTruthy();
+    });
+
+    test('should be able to append text to input', () => {
+        const text = 'hello world';
+        const { getByText } = render(<Input append={text} />);
+        expect(getByText(text)).toBeTruthy();
+    });
 });
