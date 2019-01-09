@@ -4,19 +4,28 @@ import { inputFontSize, inputHeight } from './inputSize';
 
 const borderRadius = '4px';
 
+interface ITextareaAutosize {
+    minRows: number;
+    maxRows: number;
+}
+
 export interface IInputProps {
     disabled?: boolean;
     inputSize?: string;
     prepend?: React.ReactNode;
     append?: React.ReactNode;
+    type?: string;
+    autosize?: boolean | ITextareaAutosize;
 }
 
-const Input = styled<IInputProps, 'input'>('input')`
+type InputType = IInputProps | HTMLTextAreaElement;
+const Input = styled<InputType, 'input'>('input')`
     /* Remove native input css */
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 
+    display: table-cell;
     background-color: ${props => (props.disabled ? props.theme.disabledColor : 'white')};
     border: 1px solid
         ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.defaultBorderColor)};
@@ -71,6 +80,16 @@ const Input = styled<IInputProps, 'input'>('input')`
     :focus {
         border-color: ${props => !props.disabled && props.theme.primaryColor};
     }
+
+    ${props =>
+        props.type === 'textarea' &&
+        css`
+            padding: 5px 7px;
+            line-height: 1.5;
+            width: 414px;
+            height: initial;
+            resize: vertical;
+        `};
 `;
 
 const Wrapper = styled.div`
@@ -103,10 +122,46 @@ const Append = styled(Extension)`
 
 type InputWrapperProps = IInputProps &
     React.ClassAttributes<HTMLInputElement> &
-    React.InputHTMLAttributes<HTMLInputElement>;
+    React.InputHTMLAttributes<HTMLInputElement> &
+    React.ClassAttributes<HTMLTextAreaElement> &
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+
+/**
+ * Returns number of newlines in a string.
+ */
+function countNewlines(s: string) {
+    let count = 0;
+    for (let char of s) {
+        if (char === '\n') {
+            count++;
+        }
+    }
+    return count;
+}
 
 const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
+    const [rows, setRows] = React.useState(
+        typeof props.autosize === 'object' ? Math.max(props.autosize.minRows, 1) : 1
+    );
     const inputRef = ref as any;
+
+    function onChange(e: React.ChangeEvent) {
+        /**
+         * If this input is a textarea and autosize prop is specified,
+         * calculate the number of rows based on the number of newlines in
+         * the textarea value.
+         */
+        if (props.type === 'textarea' && !!props.autosize) {
+            const input = e.currentTarget as HTMLTextAreaElement;
+            const newRows = countNewlines(input.value) + 1;
+            if (
+                typeof props.autosize === 'boolean' ||
+                (props.autosize.minRows < newRows && props.autosize.maxRows >= newRows)
+            ) {
+                setRows(newRows);
+            }
+        }
+    }
 
     return (
         <Wrapper>
@@ -115,7 +170,16 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
                     {props.prepend}
                 </Prepend>
             )}
-            <Input ref={inputRef} {...props} />
+
+            <Input
+                {...props}
+                ref={inputRef}
+                as={props.type === 'textarea' ? 'textarea' : 'input'}
+                type={props.type}
+                rows={props.type === 'textarea' && !!props.autosize ? rows : props.rows || null}
+                onChange={onChange}
+            />
+
             {props.append && (
                 <Append inputSize={props.inputSize} disabled={props.disabled}>
                     {props.append}
