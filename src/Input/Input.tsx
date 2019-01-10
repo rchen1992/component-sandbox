@@ -16,6 +16,7 @@ export interface IInputProps {
     append?: React.ReactNode;
     type?: string;
     autosize?: boolean | ITextareaAutosize;
+    onChange?: (e: React.ChangeEvent) => void;
 }
 
 type InputType = IInputProps | HTMLTextAreaElement;
@@ -152,14 +153,18 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
          * the textarea value.
          */
         if (props.type === 'textarea' && !!props.autosize) {
-            const input = e.currentTarget as HTMLTextAreaElement;
-            const newRows = countNewlines(input.value) + 1;
+            const textarea = e.currentTarget as HTMLTextAreaElement;
+            const newRows = countNewlines(textarea.value) + 1;
             if (
                 typeof props.autosize === 'boolean' ||
                 (props.autosize.minRows < newRows && props.autosize.maxRows >= newRows)
             ) {
                 setRows(newRows);
             }
+        }
+
+        if (props.onChange) {
+            props.onChange(e);
         }
     }
 

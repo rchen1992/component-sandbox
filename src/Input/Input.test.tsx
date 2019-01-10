@@ -34,6 +34,28 @@ describe('Input', () => {
         expect(getByText(text)).toBeTruthy();
     });
 
+    test('should be able to pass value with onChange handler to control input', () => {
+        let onChangeValue;
+        const value = 'hello';
+        const { container } = render(
+            <Input
+                value={value}
+                onChange={(e: React.ChangeEvent) => {
+                    const input = e.currentTarget as HTMLInputElement;
+                    onChangeValue = input.value;
+                }}
+            />
+        );
+
+        /**
+         * Change input and expect that onChange handler returns same value.
+         */
+        const newValue = `${value}world`;
+        const input = container.querySelector('input') as HTMLInputElement;
+        fireEvent.change(input, { target: { value: newValue } });
+        expect(newValue).toBe(onChangeValue);
+    });
+
     describe('Textarea type', () => {
         test('should be able to render input as textarea', () => {
             const { container } = render(<Input type="textarea" />);
