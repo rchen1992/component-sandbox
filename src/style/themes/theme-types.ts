@@ -3,6 +3,7 @@
  */
 export interface IThemeColors {
     defaultBorderColor: string;
+    defaultTextColor: string;
     secondaryTextColor: string;
     primaryColor: string;
     primaryColorAccent: string;
@@ -30,6 +31,7 @@ export interface IThemeColors {
     dangerColorHighlight: string;
     dangerColorDark: string;
     linkColor: string;
+    disabledColor: string;
 }
 
 /**

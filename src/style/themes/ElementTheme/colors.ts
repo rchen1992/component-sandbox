@@ -6,6 +6,8 @@ import {
     elementOrange,
     elementRed,
     lightGray,
+    lightBlueGray,
+    lightBlack,
     gray,
     blue,
 } from '../../colors';
@@ -50,6 +52,7 @@ const {
 
 const ElementColors: IThemeColors = {
     defaultBorderColor: lightGray,
+    defaultTextColor: lightBlack,
     secondaryTextColor: gray,
     primaryColor: defaultPrimaryColor,
     primaryColorAccent,
@@ -77,6 +80,7 @@ const ElementColors: IThemeColors = {
     dangerColorHighlight,
     dangerColorDark,
     linkColor: blue,
+    disabledColor: lightBlueGray,
 };
 
 export default ElementColors;
