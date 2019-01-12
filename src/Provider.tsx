@@ -6,7 +6,15 @@ interface IGlobalStyleProps {
     suppressMultiMountWarning: boolean;
 }
 
+/**
+ * Element UI icon fonts from: https://elemefe.github.io/element-react/d2f69a92faa6.woff
+ */
 const GlobalStyle = createGlobalStyle<IGlobalStyleProps>`
+    @font-face {
+        font-family: element-icons;
+        src: url('/element-icons.woff') format('woff');
+    }
+
     body {
         font-family: Roboto;
         font-size: ${({ theme }) => theme && theme.fontSize};
