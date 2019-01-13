@@ -18,6 +18,7 @@ export interface IInputProps {
     type?: string;
     autosize?: boolean | ITextareaAutosize;
     icon?: string;
+    iconSize?: number;
     onChange?: (e: React.ChangeEvent) => void;
 }
 
@@ -115,7 +116,7 @@ const Wrapper = styled<IInputProps, 'div'>('div')`
         top: 0;
         text-align: center;
         color: #bfcbd9;
-        font-size: ${props => inputFontSize(props)};
+        font-size: ${props => (!!props.iconSize ? `${props.iconSize}px` : inputFontSize(props))};
 
         &::after {
             content: '';
@@ -203,7 +204,12 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
 
     const { className, style, ...remainingProps } = props;
     return (
-        <Wrapper inputSize={props.inputSize} className={className} style={style}>
+        <Wrapper
+            inputSize={props.inputSize}
+            iconSize={props.iconSize}
+            className={className}
+            style={style}
+        >
             {props.prepend && (
                 <Prepend inputSize={props.inputSize} disabled={props.disabled}>
                     {props.prepend}
