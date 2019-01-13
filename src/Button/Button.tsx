@@ -48,9 +48,9 @@ export default styled<IButtonProps, 'button'>('button')`
                 border-color: ${theme.primaryColorDark};
                 color: ${theme.primaryColorDark};
             }
-        `};
+        `}
 
-    ${ButtonSizeCss};
+    ${ButtonSizeCss}
 
     /**
      * Round buttons.
@@ -59,12 +59,12 @@ export default styled<IButtonProps, 'button'>('button')`
         props.round &&
         css`
             border-radius: 20px;
-        `};
+        `}
 
     /**
      * Button types (primary, success, danger, etc)
      */
-    ${props => props.type && getBasicButtonTypeCss(props.type)};
+    ${props => props.type && getBasicButtonTypeCss(props.type)}
 
     /**
      * Default plain button.
@@ -77,12 +77,12 @@ export default styled<IButtonProps, 'button'>('button')`
                 background-color: white;
                 border-color: ${props.theme.primaryColor};
             }
-        `};
+        `}
 
     /**
      * Plain buttons types.
      */
-    ${props => props.plain && props.type && getPlainButtonTypeCss(props.type)};
+    ${props => props.plain && props.type && getPlainButtonTypeCss(props.type)}
 
     /**
      * Disabled buttons.
@@ -92,5 +92,5 @@ export default styled<IButtonProps, 'button'>('button')`
         css`
             opacity: 0.6;
             pointer-events: none;
-        `};
+        `}
 `;
