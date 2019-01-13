@@ -1,21 +1,46 @@
-import * as React from 'react';
 import BaseIcon from './BaseIcon';
+import { styled } from '../sc-utils';
 
 /**
-|--------------------------------------------------
-| Icon List
-|--------------------------------------------------
-*/
-const CaretBottom = <BaseIcon content={'\\E604'} />;
+ * Cache for icon components.
+ */
+const iconComponentCache = {};
 
-// Mapping of icon name to React element.
+/**
+ * Mapping between icon name and it's pseudo-element content.
+ */
 const ICON_MAP = {
-    'caret-bottom': CaretBottom,
+    'caret-bottom': '\\E604',
+    search: '\\E61D',
+    edit: '\\E614',
+    date: '\\E611',
+    more: '\\E61A',
+    close: '\\E60C',
 };
 
 /**
  * Returns the corresponding Icon based on icon name.
  */
-export default (iconName: string) => {
-    return ICON_MAP[iconName];
+const getIcon = (iconName: string) => {
+    // If icon is in cache, simply return it.
+    if (!!iconComponentCache[iconName]) {
+        return iconComponentCache[iconName];
+    }
+
+    /**
+     * Otherwise, dynamically create icon component
+     * and store it in cache before returning it.
+     */
+    const iconContent = ICON_MAP[iconName];
+    const iconComponent = styled(BaseIcon)`
+        &::before {
+            content: '${iconContent}';
+        }
+    `;
+
+    iconComponentCache[iconName] = iconComponent;
+
+    return iconComponent;
 };
+
+export default getIcon;
