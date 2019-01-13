@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, { css } from '../sc-utils';
 import { inputFontSize, inputHeight } from './inputSize';
+import getIcon from '../icons';
 
 const borderRadius = '4px';
 
@@ -16,10 +17,11 @@ export interface IInputProps {
     append?: React.ReactNode;
     type?: string;
     autosize?: boolean | ITextareaAutosize;
+    icon?: string;
     onChange?: (e: React.ChangeEvent) => void;
 }
 
-type InputType = IInputProps | HTMLTextAreaElement;
+type InputType = IInputProps | (IInputProps & HTMLTextAreaElement);
 const Input = styled<InputType, 'input'>('input')`
     /* Remove native input css */
     appearance: none;
@@ -58,6 +60,13 @@ const Input = styled<InputType, 'input'>('input')`
             border-bottom-right-radius: 0;
         `}
 
+    /* If input has an icon, need to pad the right side so the text doesn't overlap the icon. */
+    ${props =>
+        !!props.icon &&
+        css`
+            padding-right: 35px;
+        `}
+
     ::placeholder {
         /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.infoColor)};
@@ -93,8 +102,29 @@ const Input = styled<InputType, 'input'>('input')`
         `};
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled<IInputProps, 'div'>('div')`
     display: inline-table;
+    position: relative;
+
+    /* Input icon styles */
+    i {
+        position: absolute;
+        width: 35px;
+        height: 100%;
+        right: 0;
+        top: 0;
+        text-align: center;
+        color: #bfcbd9;
+        font-size: ${props => inputFontSize(props)};
+
+        &::after {
+            content: '';
+            height: 100%;
+            width: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
 `;
 
 const Extension = styled<IInputProps, 'div'>('div')`
@@ -146,6 +176,9 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
     );
     const inputRef = ref as any;
 
+    const Icon =
+        props.icon && props.type !== 'textarea' && !props.append ? getIcon(props.icon) : null;
+
     function onChange(e: React.ChangeEvent) {
         /**
          * If this input is a textarea and autosize prop is specified,
@@ -168,8 +201,9 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
         }
     }
 
+    const { className, style, ...remainingProps } = props;
     return (
-        <Wrapper>
+        <Wrapper inputSize={props.inputSize} className={className} style={style}>
             {props.prepend && (
                 <Prepend inputSize={props.inputSize} disabled={props.disabled}>
                     {props.prepend}
@@ -177,13 +211,15 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
             )}
 
             <Input
-                {...props}
+                {...remainingProps}
                 ref={inputRef}
                 as={props.type === 'textarea' ? 'textarea' : 'input'}
                 type={props.type}
                 rows={props.type === 'textarea' && !!props.autosize ? rows : props.rows || null}
                 onChange={onChange}
             />
+
+            {Icon && <Icon />}
 
             {props.append && (
                 <Append inputSize={props.inputSize} disabled={props.disabled}>

@@ -16,6 +16,7 @@ const ICON_MAP = {
     date: '\\E611',
     more: '\\E61A',
     close: '\\E60C',
+    time: '\\E622',
 };
 
 /**

@@ -81,6 +81,33 @@ stories.add(
 
 /**
 |--------------------------------------------------
+| Icon
+|--------------------------------------------------
+*/
+stories.add(
+    'Icon',
+    () => (
+        <>
+            <Input placeholder="Please input" icon="time" inputSize="large" style={formatStyles} />
+            <Input placeholder="Please input" icon="edit" style={formatStyles} />
+            <Input placeholder="Please input" icon="search" inputSize="small" />
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        Use **\`icon\`** to render an icon within the input.
+        
+        ### Usage
+        ~~~js
+        <Input placeholder="Please input" icon="time" inputSize="large" />
+        <Input placeholder="Please input" icon="edit" />
+        <Input placeholder="Please input" icon="search" inputSize="small" />
+        ~~~`)
+);
+
+/**
+|--------------------------------------------------
 | Prepend/Append
 |--------------------------------------------------
 */
