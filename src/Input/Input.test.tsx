@@ -66,6 +66,14 @@ describe('Input', () => {
         expect(container.querySelector('i')).toBeFalsy();
     });
 
+    test('should be able to attach onIconClick handler', () => {
+        const iconClickHandler = jest.fn();
+        const { container } = render(<Input icon="edit" iconClickHandler={iconClickHandler} />);
+        const icon = container.querySelector('i') as HTMLElement;
+        fireEvent.click(icon);
+        expect(iconClickHandler).toHaveBeenCalledTimes(1);
+    });
+
     describe('Textarea type', () => {
         test('should be able to render input as textarea', () => {
             const { container } = render(<Input type="textarea" />);

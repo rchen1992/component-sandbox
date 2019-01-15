@@ -20,6 +20,7 @@ export interface IInputProps {
     icon?: string;
     iconSize?: number;
     onChange?: (e: React.ChangeEvent) => void;
+    iconClickHandler?: (e: React.MouseEvent) => void;
 }
 
 type InputType = IInputProps | (IInputProps & HTMLTextAreaElement);
@@ -225,7 +226,7 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
                 onChange={onChange}
             />
 
-            {Icon && <Icon />}
+            {Icon && <Icon onClick={props.iconClickHandler} />}
 
             {props.append && (
                 <Append inputSize={props.inputSize} disabled={props.disabled}>
