@@ -74,6 +74,13 @@ describe('Input', () => {
         expect(iconClickHandler).toHaveBeenCalledTimes(1);
     });
 
+    test('should be able to pass ref to icon', () => {
+        const ref = React.createRef();
+        render(<Input icon="edit" iconRef={ref} />);
+        const icon = ref.current as HTMLElement;
+        expect(icon.tagName).toBe('I');
+    });
+
     describe('Textarea type', () => {
         test('should be able to render input as textarea', () => {
             const { container } = render(<Input type="textarea" />);

@@ -19,6 +19,7 @@ export interface IInputProps {
     autosize?: boolean | ITextareaAutosize;
     icon?: string;
     iconSize?: number;
+    iconRef?: React.RefObject<{}>;
     onChange?: (e: React.ChangeEvent) => void;
     iconClickHandler?: (e: React.MouseEvent) => void;
 }
@@ -226,7 +227,7 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
                 onChange={onChange}
             />
 
-            {Icon && <Icon onClick={props.iconClickHandler} />}
+            {Icon && <Icon onClick={props.iconClickHandler} ref={props.iconRef} />}
 
             {props.append && (
                 <Append inputSize={props.inputSize} disabled={props.disabled}>
