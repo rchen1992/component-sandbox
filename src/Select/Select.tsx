@@ -18,6 +18,7 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
         width: ${selectWidth};
     }
 
+    /* Rotate icon based on open/close state */
     i {
         transform: ${props => (props.open ? 'rotate(180deg)' : 'initial')};
         transition: transform 200ms;
@@ -38,9 +39,6 @@ const Dropdown = styled<ISelectProps, 'div'>('div')`
     transform: ${props => (props.open ? 'scaleY(1)' : 'scaleY(0)')};
     transform-origin: center top;
     transition: transform 200ms, opacity 200ms;
-    /* top: 36px;
-    left: 0px;
-    will-change: top, left; */
 `;
 
 const DropdownList = styled.ul`
@@ -135,6 +133,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     }
 
     function onInputClick() {
+        // Toggle dropdown open/close state
         setOpen(prevOpen => !prevOpen);
     }
 
