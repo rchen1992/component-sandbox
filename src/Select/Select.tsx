@@ -1,11 +1,31 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import Input from '../Input';
+// import { StyledComponentClass } from 'styled-components';
+import { IClickHandlerWithData } from 'types';
 
 const selectWidth = '240px';
 
+interface ISelectOption {
+    value: string;
+    label: string;
+}
+
 interface ISelectProps extends IWithStyles {
+    defaultValue?: string;
     open?: boolean;
+    options?: ISelectOption[];
+    children?: React.ReactNode;
+}
+
+interface IDropdownItemProps {
+    value?: string;
+    label?: string;
+    selectedValue?: string;
+}
+
+interface ISelectOptionProps extends IDropdownItemProps {
+    onClick?: IClickHandlerWithData<ISelectOption>;
 }
 
 const Wrapper = styled<ISelectProps, 'div'>('div')`
@@ -16,6 +36,10 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
     input {
         cursor: pointer;
         width: ${selectWidth};
+
+        :focus {
+            border-color: ${props => props.theme.infoColor};
+        }
     }
 
     /* Rotate icon based on open/close state */
@@ -47,10 +71,9 @@ const DropdownList = styled.ul`
     padding: 6px 0;
     margin: 0;
     font-size: 14px;
-    color: ${props => props.theme.defaultTextColor};
 `;
 
-const DropdownItem = styled.li`
+const DropdownItem = styled<IDropdownItemProps, 'li'>('li')`
     height: 36px;
     line-height: 1.5;
     box-sizing: border-box;
@@ -58,37 +81,22 @@ const DropdownItem = styled.li`
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    background-color: ${props =>
+        props.selectedValue === props.value ? props.theme.primaryColor : 'white'};
+    color: ${props =>
+        props.selectedValue === props.value ? 'white' : props.theme.defaultTextColor};
 
     :hover {
-        background-color: ${props => props.theme.disabledColor};
+        background-color: ${props =>
+            props.selectedValue === props.value
+                ? props.theme.primaryColor
+                : props.theme.disabledColor};
     }
 `;
 
-const mock = [
-    {
-        value: 'Option1',
-        label: 'Option1',
-    },
-    {
-        value: 'Option2',
-        label: 'Option2',
-    },
-    {
-        value: 'Option3',
-        label: 'Option3',
-    },
-    {
-        value: 'Option4',
-        label: 'Option4',
-    },
-    {
-        value: 'Option5',
-        label: 'Option5',
-    },
-];
-
 const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     const [open, setOpen] = React.useState(false);
+    const [inputValue, setInputValue] = React.useState(props.defaultValue || '');
 
     /**
      * This effect listens for clicks on the document so that we can close the dropdown
@@ -137,6 +145,23 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
         setOpen(prevOpen => !prevOpen);
     }
 
+    function onOptionClick(e: React.MouseEvent, data: ISelectOption) {
+        setInputValue(data.label);
+    }
+
+    const children = React.Children.map(props.children, child => {
+        if (!React.isValidElement(child) || child.type !== SelectWithOption.Option) {
+            throw new Error('The only valid child to a Select element is a Select Option element.');
+        }
+
+        let option = child as React.ReactElement<ISelectOptionProps>;
+
+        return React.cloneElement(option, {
+            onClick: onOptionClick,
+            selectedValue: inputValue,
+        });
+    });
+
     return (
         <Wrapper className={props.className} style={props.style} open={open}>
             <Input
@@ -148,16 +173,37 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
                 onClick={onInputClick}
                 iconClickHandler={onInputClick}
                 iconRef={iconRef}
+                value={inputValue}
             />
-            <Dropdown open={open}>
-                <DropdownList>
-                    {mock.map(option => (
-                        <DropdownItem key={option.value}>{option.label}</DropdownItem>
-                    ))}
-                </DropdownList>
+            <Dropdown open={open} data-testid="select-dropdown">
+                <DropdownList>{children}</DropdownList>
             </Dropdown>
         </Wrapper>
     );
 });
 
-export default Select;
+type SelectWithRef = React.ForwardRefExoticComponent<ISelectProps & React.RefAttributes<any>>;
+const SelectWithOption = Select as SelectWithRef & {
+    Option: React.FunctionComponent<ISelectOptionProps>;
+};
+
+const SelectOption: React.FunctionComponent<ISelectOptionProps> = props => {
+    function onClick(e: React.MouseEvent) {
+        if (props.onClick) {
+            props.onClick(e, {
+                value: props.value || '',
+                label: props.label || '',
+            });
+        }
+    }
+
+    return (
+        <DropdownItem selectedValue={props.selectedValue} value={props.value} onClick={onClick}>
+            {props.label}
+        </DropdownItem>
+    );
+};
+
+SelectWithOption.Option = SelectOption;
+
+export default SelectWithOption;
