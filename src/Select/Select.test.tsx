@@ -122,4 +122,27 @@ describe('Select', () => {
         // Input value should now be the option's label
         expect(input.value).toBe(option.value);
     });
+
+    test('should be able to attach onChange handler to get data whenever new option is selected', () => {
+        const onChange = jest.fn();
+        const { container, getByText } = render(
+            <Select onChange={onChange}>
+                {mockOptions.map(option => (
+                    <Select.Option key={option.value} value={option.value} label={option.label} />
+                ))}
+            </Select>
+        );
+
+        // Open dropdown
+        const input = container.querySelector('input') as HTMLInputElement;
+        fireEvent.click(input);
+
+        // Click first option
+        const option = mockOptions[0];
+        const optionElement = getByText(option.label);
+        fireEvent.click(optionElement);
+
+        expect(onChange).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledWith(option);
+    });
 });

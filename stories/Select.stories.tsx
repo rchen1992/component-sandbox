@@ -43,7 +43,7 @@ stories.add(
     'Basic',
     () => (
         <>
-            <Select>
+            <Select onChange={data => console.log(data)}>
                 {mockOptions.map(option => (
                     <Select.Option key={option.value} value={option.value} label={option.label} />
                 ))}

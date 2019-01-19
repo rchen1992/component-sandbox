@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import Input from '../Input';
-// import { StyledComponentClass } from 'styled-components';
 import { IClickHandlerWithData } from 'types';
 
 const selectWidth = '240px';
@@ -16,6 +15,7 @@ interface ISelectProps extends IWithStyles {
     open?: boolean;
     options?: ISelectOption[];
     children?: React.ReactNode;
+    onChange?: (data: ISelectOption) => void;
 }
 
 interface IDropdownItemProps {
@@ -147,6 +147,9 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
 
     function onOptionClick(e: React.MouseEvent, data: ISelectOption) {
         setInputValue(data.label);
+        if (props.onChange && data.value !== inputValue) {
+            props.onChange(data);
+        }
     }
 
     const children = React.Children.map(props.children, child => {
