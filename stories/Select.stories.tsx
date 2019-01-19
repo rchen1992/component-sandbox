@@ -42,14 +42,11 @@ const mockOptions = [
 stories.add(
     'Basic',
     () => (
-        <>
-            <Select onChange={data => console.log(data)}>
-                {mockOptions.map(option => (
-                    <Select.Option key={option.value} value={option.value} label={option.label} />
-                ))}
-            </Select>
-            <Select />
-        </>
+        <Select>
+            {mockOptions.map(option => (
+                <Select.Option key={option.value} value={option.value} label={option.label} />
+            ))}
+        </Select>
     ),
     wInfo(`
         ### Notes
@@ -58,7 +55,19 @@ stories.add(
         
         ### Usage
         ~~~js
-        <Select />
+        const mockOptions = [
+            { value: 'Option1', label: 'Option1', },
+            { value: 'Option2', label: 'Option2', },
+            { value: 'Option3', label: 'Option3', },
+            { value: 'Option4', label: 'Option4', },
+            { value: 'Option5', label: 'Option5', },
+        ];
+        
+        <Select>
+            {mockOptions.map(option => (
+                <Select.Option key={option.value} value={option.value} label={option.label} />
+            ))}
+        </Select>
         ~~~`)
 );
 
