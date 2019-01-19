@@ -1,9 +1,9 @@
 import * as React from 'react';
-import styled, { IWithStyles } from '../sc-utils';
+import styled, { IWithStyles, css } from '../sc-utils';
 import Input from '../Input';
 import { IClickHandlerWithData } from 'types';
-
-const selectWidth = '240px';
+import { expandAndShow } from '../keyframes';
+import { SELECT_WIDTH, DROPDOWN_ANIMATION_DURATION } from './styleConstants';
 
 interface ISelectOption {
     value: string;
@@ -35,7 +35,7 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
 
     input {
         cursor: pointer;
-        width: ${selectWidth};
+        width: ${SELECT_WIDTH};
 
         :focus {
             border-color: ${props => props.theme.infoColor};
@@ -50,7 +50,7 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
 `;
 
 const Dropdown = styled<ISelectProps, 'div'>('div')`
-    min-width: ${selectWidth};
+    min-width: ${SELECT_WIDTH};
     z-index: 10;
     border: 1px solid ${props => props.theme.defaultBorderColor};
     border-radius: 2px;
@@ -59,10 +59,16 @@ const Dropdown = styled<ISelectProps, 'div'>('div')`
     background-color: white;
     margin: 5px 0;
     position: absolute;
-    opacity: ${props => (props.open ? 1 : 0)};
-    transform: ${props => (props.open ? 'scaleY(1)' : 'scaleY(0)')};
+    opacity: 0;
+    transform: scaleY(0);
     transform-origin: center top;
-    transition: transform 200ms, opacity 200ms;
+
+    ${props =>
+        props.open &&
+        css`
+            animation: ${expandAndShow} ${DROPDOWN_ANIMATION_DURATION}ms linear;
+            animation-fill-mode: forwards;
+        `}
 `;
 
 const DropdownList = styled.ul`

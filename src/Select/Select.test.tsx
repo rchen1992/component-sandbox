@@ -3,6 +3,7 @@ import { cleanup, render, fireEvent } from 'react-testing-library';
 import Select from './index';
 import 'jest-styled-components';
 import { testComponentCanHandleStyles } from '../../tests/testUtils';
+import { DROPDOWN_ANIMATION_DURATION } from './styleConstants';
 
 function expectDropdownHidden(dropdown: HTMLElement) {
     expect(dropdown).toHaveStyleRule('opacity', '0');
@@ -56,7 +57,11 @@ describe('Select', () => {
 
         expectDropdownHidden(dropdown);
         fireEvent.click(input);
-        expectDropdownVisible(dropdown);
+
+        // Wait 200 ms for animation to finish
+        setTimeout(() => {
+            expectDropdownVisible(dropdown);
+        }, DROPDOWN_ANIMATION_DURATION);
     });
 
     test('should be able to open and close dropdown on input icon click', () => {
@@ -66,7 +71,9 @@ describe('Select', () => {
 
         expectDropdownHidden(dropdown);
         fireEvent.click(icon);
-        expectDropdownVisible(dropdown);
+        setTimeout(() => {
+            expectDropdownVisible(dropdown);
+        }, DROPDOWN_ANIMATION_DURATION);
     });
 
     test('should be able to open dropdown and then close it by clicking another element', () => {
@@ -81,9 +88,11 @@ describe('Select', () => {
 
         expectDropdownHidden(dropdown);
         fireEvent.click(input);
-        expectDropdownVisible(dropdown);
-        fireEvent.click(getByText('Another Element'));
-        expectDropdownHidden(dropdown);
+        setTimeout(() => {
+            expectDropdownVisible(dropdown);
+            fireEvent.click(getByText('Another Element'));
+            expectDropdownHidden(dropdown);
+        }, DROPDOWN_ANIMATION_DURATION);
     });
 
     test('should be able to render list of options in dropdown', () => {
