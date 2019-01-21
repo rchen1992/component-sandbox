@@ -2,6 +2,24 @@ import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import { IChangeHandlerWithData } from 'types';
 
+interface IRadioData {
+    value?: string;
+}
+
+interface IRadioProps extends IWithStyles {
+    checked?: boolean;
+    value?: string;
+    disabled?: boolean;
+    onChange?: IChangeHandlerWithData<IRadioData>;
+}
+
+interface IRadioGroupProps {
+    value?: string;
+    onChange?: IChangeHandlerWithData<IRadioData>;
+}
+
+type RadioWithRef = React.ForwardRefExoticComponent<IRadioProps & React.RefAttributes<any>>;
+
 const Label = styled<IRadioProps, 'label'>('label')`
     display: inline-block;
     position: relative;
@@ -87,17 +105,6 @@ const CircleLabel = styled<IRadioProps, 'span'>('span')`
     color: ${props => (props.disabled ? props.theme.infoColorAccent : 'black')};
 `;
 
-interface IRadioData {
-    value?: string;
-}
-
-interface IRadioProps extends IWithStyles {
-    checked?: boolean;
-    value?: string;
-    disabled?: boolean;
-    onChange?: IChangeHandlerWithData<IRadioData>;
-}
-
 const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
     function onChange(e: React.ChangeEvent) {
         if (!props.disabled && props.onChange) {
@@ -127,13 +134,6 @@ const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
 | Radio Group
 |--------------------------------------------------
 */
-interface IRadioGroupProps {
-    value?: string;
-    onChange?: IChangeHandlerWithData<IRadioData>;
-}
-
-type RadioWithRef = React.ForwardRefExoticComponent<IRadioProps & React.RefAttributes<any>>;
-
 const RadioWithGroup = Radio as RadioWithRef & {
     Group: React.FunctionComponent<IRadioGroupProps>;
 };
