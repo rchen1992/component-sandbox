@@ -2,6 +2,30 @@ import * as React from 'react';
 import styled, { IWithStyles, css } from '../sc-utils';
 import { IChangeHandlerWithData } from 'types';
 
+interface ICheckboxProps extends IWithStyles {
+    children?: React.ReactNode;
+    defaultChecked?: boolean;
+    checked?: boolean;
+    disabled?: boolean;
+    value?: string;
+    indeterminate?: boolean;
+    onChange?: IChangeHandlerWithData<ICheckboxData>;
+}
+
+interface ICheckboxData {
+    prevChecked: boolean;
+    value?: string;
+}
+
+interface ICheckboxGroupProps {
+    value?: string[];
+    min?: number;
+    max?: number;
+    onChange?: (value: string[]) => void;
+}
+
+type CheckboxWithRef = React.ForwardRefExoticComponent<ICheckboxProps & React.RefAttributes<any>>;
+
 const Label = styled<ICheckboxProps, 'label'>('label')`
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
     white-space: nowrap;
@@ -96,23 +120,6 @@ const BoxLabel = styled<ICheckboxProps, 'span'>('span')`
 |--------------------------------------------------
 */
 
-interface ICheckboxProps extends IWithStyles {
-    children?: React.ReactNode;
-    defaultChecked?: boolean;
-    checked?: boolean;
-    disabled?: boolean;
-    value?: string;
-    indeterminate?: boolean;
-    onChange?: IChangeHandlerWithData<ICheckboxData>;
-}
-
-interface ICheckboxData {
-    prevChecked: boolean;
-    value?: string;
-}
-
-type CheckboxWithRef = React.ForwardRefExoticComponent<ICheckboxProps & React.RefAttributes<any>>;
-
 const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
     const [checked, setChecked] = React.useState(!!props.defaultChecked);
 
@@ -158,14 +165,6 @@ const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
 | Checkbox Group
 |--------------------------------------------------
 */
-
-interface ICheckboxGroupProps {
-    value?: string[];
-    min?: number;
-    max?: number;
-    onChange?: (value: string[]) => void;
-}
-
 const CheckboxWithGroup = Checkbox as CheckboxWithRef & {
     Group: React.FunctionComponent<ICheckboxGroupProps>;
 };
