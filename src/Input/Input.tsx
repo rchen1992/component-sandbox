@@ -2,8 +2,8 @@ import * as React from 'react';
 import styled, { css } from '../sc-utils';
 import { inputFontSize, inputHeight } from './inputSize';
 import getIcon from '../icons';
-
-const borderRadius = '4px';
+import { countNewlines } from '../utils';
+import { BORDER_RADIUS } from './styleConstants';
 
 interface ITextareaAutosize {
     minRows: number;
@@ -35,7 +35,7 @@ const Input = styled<InputType, 'input'>('input')`
     background-color: ${props => (props.disabled ? props.theme.disabledColor : 'white')};
     border: 1px solid
         ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.defaultBorderColor)};
-    border-radius: ${borderRadius};
+    border-radius: ${BORDER_RADIUS};
     box-sizing: border-box;
     padding: 3px 10px;
     height: ${props => inputHeight(props)};
@@ -134,7 +134,7 @@ const Extension = styled<IInputProps, 'div'>('div')`
     background-color: hsl(210, 100%, 99%);
     border: 1px solid ${props => props.theme.defaultBorderColor};
     display: table-cell;
-    border-radius: ${borderRadius};
+    border-radius: ${BORDER_RADIUS};
     padding: 0 10px;
     color: ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.infoColor)};
     font-family: system-ui;
@@ -159,19 +159,6 @@ type InputWrapperProps = IInputProps &
     React.InputHTMLAttributes<HTMLInputElement> &
     React.ClassAttributes<HTMLTextAreaElement> &
     React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-
-/**
- * Returns number of newlines in a string.
- */
-function countNewlines(s: string) {
-    let count = 0;
-    for (let char of s) {
-        if (char === '\n') {
-            count++;
-        }
-    }
-    return count;
-}
 
 const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
     const [rows, setRows] = React.useState(
