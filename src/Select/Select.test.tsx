@@ -15,6 +15,11 @@ function expectDropdownVisible(dropdown: HTMLElement) {
     expect(dropdown).toHaveStyleRule('transform', 'scaleY(1)');
 }
 
+// Runs a function after dropdown animation finishes.
+function waitForDropdownAnimation(fn: any) {
+    setTimeout(fn, DROPDOWN_ANIMATION_DURATION);
+}
+
 // Mock options
 const mockOptions = [
     {
@@ -58,10 +63,9 @@ describe('Select', () => {
         expectDropdownHidden(dropdown);
         fireEvent.click(input);
 
-        // Wait 200 ms for animation to finish
-        setTimeout(() => {
+        waitForDropdownAnimation(() => {
             expectDropdownVisible(dropdown);
-        }, DROPDOWN_ANIMATION_DURATION);
+        });
     });
 
     test('should be able to open and close dropdown on input icon click', () => {
@@ -71,9 +75,9 @@ describe('Select', () => {
 
         expectDropdownHidden(dropdown);
         fireEvent.click(icon);
-        setTimeout(() => {
+        waitForDropdownAnimation(() => {
             expectDropdownVisible(dropdown);
-        }, DROPDOWN_ANIMATION_DURATION);
+        });
     });
 
     test('should be able to open dropdown and then close it by clicking another element', () => {
@@ -88,11 +92,12 @@ describe('Select', () => {
 
         expectDropdownHidden(dropdown);
         fireEvent.click(input);
-        setTimeout(() => {
+
+        waitForDropdownAnimation(() => {
             expectDropdownVisible(dropdown);
             fireEvent.click(getByText('Another Element'));
             expectDropdownHidden(dropdown);
-        }, DROPDOWN_ANIMATION_DURATION);
+        });
     });
 
     test('should be able to render list of options in dropdown', () => {
@@ -119,22 +124,19 @@ describe('Select', () => {
             </Select>
         );
 
-        // Open dropdown
-        const input = container.querySelector('input') as HTMLInputElement;
-        fireEvent.click(input);
-
         // Click first option
         const option = mockOptions[0];
         const optionElement = getByText(option.label);
         fireEvent.click(optionElement);
 
         // Input value should now be the option's label
+        const input = container.querySelector('input') as HTMLInputElement;
         expect(input.value).toBe(option.value);
     });
 
     test('should be able to attach onChange handler to get data whenever new option is selected', () => {
         const onChange = jest.fn();
-        const { container, getByText } = render(
+        const { getByText } = render(
             <Select onChange={onChange}>
                 {mockOptions.map(option => (
                     <Select.Option key={option.value} value={option.value} label={option.label} />
@@ -142,16 +144,81 @@ describe('Select', () => {
             </Select>
         );
 
-        // Open dropdown
-        const input = container.querySelector('input') as HTMLInputElement;
-        fireEvent.click(input);
-
         // Click first option
         const option = mockOptions[0];
         const optionElement = getByText(option.label);
         fireEvent.click(optionElement);
 
-        expect(onChange).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalled();
         expect(onChange).toHaveBeenCalledWith(option);
+    });
+
+    test('should not close dropdown or update input when disabled option is clicked', () => {
+        const mockOptionsWithDisabled = [
+            {
+                value: 'Option1',
+                label: 'Option1',
+                disabled: true,
+            },
+            {
+                value: 'Option2',
+                label: 'Option2',
+            },
+            {
+                value: 'Option3',
+                label: 'Option3',
+            },
+        ];
+        const { container, getByText, getByTestId } = render(
+            <Select>
+                {mockOptionsWithDisabled.map(option => (
+                    <Select.Option
+                        key={option.value}
+                        value={option.value}
+                        label={option.label}
+                        disabled={option.disabled}
+                    />
+                ))}
+            </Select>
+        );
+
+        const dropdown = getByTestId('select-dropdown');
+
+        // Open dropdown
+        const input = container.querySelector('input') as HTMLInputElement;
+        fireEvent.click(input);
+
+        waitForDropdownAnimation(() => {
+            // Click disabled option
+            const option = mockOptions[0];
+            const optionElement = getByText(option.label);
+            fireEvent.click(optionElement);
+
+            // Input value should still be empty.
+            expect(input.value).toBe('');
+            // Dropdown should not have closed.
+            expectDropdownVisible(dropdown);
+        });
+    });
+
+    describe('Select Option', () => {
+        testComponentCanHandleStyles(<Select.Option />);
+
+        test('should be able to pass ref to select options', () => {
+            const ref = React.createRef();
+            render(<Select.Option ref={ref} />);
+            expect(ref.current instanceof HTMLLIElement).toBeTruthy();
+        });
+
+        test('should be able to pass onClick handler', () => {
+            const onClick = jest.fn();
+            const value = 'option';
+            const { container } = render(
+                <Select.Option onClick={onClick} label={value} value={value} />
+            );
+            fireEvent.click(container.firstElementChild as HTMLLIElement);
+            expect(onClick).toHaveBeenCalled();
+            expect(onClick).toHaveBeenCalledWith(expect.anything(), { label: value, value });
+        });
     });
 });

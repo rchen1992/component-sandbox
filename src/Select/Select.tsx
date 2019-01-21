@@ -21,10 +21,11 @@ interface ISelectProps extends IWithStyles {
 interface IDropdownItemProps {
     value?: string;
     label?: string;
+    disabled?: boolean;
     selectedValue?: string;
 }
 
-interface ISelectOptionProps extends IDropdownItemProps {
+interface ISelectOptionProps extends IDropdownItemProps, IWithStyles {
     onClick?: IClickHandlerWithData<ISelectOption>;
 }
 
@@ -89,8 +90,14 @@ const DropdownItem = styled<IDropdownItemProps, 'li'>('li')`
     overflow: hidden;
     background-color: ${props =>
         props.selectedValue === props.value ? props.theme.primaryColor : 'white'};
-    color: ${props =>
-        props.selectedValue === props.value ? 'white' : props.theme.defaultTextColor};
+    color: ${props => {
+        if (props.disabled) {
+            return props.theme.infoColorAccent;
+        }
+
+        return props.selectedValue === props.value ? 'white' : props.theme.defaultTextColor;
+    }};
+    cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 
     :hover {
         background-color: ${props =>
@@ -123,25 +130,27 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
          * We want `useCapture` to be true in case we click somewhere on the document that has an event handler
          * that stops propagation. We don't want to wait until the event bubbles up to the document.
          */
-        document.addEventListener('click', closeDropdownOnClickAway, true);
+        document.addEventListener('click', closeDropdownOnClickAway, false);
 
         // Return function to cleanup on unmount.
         return () => {
-            document.removeEventListener('click', closeDropdownOnClickAway, true);
+            document.removeEventListener('click', closeDropdownOnClickAway, false);
         };
     }, []);
 
     const ownInputRef = React.useRef(null);
     const iconRef = React.useRef(null);
+    const wrapperRef = React.useRef(null);
     const inputRef = (ref || ownInputRef) as React.RefObject<HTMLInputElement>;
 
     function closeDropdownOnClickAway(e: any) {
         /**
-         * If the element we clicked on is our input or the input's icon,
-         * we don't want to close the dropdown because the
-         * input click handler will re-open it.
+         * If the element we clicked on is NOT our select element nor any
+         * child node of it, then we clicked away from the select.
+         * This should cause the dropdown to close.
          */
-        if (e.target !== inputRef.current && e.target !== iconRef.current) {
+        let wrapperElement = (wrapperRef.current as unknown) as HTMLDivElement;
+        if (wrapperElement !== e.target && !wrapperElement.contains(e.target)) {
             setOpen(false);
         }
     }
@@ -153,9 +162,12 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
 
     function onOptionClick(e: React.MouseEvent, data: ISelectOption) {
         setInputValue(data.label);
+
         if (props.onChange && data.value !== inputValue) {
             props.onChange(data);
         }
+
+        setOpen(false);
     }
 
     const children = React.Children.map(props.children, child => {
@@ -165,14 +177,17 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
 
         let option = child as React.ReactElement<ISelectOptionProps>;
 
-        return React.cloneElement(option, {
-            onClick: onOptionClick,
-            selectedValue: inputValue,
-        });
+        let newOptionProps: ISelectOptionProps = { selectedValue: inputValue };
+        // If option is disabled, don't give it a click handler at all.
+        if (!option.props.disabled) {
+            newOptionProps.onClick = onOptionClick;
+        }
+
+        return React.cloneElement(option, newOptionProps);
     });
 
     return (
-        <Wrapper className={props.className} style={props.style} open={open}>
+        <Wrapper ref={wrapperRef} className={props.className} style={props.style} open={open}>
             <Input
                 ref={inputRef}
                 readOnly
@@ -193,12 +208,12 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
 
 type SelectWithRef = React.ForwardRefExoticComponent<ISelectProps & React.RefAttributes<any>>;
 const SelectWithOption = Select as SelectWithRef & {
-    Option: React.FunctionComponent<ISelectOptionProps>;
+    Option: React.ForwardRefExoticComponent<ISelectOptionProps & React.RefAttributes<any>>;
 };
 
-const SelectOption: React.FunctionComponent<ISelectOptionProps> = props => {
+const SelectOption = React.forwardRef<any, ISelectOptionProps>((props, ref) => {
     function onClick(e: React.MouseEvent) {
-        if (props.onClick) {
+        if (props.onClick && !props.disabled) {
             props.onClick(e, {
                 value: props.value || '',
                 label: props.label || '',
@@ -207,11 +222,19 @@ const SelectOption: React.FunctionComponent<ISelectOptionProps> = props => {
     }
 
     return (
-        <DropdownItem selectedValue={props.selectedValue} value={props.value} onClick={onClick}>
+        <DropdownItem
+            ref={ref}
+            className={props.className}
+            style={props.style}
+            selectedValue={props.selectedValue}
+            value={props.value}
+            onClick={onClick}
+            disabled={props.disabled}
+        >
             {props.label}
         </DropdownItem>
     );
-};
+});
 
 SelectWithOption.Option = SelectOption;
 
