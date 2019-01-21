@@ -13,6 +13,7 @@ interface ISelectOption {
 interface ISelectProps extends IWithStyles {
     defaultValue?: string;
     open?: boolean;
+    disabled?: boolean;
     options?: ISelectOption[];
     children?: React.ReactNode;
     onChange?: (data: ISelectOption) => void;
@@ -31,11 +32,11 @@ interface ISelectOptionProps extends IDropdownItemProps, IWithStyles {
 
 const Wrapper = styled<ISelectProps, 'div'>('div')`
     display: inline-block;
-    cursor: pointer;
+    cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
     font-family: system-ui;
 
     input {
-        cursor: pointer;
+        cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
         width: ${SELECT_WIDTH};
 
         :focus {
@@ -130,11 +131,11 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
          * We want `useCapture` to be true in case we click somewhere on the document that has an event handler
          * that stops propagation. We don't want to wait until the event bubbles up to the document.
          */
-        document.addEventListener('click', closeDropdownOnClickAway, false);
+        document.addEventListener('click', closeDropdownOnClickAway, true);
 
         // Return function to cleanup on unmount.
         return () => {
-            document.removeEventListener('click', closeDropdownOnClickAway, false);
+            document.removeEventListener('click', closeDropdownOnClickAway, true);
         };
     }, []);
 
@@ -156,8 +157,10 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     }
 
     function onInputClick() {
-        // Toggle dropdown open/close state
-        setOpen(prevOpen => !prevOpen);
+        if (!props.disabled) {
+            // Toggle dropdown open/close state
+            setOpen(prevOpen => !prevOpen);
+        }
     }
 
     function onOptionClick(e: React.MouseEvent, data: ISelectOption) {
@@ -187,7 +190,13 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     });
 
     return (
-        <Wrapper ref={wrapperRef} className={props.className} style={props.style} open={open}>
+        <Wrapper
+            ref={wrapperRef}
+            className={props.className}
+            style={props.style}
+            open={open}
+            disabled={props.disabled}
+        >
             <Input
                 ref={inputRef}
                 readOnly
@@ -198,6 +207,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
                 iconClickHandler={onInputClick}
                 iconRef={iconRef}
                 value={inputValue}
+                disabled={props.disabled}
             />
             <Dropdown open={open} data-testid="select-dropdown">
                 <DropdownList>{children}</DropdownList>

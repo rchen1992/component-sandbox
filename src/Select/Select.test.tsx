@@ -201,6 +201,19 @@ describe('Select', () => {
         });
     });
 
+    test('should not open dropdown if select is disabled', () => {
+        const { container, getByTestId } = render(<Select disabled />);
+        const input = container.querySelector('input') as HTMLInputElement;
+        const dropdown = getByTestId('select-dropdown');
+
+        expectDropdownHidden(dropdown);
+        fireEvent.click(input);
+
+        waitForDropdownAnimation(() => {
+            expectDropdownHidden(dropdown);
+        });
+    });
+
     describe('Select Option', () => {
         testComponentCanHandleStyles(<Select.Option />);
 
