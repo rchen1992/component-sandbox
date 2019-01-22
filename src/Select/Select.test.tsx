@@ -214,6 +214,30 @@ describe('Select', () => {
         });
     });
 
+    test('should be able to clear select with clearable prop', () => {
+        const { container, getByText } = render(
+            <Select clearable>
+                {mockOptions.map(option => (
+                    <Select.Option key={option.value} value={option.value} label={option.label} />
+                ))}
+            </Select>
+        );
+
+        // Click first option
+        const option = mockOptions[0];
+        const optionElement = getByText(option.label);
+        fireEvent.click(optionElement);
+
+        // Input value should now be the option's label
+        const input = container.querySelector('input') as HTMLInputElement;
+        expect(input.value).toBe(option.value);
+
+        // Click clear icon
+        const icon = container.querySelector('i') as HTMLInputElement;
+        fireEvent.click(icon);
+        expect(input.value).toBe('');
+    });
+
     describe('Select Option', () => {
         testComponentCanHandleStyles(<Select.Option />);
 

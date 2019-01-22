@@ -17,6 +17,11 @@ const ICON_MAP = {
     more: '\\E61A',
     close: '\\E60C',
     time: '\\E622',
+    'circle-close': '\\E60A',
+};
+
+export const getIconContent = (iconName: string) => {
+    return ICON_MAP[iconName];
 };
 
 /**
@@ -32,7 +37,7 @@ const getIcon = (iconName: string) => {
      * Otherwise, dynamically create icon component
      * and store it in cache before returning it.
      */
-    const iconContent = ICON_MAP[iconName];
+    const iconContent = getIconContent(iconName);
     const iconComponent = styled(BaseIcon)`
         &::before {
             content: '${iconContent}';

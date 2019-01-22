@@ -4,6 +4,7 @@ import Input from '../Input';
 import { IClickHandlerWithData } from 'types';
 import { expandAndShow } from '../keyframes';
 import { SELECT_WIDTH, DROPDOWN_ANIMATION_DURATION } from './styleConstants';
+import { getIconContent } from '../icons';
 
 interface ISelectOption {
     value: string;
@@ -14,6 +15,7 @@ interface ISelectProps extends IWithStyles {
     defaultValue?: string;
     open?: boolean;
     disabled?: boolean;
+    clearable?: boolean;
     options?: ISelectOption[];
     children?: React.ReactNode;
     onChange?: (data: ISelectOption) => void;
@@ -42,12 +44,31 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
         :focus {
             border-color: ${props => props.theme.infoColor};
         }
+
+        :hover + i::before {
+            content: ${props =>
+                props.clearable
+                    ? `'${getIconContent('circle-close')}'`
+                    : `'${getIconContent('caret-bottom')}'`};
+        }
     }
 
     /* Rotate icon based on open/close state */
     i {
         transform: ${props => (props.open ? 'rotate(180deg)' : 'initial')};
         transition: transform 200ms;
+
+        :hover {
+            ::before {
+                content: ${props =>
+                    props.clearable
+                        ? `'${getIconContent('circle-close')}'`
+                        : `'${getIconContent('caret-bottom')}'`};
+            }
+
+            color: ${props =>
+                props.clearable ? props.theme.infoColor : props.theme.infoColorAccent};
+        }
     }
 `;
 
@@ -111,6 +132,8 @@ const DropdownItem = styled<IDropdownItemProps, 'li'>('li')`
 const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     const [open, setOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState(props.defaultValue || '');
+    const clearable = props.clearable && !!inputValue;
+    const wrapperRef = React.useRef(null);
 
     /**
      * This effect listens for clicks on the document so that we can close the dropdown
@@ -139,8 +162,6 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
         };
     }, []);
 
-    const wrapperRef = React.useRef(null);
-
     function closeDropdownOnClickAway(e: any) {
         /**
          * If the element we clicked on is NOT our select element nor any
@@ -157,6 +178,15 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
         if (!props.disabled) {
             // Toggle dropdown open/close state
             setOpen(prevOpen => !prevOpen);
+        }
+    }
+
+    function onIconClick() {
+        if (clearable && !props.disabled) {
+            setInputValue('');
+            setOpen(false);
+        } else {
+            onInputClick();
         }
     }
 
@@ -193,6 +223,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
             style={props.style}
             open={open}
             disabled={props.disabled}
+            clearable={clearable}
         >
             <Input
                 ref={ref}
@@ -201,7 +232,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
                 icon="caret-bottom"
                 iconSize={12}
                 onClick={onInputClick}
-                iconClickHandler={onInputClick}
+                iconClickHandler={onIconClick}
                 value={inputValue}
                 disabled={props.disabled}
             />

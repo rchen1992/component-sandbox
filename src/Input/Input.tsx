@@ -117,7 +117,7 @@ const Wrapper = styled<IInputProps, 'div'>('div')`
         right: 0;
         top: 0;
         text-align: center;
-        color: #bfcbd9;
+        color: ${props => props.theme.infoColorAccent};
         font-size: ${props => (!!props.iconSize ? `${props.iconSize}px` : inputFontSize(props))};
 
         &::after {
