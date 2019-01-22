@@ -6,10 +6,6 @@ import { wInfo } from '../src/utils';
 
 const stories = storiesOf('Components/Select', module) as any;
 
-// const formatStyles = {
-//     marginRight: '8px',
-// };
-
 // Mock options
 const mockOptions = [
     {

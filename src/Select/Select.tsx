@@ -139,10 +139,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
         };
     }, []);
 
-    const ownInputRef = React.useRef(null);
-    const iconRef = React.useRef(null);
     const wrapperRef = React.useRef(null);
-    const inputRef = (ref || ownInputRef) as React.RefObject<HTMLInputElement>;
 
     function closeDropdownOnClickAway(e: any) {
         /**
@@ -198,14 +195,13 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
             disabled={props.disabled}
         >
             <Input
-                ref={inputRef}
+                ref={ref}
                 readOnly
                 placeholder="Select"
                 icon="caret-bottom"
                 iconSize={12}
                 onClick={onInputClick}
                 iconClickHandler={onInputClick}
-                iconRef={iconRef}
                 value={inputValue}
                 disabled={props.disabled}
             />
