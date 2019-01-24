@@ -1,15 +1,11 @@
 import * as React from 'react';
 import styled, { IWithStyles, css } from '../sc-utils';
 import Input from '../Input';
-import { IClickHandlerWithData } from 'types';
 import { expandAndShow } from '../keyframes';
 import { SELECT_WIDTH, DROPDOWN_ANIMATION_DURATION } from './styleConstants';
 import { getIconContent } from '../icons';
-
-interface ISelectOption {
-    value: string;
-    label: string;
-}
+import SelectOption, { ISelectOption, ISelectOptionProps } from './SelectOption';
+import SelectOptionGroup, { ISelectOptionGroupProps } from './SelectOptionGroup';
 
 interface ISelectProps extends IWithStyles {
     defaultValue?: string;
@@ -21,16 +17,7 @@ interface ISelectProps extends IWithStyles {
     onChange?: (data: ISelectOption) => void;
 }
 
-interface IDropdownItemProps {
-    value?: string;
-    label?: string;
-    disabled?: boolean;
-    selectedValue?: string;
-}
-
-interface ISelectOptionProps extends IDropdownItemProps, IWithStyles {
-    onClick?: IClickHandlerWithData<ISelectOption>;
-}
+type SelectWithRef = React.ForwardRefExoticComponent<ISelectProps & React.RefAttributes<any>>;
 
 const Wrapper = styled<ISelectProps, 'div'>('div')`
     display: inline-block;
@@ -114,33 +101,6 @@ const DropdownList = styled.ul`
     font-size: 14px;
 `;
 
-const DropdownItem = styled<IDropdownItemProps, 'li'>('li')`
-    height: 36px;
-    line-height: 1.5;
-    box-sizing: border-box;
-    padding: 8px 10px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    background-color: ${props =>
-        props.selectedValue === props.value ? props.theme.primaryColor : 'white'};
-    color: ${props => {
-        if (props.disabled) {
-            return props.theme.infoColorAccent;
-        }
-
-        return props.selectedValue === props.value ? 'white' : props.theme.defaultTextColor;
-    }};
-    cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-
-    :hover {
-        background-color: ${props =>
-            props.selectedValue === props.value
-                ? props.theme.primaryColor
-                : props.theme.disabledColor};
-    }
-`;
-
 const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     const [open, setOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState(props.defaultValue || '');
@@ -213,7 +173,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     }
 
     const children = React.Children.map(props.children, child => {
-        if (!React.isValidElement(child) || child.type !== SelectWithOption.Option) {
+        if (!React.isValidElement(child) || child.type !== SelectWithCompoundComponents.Option) {
             throw new Error('The only valid child to a Select element is a Select Option element.');
         }
 
@@ -256,36 +216,14 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     );
 });
 
-type SelectWithRef = React.ForwardRefExoticComponent<ISelectProps & React.RefAttributes<any>>;
-const SelectWithOption = Select as SelectWithRef & {
+const SelectWithCompoundComponents = Select as SelectWithRef & {
     Option: React.ForwardRefExoticComponent<ISelectOptionProps & React.RefAttributes<any>>;
+    OptionGroup: React.ForwardRefExoticComponent<
+        ISelectOptionGroupProps & React.RefAttributes<any>
+    >;
 };
 
-const SelectOption = React.forwardRef<any, ISelectOptionProps>((props, ref) => {
-    function onClick(e: React.MouseEvent) {
-        if (props.onClick && !props.disabled) {
-            props.onClick(e, {
-                value: props.value || '',
-                label: props.label || '',
-            });
-        }
-    }
+SelectWithCompoundComponents.Option = SelectOption;
+SelectWithCompoundComponents.OptionGroup = SelectOptionGroup;
 
-    return (
-        <DropdownItem
-            ref={ref}
-            className={props.className}
-            style={props.style}
-            selectedValue={props.selectedValue}
-            value={props.value}
-            onClick={onClick}
-            disabled={props.disabled}
-        >
-            {props.children || props.label}
-        </DropdownItem>
-    );
-});
-
-SelectWithOption.Option = SelectOption;
-
-export default SelectWithOption;
+export default SelectWithCompoundComponents;
