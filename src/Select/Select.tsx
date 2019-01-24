@@ -279,7 +279,7 @@ const SelectOption = React.forwardRef<any, ISelectOptionProps>((props, ref) => {
             onClick={onClick}
             disabled={props.disabled}
         >
-            {props.label}
+            {props.children || props.label}
         </DropdownItem>
     );
 });

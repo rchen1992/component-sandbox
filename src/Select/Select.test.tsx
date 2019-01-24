@@ -257,5 +257,24 @@ describe('Select', () => {
             expect(onClick).toHaveBeenCalled();
             expect(onClick).toHaveBeenCalledWith(expect.anything(), { label: value, value });
         });
+
+        test('should be able to provide custom template to options via children', () => {
+            const value = 'myvalue';
+            const { container } = render(
+                <Select.Option label={value} value={value} data-testid="option">
+                    <span>hello</span>
+                    <span>world</span>
+                </Select.Option>
+            );
+
+            const option = container.firstElementChild as HTMLDivElement;
+
+            // Should have rendered children content
+            expect(option.textContent).toMatch('hello');
+            expect(option.textContent).toMatch('world');
+
+            // Should not have rendered label text
+            expect(option.textContent).not.toMatch(value);
+        });
     });
 });
