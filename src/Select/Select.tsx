@@ -36,6 +36,7 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
     display: inline-block;
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
     font-family: system-ui;
+    position: relative;
 
     input {
         cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -71,6 +72,15 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
         }
     }
 `;
+
+// const TagWrapper = styled.div`
+//     z-index: 1;
+//     max-width: 208px;
+//     position: absolute;
+//     top: 50%;
+//     /* Translate with percentage moves it a percentage of this elements own height, not the parent. */
+//     transform: translateY(-50%);
+// `;
 
 const Dropdown = styled<ISelectProps, 'div'>('div')`
     min-width: ${SELECT_WIDTH};
@@ -225,6 +235,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
             disabled={props.disabled}
             clearable={clearable}
         >
+            {/* <TagWrapper /> */}
             <Input
                 ref={ref}
                 readOnly
