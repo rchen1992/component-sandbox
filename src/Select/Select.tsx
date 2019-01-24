@@ -84,6 +84,8 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
 
 const Dropdown = styled<ISelectProps, 'div'>('div')`
     min-width: ${SELECT_WIDTH};
+    max-height: 274px;
+    overflow: scroll;
     z-index: 10;
     border: 1px solid ${props => props.theme.defaultBorderColor};
     border-radius: 2px;
