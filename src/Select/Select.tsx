@@ -173,19 +173,32 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     }
 
     const children = React.Children.map(props.children, child => {
-        if (!React.isValidElement(child) || child.type !== SelectWithCompoundComponents.Option) {
-            throw new Error('The only valid child to a Select element is a Select Option element.');
+        if (!React.isValidElement(child)) {
+            throw new Error('Provided an invalid element as a child to Select.');
         }
 
-        let option = child as React.ReactElement<ISelectOptionProps>;
+        if (child.type === SelectWithCompoundComponents.Option) {
+            let option = child as React.ReactElement<ISelectOptionProps>;
 
-        let newOptionProps: ISelectOptionProps = { selectedValue: inputValue };
-        // If option is disabled, don't give it a click handler at all.
-        if (!option.props.disabled) {
-            newOptionProps.onClick = onOptionClick;
+            let newOptionProps: ISelectOptionProps = { selectedValue: inputValue };
+            // If option is disabled, don't give it a click handler at all.
+            if (!option.props.disabled) {
+                newOptionProps.onClick = onOptionClick;
+            }
+
+            return React.cloneElement(option, newOptionProps);
+        } else if (child.type === SelectWithCompoundComponents.OptionGroup) {
+            let group = child as React.ReactElement<ISelectOptionGroupProps>;
+
+            return React.cloneElement(group, {
+                onOptionClick,
+                inputValue,
+            });
+        } else {
+            throw new Error(
+                'The only valid child to a Select element is either a Select Option element or Select Option Group element.'
+            );
         }
-
-        return React.cloneElement(option, newOptionProps);
     });
 
     return (
