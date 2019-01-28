@@ -6,6 +6,7 @@ import { IClickHandlerWithData } from 'types';
 export interface ISelectOptionGroupProps extends IWithStyles {
     label?: string;
     inputValue?: string;
+    children?: React.ReactNode;
     onOptionClick?: IClickHandlerWithData<ISelectOption>;
 }
 

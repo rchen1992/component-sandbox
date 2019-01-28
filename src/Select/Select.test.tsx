@@ -2,8 +2,9 @@ import * as React from 'react';
 import { cleanup, render, fireEvent } from 'react-testing-library';
 import Select from './index';
 import 'jest-styled-components';
-import { testComponentCanHandleStyles } from '../../tests/testUtils';
+import { testComponentCanHandleStyles, expectRenderError } from '../../tests/testUtils';
 import { DROPDOWN_ANIMATION_DURATION } from './styleConstants';
+import { mockOptions, mockOptionGroups } from './mockData';
 
 function expectDropdownHidden(dropdown: HTMLElement) {
     expect(dropdown).toHaveStyleRule('opacity', '0');
@@ -16,38 +17,27 @@ function expectDropdownVisible(dropdown: HTMLElement) {
 }
 
 // Runs a function after dropdown animation finishes.
-function waitForDropdownAnimation(fn: any) {
-    setTimeout(fn, DROPDOWN_ANIMATION_DURATION);
+function waitForDropdownAnimation() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, DROPDOWN_ANIMATION_DURATION + 1);
+    });
 }
-
-// Mock options
-const mockOptions = [
-    {
-        value: 'Option1',
-        label: 'Option1',
-    },
-    {
-        value: 'Option2',
-        label: 'Option2',
-    },
-    {
-        value: 'Option3',
-        label: 'Option3',
-    },
-    {
-        value: 'Option4',
-        label: 'Option4',
-    },
-    {
-        value: 'Option5',
-        label: 'Option5',
-    },
-];
 
 afterEach(cleanup);
 
 describe('Select', () => {
     testComponentCanHandleStyles(<Select />);
+
+    test('should throw error when rendering children that are not options or option groups', () => {
+        expectRenderError(
+            <Select>
+                <div>hello</div>
+            </Select>,
+            'The only valid child to a Select element is either a Select Option element or Select Option Group element.'
+        );
+    });
 
     test('should be able to pass ref to input', () => {
         const ref = React.createRef();
@@ -63,7 +53,7 @@ describe('Select', () => {
         expectDropdownHidden(dropdown);
         fireEvent.click(input);
 
-        waitForDropdownAnimation(() => {
+        waitForDropdownAnimation().then(() => {
             expectDropdownVisible(dropdown);
         });
     });
@@ -75,7 +65,8 @@ describe('Select', () => {
 
         expectDropdownHidden(dropdown);
         fireEvent.click(icon);
-        waitForDropdownAnimation(() => {
+
+        waitForDropdownAnimation().then(() => {
             expectDropdownVisible(dropdown);
         });
     });
@@ -93,7 +84,7 @@ describe('Select', () => {
         expectDropdownHidden(dropdown);
         fireEvent.click(input);
 
-        waitForDropdownAnimation(() => {
+        waitForDropdownAnimation().then(() => {
             expectDropdownVisible(dropdown);
             fireEvent.click(getByText('Another Element'));
             expectDropdownHidden(dropdown);
@@ -188,7 +179,7 @@ describe('Select', () => {
         const input = container.querySelector('input') as HTMLInputElement;
         fireEvent.click(input);
 
-        waitForDropdownAnimation(() => {
+        waitForDropdownAnimation().then(() => {
             // Click disabled option
             const option = mockOptions[0];
             const optionElement = getByText(option.label);
@@ -209,7 +200,7 @@ describe('Select', () => {
         expectDropdownHidden(dropdown);
         fireEvent.click(input);
 
-        waitForDropdownAnimation(() => {
+        waitForDropdownAnimation().then(() => {
             expectDropdownHidden(dropdown);
         });
     });
@@ -236,5 +227,76 @@ describe('Select', () => {
         const icon = container.querySelector('i') as HTMLInputElement;
         fireEvent.click(icon);
         expect(input.value).toBe('');
+    });
+
+    test('should be able to render list of option groups', () => {
+        const { getByText } = render(
+            <Select>
+                {mockOptionGroups.map(group => {
+                    return (
+                        <Select.OptionGroup key={group.label} label={group.label}>
+                            {group.options.map(option => {
+                                return (
+                                    <Select.Option
+                                        key={option.value}
+                                        label={option.label}
+                                        value={option.value}
+                                    />
+                                );
+                            })}
+                        </Select.OptionGroup>
+                    );
+                })}
+            </Select>
+        );
+
+        // Should render every group's label and all options within each group.
+        mockOptionGroups.forEach(group => {
+            const groupLabel = getByText(group.label);
+            expect(groupLabel).toBeTruthy();
+
+            group.options.forEach(option => {
+                const renderedOption = getByText(option.label);
+                expect(renderedOption).toBeTruthy();
+            });
+        });
+    });
+
+    test('should not close dropdown when clicking on option group label', () => {
+        const { container, getByTestId, getByText } = render(
+            <Select>
+                {mockOptionGroups.map(group => {
+                    return (
+                        <Select.OptionGroup key={group.label} label={group.label}>
+                            {group.options.map(option => {
+                                return (
+                                    <Select.Option
+                                        key={option.value}
+                                        label={option.label}
+                                        value={option.value}
+                                    />
+                                );
+                            })}
+                        </Select.OptionGroup>
+                    );
+                })}
+            </Select>
+        );
+        const input = container.querySelector('input') as HTMLInputElement;
+        const dropdown = getByTestId('select-dropdown');
+
+        // Open dropdown
+        fireEvent.click(input);
+
+        waitForDropdownAnimation().then(() => {
+            expectDropdownVisible(dropdown);
+
+            // Click on first option group label
+            fireEvent.click(getByText(mockOptionGroups[0].label));
+
+            waitForDropdownAnimation().then(() => {
+                expectDropdownVisible(dropdown);
+            });
+        });
     });
 });
