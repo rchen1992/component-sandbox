@@ -1,6 +1,20 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import { IChangeHandlerWithData } from 'types';
+import RadioGroup, { IRadioGroupProps } from './RadioGroup';
+
+export interface IRadioData {
+    value?: string;
+}
+
+export interface IRadioProps extends IWithStyles {
+    checked?: boolean;
+    value?: string;
+    disabled?: boolean;
+    onChange?: IChangeHandlerWithData<IRadioData>;
+}
+
+type RadioWithRef = React.ForwardRefExoticComponent<IRadioProps & React.RefAttributes<any>>;
 
 const Label = styled<IRadioProps, 'label'>('label')`
     display: inline-block;
@@ -87,17 +101,6 @@ const CircleLabel = styled<IRadioProps, 'span'>('span')`
     color: ${props => (props.disabled ? props.theme.infoColorAccent : 'black')};
 `;
 
-interface IRadioData {
-    value?: string;
-}
-
-interface IRadioProps extends IWithStyles {
-    checked?: boolean;
-    value?: string;
-    disabled?: boolean;
-    onChange?: IChangeHandlerWithData<IRadioData>;
-}
-
 const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
     function onChange(e: React.ChangeEvent) {
         if (!props.disabled && props.onChange) {
@@ -122,49 +125,10 @@ const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
     );
 });
 
-/**
-|--------------------------------------------------
-| Radio Group
-|--------------------------------------------------
-*/
-interface IRadioGroupProps {
-    value?: string;
-    onChange?: IChangeHandlerWithData<IRadioData>;
-}
-
-type RadioWithRef = React.ForwardRefExoticComponent<IRadioProps & React.RefAttributes<any>>;
-
 const RadioWithGroup = Radio as RadioWithRef & {
     Group: React.FunctionComponent<IRadioGroupProps>;
 };
 
-RadioWithGroup.Group = props => {
-    /**
-     * We will be passing this to each of the individual Radio buttons in this group.
-     *
-     * When an onChange event occurs in one of the children, we will call the onChange
-     * handler for the group with the same arguments.
-     */
-    function onChange(e: React.ChangeEvent, data: IRadioData) {
-        if (props.onChange) {
-            props.onChange(e, data);
-        }
-    }
-
-    const children = React.Children.map(props.children, child => {
-        if (!React.isValidElement(child) || child.type !== Radio) {
-            throw new Error('The only valid child to a Radio Group element is a Radio element.');
-        }
-
-        let radio = child as React.ReactElement<IRadioProps>;
-
-        return React.cloneElement(radio, {
-            checked: props.value === radio.props.value,
-            onChange,
-        });
-    });
-
-    return <div>{children}</div>;
-};
+RadioWithGroup.Group = RadioGroup;
 
 export default RadioWithGroup;

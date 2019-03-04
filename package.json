@@ -7,7 +7,7 @@
         "build/lib"
     ],
     "scripts": {
-        "storybook": "start-storybook -p 6006 -c .storybook",
+        "storybook": "start-storybook -p 6006 -c .storybook -s ./public",
         "build": "npm run build-lib && build-storybook",
         "build-lib": "tsc && npm run copy-css-to-lib",
         "build-storybook": "build-storybook",

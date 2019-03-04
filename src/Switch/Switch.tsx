@@ -7,14 +7,42 @@ interface ILabelProps {
     onClick?: React.MouseEventHandler;
 }
 
-const Label = styled<ILabelProps, 'label'>('label')`
-    position: relative;
-`;
-
 interface IInputProps {
     value?: string | number;
     allowFocus?: boolean;
 }
+
+interface ISliderProps extends ISwitchProps {
+    // Alias for the onColor prop, since using onColor emits a React warning.
+    aliasForOnColor?: string;
+}
+
+interface ISwitchData {
+    checked: boolean;
+    value: string | number;
+}
+
+interface ISwitchProps extends IWithStyles {
+    checked?: boolean;
+    defaultChecked?: boolean;
+    onColor?: string;
+    offColor?: string;
+    onText?: string;
+    offText?: string;
+    disabled?: boolean;
+    textClassName?: string;
+    allowFocus?: boolean;
+    width?: number;
+    onValue?: string | number;
+    offValue?: string | number;
+    onFocus?: IFocusHandlerWithData<ISwitchData>;
+    onBlur?: IFocusHandlerWithData<ISwitchData>;
+    onClick?: IClickHandlerWithData<ISwitchData>;
+}
+
+const Label = styled<ILabelProps, 'label'>('label')`
+    position: relative;
+`;
 
 const Input = styled<IInputProps, 'input'>('input')`
     opacity: 0;
@@ -30,11 +58,6 @@ const Input = styled<IInputProps, 'input'>('input')`
         box-shadow: 0 0 2px ${props => props.theme.linkColor};
     }
 `;
-
-interface ISliderProps extends ISwitchProps {
-    // Alias for the onColor prop, since using onColor emits a React warning.
-    aliasForOnColor?: string;
-}
 
 const Slider = styled<ISliderProps, 'span'>('span')`
     width: ${props => (props.width ? `${props.width}px` : props.theme.defaultSwitchWidth)};
@@ -98,29 +121,6 @@ const OffText = styled(Text)`
     margin-right: 6px;
     color: ${props => (!props.checked ? props.theme.linkColor : 'black')};
 `;
-
-interface ISwitchData {
-    checked: boolean;
-    value: string | number;
-}
-
-interface ISwitchProps extends IWithStyles {
-    checked?: boolean;
-    defaultChecked?: boolean;
-    onColor?: string;
-    offColor?: string;
-    onText?: string;
-    offText?: string;
-    disabled?: boolean;
-    textClassName?: string;
-    allowFocus?: boolean;
-    width?: number;
-    onValue?: string | number;
-    offValue?: string | number;
-    onFocus?: IFocusHandlerWithData<ISwitchData>;
-    onBlur?: IFocusHandlerWithData<ISwitchData>;
-    onClick?: IClickHandlerWithData<ISwitchData>;
-}
 
 /**
  * Note: there is currently a TypeScript bug with passing refs to styled-components,

@@ -56,6 +56,31 @@ describe('Input', () => {
         expect(newValue).toBe(onChangeValue);
     });
 
+    test('should be able to render icon', () => {
+        const { container } = render(<Input icon="edit" />);
+        expect(container.querySelector('i')).toBeTruthy();
+    });
+
+    test('should not render icon when append is used', () => {
+        const { container } = render(<Input append="hello" icon="edit" />);
+        expect(container.querySelector('i')).toBeFalsy();
+    });
+
+    test('should be able to attach onIconClick handler', () => {
+        const iconClickHandler = jest.fn();
+        const { container } = render(<Input icon="edit" iconClickHandler={iconClickHandler} />);
+        const icon = container.querySelector('i') as HTMLElement;
+        fireEvent.click(icon);
+        expect(iconClickHandler).toHaveBeenCalledTimes(1);
+    });
+
+    test('should be able to pass ref to icon', () => {
+        const ref = React.createRef();
+        render(<Input icon="edit" iconRef={ref} />);
+        const icon = ref.current as HTMLElement;
+        expect(icon.tagName).toBe('I');
+    });
+
     describe('Textarea type', () => {
         test('should be able to render input as textarea', () => {
             const { container } = render(<Input type="textarea" />);
@@ -130,6 +155,11 @@ describe('Input', () => {
             const { container } = render(<Input type="textarea" rows={rows} />);
             const textarea = container.querySelector('textarea') as HTMLTextAreaElement;
             expect(textarea.rows).toBe(rows);
+        });
+
+        test('should not be able to render icons with textarea', () => {
+            const { container } = render(<Input type="textarea" icon="edit" />);
+            expect(container.querySelector('i')).toBeFalsy();
         });
     });
 });
