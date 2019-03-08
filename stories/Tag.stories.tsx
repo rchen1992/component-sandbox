@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import Tag, { TagType } from '../src/Tag/Tag';
+import Tag from '../src/Tag/Tag';
 import { wInfo } from '../src/utils';
+import { TagType } from '../src/Tag/tagTypes';
 
 const stories = storiesOf('Components/Tag', module) as any;
 
