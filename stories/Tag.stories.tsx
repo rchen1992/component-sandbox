@@ -53,4 +53,49 @@ stories.add(
         ~~~`)
 );
 
+/**
+|--------------------------------------------------
+| Removable
+|--------------------------------------------------
+*/
+stories.add(
+    'Removable',
+    () => (
+        <>
+            <Tag closable style={styles}>
+                Default
+            </Tag>
+            <Tag closable type="gray" style={styles}>
+                Gray
+            </Tag>
+            <Tag closable type="primary" style={styles}>
+                Primary
+            </Tag>
+            <Tag closable type="success" style={styles}>
+                Success
+            </Tag>
+            <Tag closable type="warning" style={styles}>
+                Warning
+            </Tag>
+            <Tag closable type="danger" style={styles}>
+                Danger
+            </Tag>
+        </>
+    ),
+    wInfo(`
+        ### Notes
+
+        Tag types.
+
+        ### Usage
+        ~~~js
+        <Tag>Default</Tag>
+        <Tag type="gray">Gray</Tag>
+        <Tag type="primary">Primary</Tag>
+        <Tag type="success">Success</Tag>
+        <Tag type="warning">Warning</Tag>
+        <Tag type="danger">Danger</Tag>
+        ~~~`)
+);
+
 export default stories;
