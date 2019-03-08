@@ -9,13 +9,14 @@ interface ITagProps {
 
 interface ITagWrapperProps extends ITagProps, IWithStyles {
     children: React.ReactNode;
+    onClose?: () => void;
 }
 
 interface ITagPropsWithTheme extends ITagProps {
     theme: ITheme;
 }
 
-enum TagType {
+export enum TagType {
     gray = 'gray',
     primary = 'primary',
     success = 'success',
@@ -123,7 +124,7 @@ const TagWrapper = React.forwardRef<any, ITagWrapperProps>((props, ref) => {
     return (
         <Tag ref={ref} style={props.style} className={props.className} type={props.type}>
             {props.children}
-            {Icon && <Icon />}
+            {Icon && <Icon onClick={props.onClose} />}
         </Tag>
     );
 });
