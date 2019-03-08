@@ -149,14 +149,14 @@ stories.add(
                 placeholder="Enter text here..."
                 type="textarea"
                 autosize={{ minRows: 2, maxRows: 4 }}
-                style={{ marginBottom: '20px' }}
+                style={{ marginBottom: '20px', display: 'block' }}
             />
 
             <Input
                 placeholder="Enter text here..."
                 type="textarea"
                 disabled
-                style={{ marginBottom: '20px' }}
+                style={{ marginBottom: '20px', display: 'block' }}
             />
 
             <Input

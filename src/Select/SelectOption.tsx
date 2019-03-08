@@ -16,6 +16,7 @@ interface IDropdownItemProps {
 
 export interface ISelectOptionProps extends IDropdownItemProps, IWithStyles {
     onClick?: IClickHandlerWithData<ISelectOption>;
+    children?: React.ReactNode;
 }
 
 const DropdownItem = styled<IDropdownItemProps, 'li'>('li')`
