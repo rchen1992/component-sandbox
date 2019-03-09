@@ -7,6 +7,7 @@ import filterByLabel from './filterable';
 export interface ISelectOptionGroupProps extends IWithStyles {
     label?: string;
     inputValue?: string;
+    selectedValues?: string[];
     filterable?: boolean;
     children?: React.ReactNode;
     onOptionClick?: IClickHandlerWithData<ISelectOption>;
@@ -43,7 +44,7 @@ const SelectOptionGroup = React.forwardRef<any, ISelectOptionGroupProps>((props,
 
             let option = child as React.ReactElement<ISelectOptionProps>;
 
-            let newOptionProps: ISelectOptionProps = { selectedValue: props.inputValue };
+            let newOptionProps: ISelectOptionProps = { selectedValues: props.selectedValues };
             // If option is disabled, don't give it a click handler at all.
             if (!option.props.disabled) {
                 newOptionProps.onClick = props.onOptionClick;

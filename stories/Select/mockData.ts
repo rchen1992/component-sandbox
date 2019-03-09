@@ -21,6 +21,29 @@ export const mockOptions = [
     },
 ];
 
+export const mockOptionsWithDifferingValuesFromLabels = [
+    {
+        value: 'Hello',
+        label: 'Option1',
+    },
+    {
+        value: 'World',
+        label: 'Option2',
+    },
+    {
+        value: 'Foo',
+        label: 'Option3',
+    },
+    {
+        value: 'Bar',
+        label: 'Option4',
+    },
+    {
+        value: 'Baz',
+        label: 'Option5',
+    },
+];
+
 export const mockOptionsWithDisabled = [
     {
         value: 'Option1',

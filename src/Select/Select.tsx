@@ -9,7 +9,6 @@ import SelectOptionGroup, { ISelectOptionGroupProps } from './SelectOptionGroup'
 import filterByLabel from './filterable';
 
 interface ISelectProps extends IWithStyles {
-    defaultValue?: string;
     open?: boolean;
     disabled?: boolean;
     clearable?: boolean;
@@ -106,7 +105,21 @@ const DropdownList = styled.ul`
 
 const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     const [open, setOpen] = React.useState(false);
-    const [inputValue, setInputValue] = React.useState(props.defaultValue || '');
+
+    /**
+     * State var for current input value.
+     * Corresponds with select option labels.
+     */
+    const [inputValue, setInputValue] = React.useState('');
+
+    /**
+     * State var for selected option values (not option labels).
+     * It is an array in case user uses the `multiple` prop,
+     * which allows for selecting multiple options.
+     */
+    const initialSelectedValues: string[] = [];
+    const [selectedValues, setSelectedValues] = React.useState(initialSelectedValues);
+
     const clearable = props.clearable && !!inputValue;
     const wrapperRef = React.useRef(null);
 
@@ -159,12 +172,17 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     function onIconClick() {
         if (clearable && !props.disabled) {
             setInputValue('');
+            setSelectedValues([]);
             setOpen(false);
         } else {
             onInputClick();
         }
     }
 
+    /**
+     * Used for `filterable` prop.
+     * Updates input value on user input.
+     */
     function onInputChange(e: React.ChangeEvent) {
         const target = e.target as HTMLInputElement;
         setInputValue(target.value);
@@ -173,10 +191,11 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     function onOptionClick(e: React.MouseEvent, data: ISelectOption) {
         setInputValue(data.label);
 
-        if (props.onChange && data.value !== inputValue) {
+        if (props.onChange && !selectedValues.includes(data.value)) {
             props.onChange(data);
         }
 
+        setSelectedValues([data.value]);
         setOpen(false);
     }
 
@@ -186,7 +205,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
             if (child.type === SelectWithCompoundComponents.Option) {
                 let option = child as React.ReactElement<ISelectOptionProps>;
 
-                let newOptionProps: ISelectOptionProps = { selectedValue: inputValue };
+                let newOptionProps: ISelectOptionProps = { selectedValues };
                 // If option is disabled, don't give it a click handler at all.
                 if (!option.props.disabled) {
                     newOptionProps.onClick = onOptionClick;
@@ -199,6 +218,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
                 return React.cloneElement(group, {
                     onOptionClick,
                     inputValue,
+                    selectedValues,
                     filterable: props.filterable,
                 });
             } else {

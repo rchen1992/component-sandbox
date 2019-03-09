@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Select from '../../src/Select';
 import { wInfo } from '../../src/utils';
-import { mockOptions } from './mockData';
+import { mockOptionsWithDifferingValuesFromLabels } from './mockData';
 
 const CustomTemplate = (stories: any) => {
     stories.add(
         'Custom Template',
         () => (
             <Select>
-                {mockOptions.map(option => (
+                {mockOptionsWithDifferingValuesFromLabels.map(option => (
                     <Select.Option key={option.value} value={option.value} label={option.label}>
                         <span style={{ float: 'left' }}>{option.label}</span>
                         <span style={{ float: 'right', color: '#8492a6', fontSize: 13 }}>
@@ -28,11 +28,11 @@ const CustomTemplate = (stories: any) => {
         ### Usage
         ~~~js
         const mockOptions = [
-            { value: 'Option1', label: 'Option1', },
-            { value: 'Option2', label: 'Option2', },
-            { value: 'Option3', label: 'Option3', },
-            { value: 'Option4', label: 'Option4', },
-            { value: 'Option5', label: 'Option5', },
+            { value: 'Hello', label: 'Option1', },
+            { value: 'World', label: 'Option2', },
+            { value: 'Foo', label: 'Option3', },
+            { value: 'Bar', label: 'Option4', },
+            { value: 'Baz', label: 'Option5', },
         ];
         
         <Select>
