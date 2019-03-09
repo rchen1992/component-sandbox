@@ -6,6 +6,7 @@ import { SELECT_WIDTH, DROPDOWN_ANIMATION_DURATION } from './styleConstants';
 import { getIconContent } from '../icons';
 import SelectOption, { ISelectOption, ISelectOptionProps } from './SelectOption';
 import SelectOptionGroup, { ISelectOptionGroupProps } from './SelectOptionGroup';
+import filterByLabel from './filterable';
 
 interface ISelectProps extends IWithStyles {
     defaultValue?: string;
@@ -179,27 +180,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     }
 
     const children = React.Children.toArray(props.children)
-        .filter(child => {
-            if (!React.isValidElement(child)) {
-                throw new Error('Provided an invalid element as a child to Select.');
-            }
-
-            /**
-             * If this Select is filterable, we need to filter out the Option children
-             * whose labels don't contain the current input value.
-             */
-            if (props.filterable && child.type === SelectWithCompoundComponents.Option) {
-                let option = child as React.ReactElement<ISelectOptionProps>;
-                if (
-                    option.props.label &&
-                    !option.props.label.toLowerCase().includes(inputValue.toLowerCase())
-                ) {
-                    return false;
-                }
-            }
-
-            return true;
-        })
+        .filter(filterByLabel(props.filterable, inputValue))
         .map((child: React.ReactElement<{}>) => {
             if (child.type === SelectWithCompoundComponents.Option) {
                 let option = child as React.ReactElement<ISelectOptionProps>;
@@ -217,6 +198,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
                 return React.cloneElement(group, {
                     onOptionClick,
                     inputValue,
+                    filterable: props.filterable,
                 });
             } else {
                 throw new Error(

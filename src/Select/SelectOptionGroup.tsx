@@ -2,10 +2,12 @@ import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import SelectOption, { ISelectOptionProps, ISelectOption } from './SelectOption';
 import { IClickHandlerWithData } from 'types';
+import filterByLabel from './filterable';
 
 export interface ISelectOptionGroupProps extends IWithStyles {
     label?: string;
     inputValue?: string;
+    filterable?: boolean;
     children?: React.ReactNode;
     onOptionClick?: IClickHandlerWithData<ISelectOption>;
 }
@@ -30,23 +32,25 @@ const Title = styled.li`
 `;
 
 const SelectOptionGroup = React.forwardRef<any, ISelectOptionGroupProps>((props, ref) => {
-    const children = React.Children.map(props.children, child => {
-        if (!React.isValidElement(child) || child.type !== SelectOption) {
-            throw new Error(
-                'The only valid child to a Select Option Group element is a Select Option element.'
-            );
-        }
+    const children = React.Children.toArray(props.children)
+        .filter(filterByLabel(props.filterable, props.inputValue || ''))
+        .map(child => {
+            if (!React.isValidElement(child) || child.type !== SelectOption) {
+                throw new Error(
+                    'The only valid child to a Select Option Group element is a Select Option element.'
+                );
+            }
 
-        let option = child as React.ReactElement<ISelectOptionProps>;
+            let option = child as React.ReactElement<ISelectOptionProps>;
 
-        let newOptionProps: ISelectOptionProps = { selectedValue: props.inputValue };
-        // If option is disabled, don't give it a click handler at all.
-        if (!option.props.disabled) {
-            newOptionProps.onClick = props.onOptionClick;
-        }
+            let newOptionProps: ISelectOptionProps = { selectedValue: props.inputValue };
+            // If option is disabled, don't give it a click handler at all.
+            if (!option.props.disabled) {
+                newOptionProps.onClick = props.onOptionClick;
+            }
 
-        return React.cloneElement(option, newOptionProps);
-    });
+            return React.cloneElement(option, newOptionProps);
+        });
 
     return (
         <Group ref={ref} className={props.className} style={props.style}>
