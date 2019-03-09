@@ -14,6 +14,7 @@ interface ISelectProps extends IWithStyles {
     disabled?: boolean;
     clearable?: boolean;
     filterable?: boolean;
+    multiple?: boolean;
     options?: ISelectOption[];
     children?: React.ReactNode;
     onChange?: (data: ISelectOption) => void;
@@ -62,14 +63,14 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
     }
 `;
 
-// const TagWrapper = styled.div`
-//     z-index: 1;
-//     max-width: 208px;
-//     position: absolute;
-//     top: 50%;
-//     /* Translate with percentage moves it a percentage of this elements own height, not the parent. */
-//     transform: translateY(-50%);
-// `;
+const TagWrapper = styled.div`
+    z-index: 1;
+    max-width: 208px;
+    position: absolute;
+    top: 50%;
+    /* Translate with percentage moves it a percentage of this elements own height, not the parent. */
+    transform: translateY(-50%);
+`;
 
 const Dropdown = styled<ISelectProps, 'div'>('div')`
     min-width: ${SELECT_WIDTH};
@@ -216,7 +217,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
             disabled={props.disabled}
             clearable={clearable}
         >
-            {/* <TagWrapper /> */}
+            {props.multiple && <TagWrapper />}
             <Input
                 ref={ref}
                 readOnly={!props.filterable}
