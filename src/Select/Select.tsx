@@ -12,6 +12,7 @@ interface ISelectProps extends IWithStyles {
     open?: boolean;
     disabled?: boolean;
     clearable?: boolean;
+    filterable?: boolean;
     options?: ISelectOption[];
     children?: React.ReactNode;
     onChange?: (data: ISelectOption) => void;
@@ -162,6 +163,11 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
         }
     }
 
+    function onInputChange(e: React.ChangeEvent) {
+        const target = e.target as HTMLInputElement;
+        setInputValue(target.value);
+    }
+
     function onOptionClick(e: React.MouseEvent, data: ISelectOption) {
         setInputValue(data.label);
 
@@ -172,34 +178,52 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
         setOpen(false);
     }
 
-    const children = React.Children.map(props.children, child => {
-        if (!React.isValidElement(child)) {
-            throw new Error('Provided an invalid element as a child to Select.');
-        }
-
-        if (child.type === SelectWithCompoundComponents.Option) {
-            let option = child as React.ReactElement<ISelectOptionProps>;
-
-            let newOptionProps: ISelectOptionProps = { selectedValue: inputValue };
-            // If option is disabled, don't give it a click handler at all.
-            if (!option.props.disabled) {
-                newOptionProps.onClick = onOptionClick;
+    const children = React.Children.toArray(props.children)
+        .filter(child => {
+            if (!React.isValidElement(child)) {
+                throw new Error('Provided an invalid element as a child to Select.');
             }
 
-            return React.cloneElement(option, newOptionProps);
-        } else if (child.type === SelectWithCompoundComponents.OptionGroup) {
-            let group = child as React.ReactElement<ISelectOptionGroupProps>;
+            /**
+             * If this Select is filterable, we need to filter out the Option children
+             * whose labels don't contain the current input value.
+             */
+            if (props.filterable && child.type === SelectWithCompoundComponents.Option) {
+                let option = child as React.ReactElement<ISelectOptionProps>;
+                if (
+                    option.props.label &&
+                    !option.props.label.toLowerCase().includes(inputValue.toLowerCase())
+                ) {
+                    return false;
+                }
+            }
 
-            return React.cloneElement(group, {
-                onOptionClick,
-                inputValue,
-            });
-        } else {
-            throw new Error(
-                'The only valid child to a Select element is either a Select Option element or Select Option Group element.'
-            );
-        }
-    });
+            return true;
+        })
+        .map((child: React.ReactElement<{}>) => {
+            if (child.type === SelectWithCompoundComponents.Option) {
+                let option = child as React.ReactElement<ISelectOptionProps>;
+
+                let newOptionProps: ISelectOptionProps = { selectedValue: inputValue };
+                // If option is disabled, don't give it a click handler at all.
+                if (!option.props.disabled) {
+                    newOptionProps.onClick = onOptionClick;
+                }
+
+                return React.cloneElement(option, newOptionProps);
+            } else if (child.type === SelectWithCompoundComponents.OptionGroup) {
+                let group = child as React.ReactElement<ISelectOptionGroupProps>;
+
+                return React.cloneElement(group, {
+                    onOptionClick,
+                    inputValue,
+                });
+            } else {
+                throw new Error(
+                    'The only valid child to a Select element is either a Select Option element or Select Option Group element.'
+                );
+            }
+        });
 
     return (
         <Wrapper
@@ -213,7 +237,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
             {/* <TagWrapper /> */}
             <Input
                 ref={ref}
-                readOnly
+                readOnly={!props.filterable}
                 placeholder="Select"
                 icon="caret-bottom"
                 iconSize={12}
@@ -221,6 +245,7 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
                 iconClickHandler={onIconClick}
                 value={inputValue}
                 disabled={props.disabled}
+                onChange={props.filterable ? onInputChange : undefined}
             />
             <Dropdown open={open} data-testid="select-dropdown">
                 <DropdownList>{children}</DropdownList>
