@@ -14,7 +14,7 @@ I am recreating certain Element UI components to learn more about the following 
 -   Styled Components
 -   Jest
 
-The offical Element UI library is here: https://elemefe.github.io/element-react/#/en-US/quick-start
+The official Element UI library is here: https://elemefe.github.io/element-react/#/en-US/quick-start
 
 # Usage
 

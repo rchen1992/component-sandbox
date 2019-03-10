@@ -19,6 +19,6 @@ storiesOf('Welcome', module).add(
     - Storybook
     - Jest
 
-    The offical Element UI library is here: https://elemefe.github.io/element-react/#/en-US/quick-start
+    The official Element UI library is here: https://elemefe.github.io/element-react/#/en-US/quick-start
   `)
 );
