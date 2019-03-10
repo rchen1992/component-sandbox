@@ -1,12 +1,20 @@
-Based off of https://dev.to/swyx/quick-guide-to-setup-your-react--typescript-storybook-design-system-1c51
+# Demo
 
-# Tech
+https://componentsandbox.netlify.com
+
+# About
+
+This project is an ongoing **learning exercise**. It is NOT meant to be an official library.
+
+I am recreating certain Element UI components to learn more about the following technologies:
 
 -   React
 -   TypeScript
 -   Storybook
 -   Styled Components
 -   Jest
+
+The offical Element UI library is here: https://elemefe.github.io/element-react/#/en-US/quick-start
 
 # Usage
 
