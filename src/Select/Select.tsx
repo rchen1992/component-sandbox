@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, { IWithStyles, css } from '../sc-utils';
 import Input from '../Input';
+// import Tag from '../Tag';
 import { expandAndShow } from '../keyframes';
 import { SELECT_WIDTH, DROPDOWN_ANIMATION_DURATION } from './styleConstants';
 import { getIconContent } from '../icons';
@@ -62,14 +63,18 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
     }
 `;
 
-const TagWrapper = styled.div`
-    z-index: 1;
-    max-width: 208px;
-    position: absolute;
-    top: 50%;
-    /* Translate with percentage moves it a percentage of this elements own height, not the parent. */
-    transform: translateY(-50%);
-`;
+// const TagWrapper = styled.div`
+//     z-index: 1;
+//     max-width: calc(${SELECT_WIDTH} - 32px);
+//     position: absolute;
+//     top: 50%;
+//     /* Translate with percentage moves it a percentage of this elements own height, not the parent. */
+//     transform: translateY(-50%);
+
+//     > span {
+//         margin: 3px 0 3px 6px;
+//     }
+// `;
 
 const Dropdown = styled<ISelectProps, 'div'>('div')`
     min-width: ${SELECT_WIDTH};
@@ -189,14 +194,22 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
     }
 
     function onOptionClick(e: React.MouseEvent, data: ISelectOption) {
-        setInputValue(data.label);
-
         if (props.onChange && !selectedValues.includes(data.value)) {
             props.onChange(data);
         }
 
-        setSelectedValues([data.value]);
-        setOpen(false);
+        if (props.multiple) {
+            // setSelectedValues(prevValues => {
+            //     if (!prevValues.includes(data.value)) {
+            //         return prevValues.concat([data.value]);
+            //     }
+            //     return prevValues;
+            // });
+        } else {
+            setInputValue(data.label);
+            setSelectedValues([data.value]);
+            setOpen(false);
+        }
     }
 
     const children = React.Children.toArray(props.children)
@@ -228,6 +241,15 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
             }
         });
 
+    // let tags;
+    // if (props.multiple) {
+    //     tags = selectedValues.map(value => (
+    //         <Tag key={value} type="primary" closable>
+    //             {value}
+    //         </Tag>
+    //     ));
+    // }
+
     return (
         <Wrapper
             ref={wrapperRef}
@@ -237,11 +259,12 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
             disabled={props.disabled}
             clearable={clearable}
         >
-            {props.multiple && <TagWrapper />}
+            {/* {props.multiple && <TagWrapper>{tags}</TagWrapper>} */}
             <Input
                 ref={ref}
                 readOnly={!props.filterable}
-                placeholder="Select"
+                placeholder={'Select'}
+                // placeholder={tags && tags.length > 0 ? '' : 'Select'}
                 icon="caret-bottom"
                 iconSize={12}
                 onClick={onInputClick}
