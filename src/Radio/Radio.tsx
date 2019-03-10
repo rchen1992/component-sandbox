@@ -8,6 +8,7 @@ export interface IRadioData {
 }
 
 export interface IRadioProps extends IWithStyles {
+    children?: React.ReactNode;
     checked?: boolean;
     value?: string;
     disabled?: boolean;

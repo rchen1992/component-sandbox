@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, { IWithStyles } from '../sc-utils';
 import { IClickHandlerWithData } from 'types';
+import { optionIsSelected } from './util';
 
 export interface ISelectOption {
     value: string;
@@ -11,7 +12,7 @@ interface IDropdownItemProps {
     value?: string;
     label?: string;
     disabled?: boolean;
-    selectedValue?: string;
+    selectedValues?: string[];
 }
 
 export interface ISelectOptionProps extends IDropdownItemProps, IWithStyles {
@@ -28,19 +29,21 @@ const DropdownItem = styled<IDropdownItemProps, 'li'>('li')`
     text-overflow: ellipsis;
     overflow: hidden;
     background-color: ${props =>
-        props.selectedValue === props.value ? props.theme.primaryColor : 'white'};
+        optionIsSelected(props.selectedValues, props.value) ? props.theme.primaryColor : 'white'};
     color: ${props => {
         if (props.disabled) {
             return props.theme.infoColorAccent;
         }
 
-        return props.selectedValue === props.value ? 'white' : props.theme.defaultTextColor;
+        return optionIsSelected(props.selectedValues, props.value)
+            ? 'white'
+            : props.theme.defaultTextColor;
     }};
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 
     :hover {
         background-color: ${props =>
-            props.selectedValue === props.value
+            optionIsSelected(props.selectedValues, props.value)
                 ? props.theme.primaryColor
                 : props.theme.disabledColor};
     }
@@ -61,7 +64,7 @@ const SelectOption = React.forwardRef<any, ISelectOptionProps>((props, ref) => {
             ref={ref}
             className={props.className}
             style={props.style}
-            selectedValue={props.selectedValue}
+            selectedValues={props.selectedValues}
             value={props.value}
             onClick={onClick}
             disabled={props.disabled}

@@ -299,4 +299,62 @@ describe('Select', () => {
             });
         });
     });
+
+    test('should be able to filter options when filterable prop is set', () => {
+        const { container, getByText, queryByText } = render(
+            <Select filterable>
+                {mockOptions.map(option => (
+                    <Select.Option key={option.value} value={option.value} label={option.label} />
+                ))}
+            </Select>
+        );
+
+        // Type '3' into input
+        const input = container.querySelector('input') as HTMLInputElement;
+        fireEvent.change(input, { target: { value: '3' } });
+
+        // 'Option3' should be the only option remaining
+        expect(getByText('Option3')).toBeTruthy();
+
+        const restOfOptions = ['Option1', 'Option2', 'Option4', 'Option5'];
+        restOfOptions.forEach(option => {
+            const renderedOption = queryByText(option);
+            expect(renderedOption).toBeFalsy();
+        });
+    });
+
+    test('should be able to filter options inside of option groups when filterable prop is set', () => {
+        const { container, getByText, queryByText } = render(
+            <Select filterable>
+                {mockOptionGroups.map(group => {
+                    return (
+                        <Select.OptionGroup key={group.label} label={group.label}>
+                            {group.options.map(option => {
+                                return (
+                                    <Select.Option
+                                        key={option.value}
+                                        label={option.label}
+                                        value={option.value}
+                                    />
+                                );
+                            })}
+                        </Select.OptionGroup>
+                    );
+                })}
+            </Select>
+        );
+
+        // Type '3' into input
+        const input = container.querySelector('input') as HTMLInputElement;
+        fireEvent.change(input, { target: { value: '3' } });
+
+        // 'Option3' should be the only option remaining
+        expect(getByText('Option3')).toBeTruthy();
+
+        const restOfOptions = ['Option1', 'Option2', 'Option4', 'Option5', 'Option6'];
+        restOfOptions.forEach(option => {
+            const renderedOption = queryByText(option);
+            expect(renderedOption).toBeFalsy();
+        });
+    });
 });
