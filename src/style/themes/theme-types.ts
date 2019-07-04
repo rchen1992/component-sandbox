@@ -34,10 +34,15 @@ export interface IThemeColors {
     disabledColor: string;
 }
 
+export interface IThemeZIndexes {
+    zIndexOverlay: number;
+    zIndexModal: number;
+}
+
 /**
  * Object containing theme variables.
  */
-export interface ITheme extends IThemeColors {
+export interface ITheme extends IThemeColors, IThemeZIndexes {
     fontSize: string;
     defaultButtonVerticalPadding: string;
     defaultButtonHorizontalPadding: string;

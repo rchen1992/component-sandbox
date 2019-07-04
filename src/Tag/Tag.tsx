@@ -9,7 +9,7 @@ export interface ITagProps {
 }
 
 interface ITagWrapperProps extends ITagProps, IWithStyles {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     onClose?: () => void;
 }
 
