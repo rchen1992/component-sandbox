@@ -42,3 +42,9 @@ Run tests
 ```bash
 npm test
 ```
+
+# Gotchas
+
+1. After `npm install` (If using npm instead of yarn), run `yarn autoclean --force`.
+
+-   Reason: There is currently an unaddressed [issue](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33311) with styled-components versions above `4.1.8` where react-native types are being exported along with react types. This causes errors upon building. My current workaround is adding react-native types to `.yarnclean` and then removing them from `node_modules` with the above command.
