@@ -2,7 +2,7 @@ import styled, { css, ITheme } from '../sc-utils';
 import getBasicButtonTypeCss from './basicButtonTypes';
 import getPlainButtonTypeCss from './plainButtonTypes';
 import ButtonSizeCss, { ButtonSize } from './buttonSizes';
-import { InterpolationValue } from 'styled-components';
+import { FlattenSimpleInterpolation } from 'styled-components';
 import { ButtonType } from './buttonTypes';
 
 export interface IButtonProps {
@@ -20,9 +20,11 @@ export interface IButtonPropsAndTheme extends IButtonProps {
 /**
  * A function that takes button props and returns a CSS function.
  */
-export type ButtonCssFunction = (props: IButtonPropsAndTheme) => InterpolationValue[] | undefined;
+export type ButtonCssFunction = (
+    props: IButtonPropsAndTheme
+) => FlattenSimpleInterpolation | undefined;
 
-export default styled<IButtonProps, 'button'>('button')`
+export default styled.div<IButtonProps>`
     /**
      * Default styling
      */

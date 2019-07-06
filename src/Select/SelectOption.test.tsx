@@ -10,7 +10,7 @@ describe('Select Option', () => {
     testComponentCanHandleStyles(<Select.Option />);
 
     test('should be able to pass ref to select options', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLLIElement>();
         render(<Select.Option ref={ref} />);
         expect(ref.current instanceof HTMLLIElement).toBeTruthy();
     });

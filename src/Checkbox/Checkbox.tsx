@@ -18,16 +18,18 @@ export interface ICheckboxData {
     value?: string;
 }
 
-type CheckboxWithRef = React.ForwardRefExoticComponent<ICheckboxProps & React.RefAttributes<any>>;
+type CheckboxWithRef = React.ForwardRefExoticComponent<
+    ICheckboxProps & React.RefAttributes<HTMLInputElement>
+>;
 
-const Label = styled<ICheckboxProps, 'label'>('label')`
+const Label = styled.label<ICheckboxProps>`
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
     white-space: nowrap;
     position: relative;
     display: inline-block;
 `;
 
-const Box = styled<ICheckboxProps, 'span'>('span')`
+const Box = styled.span<ICheckboxProps>`
     display: inline-block;
     position: relative;
     background-color: ${props => {
@@ -81,8 +83,9 @@ const Box = styled<ICheckboxProps, 'span'>('span')`
                       top: 1px;
                       left: 5px;
                       z-index: 1;
-                      transform: ${props =>
-                          props.checked ? 'rotate(45deg) scaleY(1)' : 'rotate(45deg) scaleY(0)'};
+                      transform: ${props.checked
+                          ? 'rotate(45deg) scaleY(1)'
+                          : 'rotate(45deg) scaleY(0)'};
                       transform-origin: center;
                       box-sizing: content-box;
                       transition: transform 200ms ease-out;
@@ -99,7 +102,7 @@ const Input = styled.input`
     height: 0;
 `;
 
-const BoxLabel = styled<ICheckboxProps, 'span'>('span')`
+const BoxLabel = styled.span<ICheckboxProps>`
     font-size: 14px;
     font-family: system-ui;
     padding-left: 5px;
@@ -114,7 +117,7 @@ const BoxLabel = styled<ICheckboxProps, 'span'>('span')`
 |--------------------------------------------------
 */
 
-const Checkbox = React.forwardRef<any, ICheckboxProps>((props, ref) => {
+const Checkbox = React.forwardRef<HTMLInputElement, ICheckboxProps>((props, ref) => {
     const [checked, setChecked] = React.useState(!!props.defaultChecked);
 
     const finalChecked = props.checked === undefined ? checked : !!props.checked;

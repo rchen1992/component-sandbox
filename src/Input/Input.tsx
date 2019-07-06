@@ -25,7 +25,7 @@ export interface IInputProps {
 }
 
 type InputType = IInputProps | (IInputProps & HTMLTextAreaElement);
-const Input = styled<InputType, 'input'>('input')`
+const Input = styled.input<InputType>`
     /* Remove native input css */
     appearance: none;
     -webkit-appearance: none;
@@ -105,7 +105,7 @@ const Input = styled<InputType, 'input'>('input')`
         `};
 `;
 
-const Wrapper = styled<IInputProps, 'div'>('div')`
+const Wrapper = styled.div<IInputProps>`
     display: inline-table;
     position: relative;
 
@@ -130,7 +130,7 @@ const Wrapper = styled<IInputProps, 'div'>('div')`
     }
 `;
 
-const Extension = styled<IInputProps, 'div'>('div')`
+const Extension = styled.div<IInputProps>`
     background-color: hsl(210, 100%, 99%);
     border: 1px solid ${props => props.theme.defaultBorderColor};
     display: table-cell;
@@ -154,17 +154,20 @@ const Append = styled(Extension)`
     border-bottom-left-radius: 0;
 `;
 
-type InputWrapperProps = IInputProps &
-    React.ClassAttributes<HTMLInputElement> &
-    React.InputHTMLAttributes<HTMLInputElement> &
-    React.ClassAttributes<HTMLTextAreaElement> &
-    React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+// type InputWrapperProps = IInputProps &
+//     React.ClassAttributes<HTMLInputElement> &
+//     React.InputHTMLAttributes<HTMLInputElement> &
+//     React.ClassAttributes<HTMLTextAreaElement> &
+//     React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
+/**
+ * TODO: Figure out how to properly add type to the props.
+ * The currently problem is that this can be an input element OR a textarea element.
+ */
+const InputWrapper = React.forwardRef<any, any>((props, ref) => {
     const [rows, setRows] = React.useState(
         typeof props.autosize === 'object' ? Math.max(props.autosize.minRows, 1) : 1
     );
-    const inputRef = ref as any;
 
     const Icon =
         props.icon && props.type !== 'textarea' && !props.append ? getIcon(props.icon) : null;
@@ -207,7 +210,7 @@ const InputWrapper = React.forwardRef<any, InputWrapperProps>((props, ref) => {
 
             <Input
                 {...remainingProps}
-                ref={inputRef}
+                ref={ref}
                 as={props.type === 'textarea' ? 'textarea' : 'input'}
                 type={props.type}
                 rows={props.type === 'textarea' && !!props.autosize ? rows : props.rows || null}

@@ -10,7 +10,7 @@ describe('Input', () => {
     testComponentCanHandleStyles(<Input />);
 
     test('should be able to pass ref to input', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLInputElement>();
         render(<Input ref={ref} />);
         expect(ref.current instanceof HTMLInputElement).toBeTruthy();
     });

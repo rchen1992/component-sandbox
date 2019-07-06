@@ -10,7 +10,7 @@ describe('Tag', () => {
     testComponentCanHandleStyles(<Tag>Hello World</Tag>);
 
     test('should be able to pass ref', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLSpanElement>();
         render(<Tag ref={ref}>Hello World</Tag>);
         expect(ref.current instanceof HTMLSpanElement).toBeTruthy();
     });

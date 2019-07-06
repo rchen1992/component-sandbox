@@ -20,7 +20,7 @@ describe('Select Option Group', () => {
     });
 
     test('should be able to pass ref to select option group', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLUListElement>();
         render(<Select.OptionGroup ref={ref} />);
         expect(ref.current instanceof HTMLUListElement).toBeTruthy();
     });

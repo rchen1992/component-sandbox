@@ -1,24 +1,24 @@
 import styled, { media, screenSizes } from '../sc-utils';
 import { GRID_COLUMN_MAX } from './util';
-import { InterpolationValue } from 'styled-components';
+import { SimpleInterpolation } from 'styled-components';
 
 /**
  * Returns all media queries for all breakpoints for a column.
  */
-const colMediaQueries = (props: IColProps): InterpolationValue[] => {
+const colMediaQueries = (props: IColProps) => {
     return Object.keys(screenSizes).reduce(
         (result, breakpoint) => {
             result.push(...colMediaQuery(props, breakpoint));
             return result;
         },
-        [] as InterpolationValue[]
+        [] as SimpleInterpolation[]
     );
 };
 
 /**
  * Returns media query that sets start and span for a column at a specific breakpoint.
  */
-const colMediaQuery = (props: IColProps, breakpoint: string): InterpolationValue[] => {
+const colMediaQuery = (props: IColProps, breakpoint: string) => {
     return media[breakpoint]`
             grid-column-start: ${props.gridColumnStart && props.gridColumnStart[breakpoint]};
             grid-column-end: span

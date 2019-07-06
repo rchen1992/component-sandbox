@@ -20,7 +20,7 @@ export interface ISelectOptionProps extends IDropdownItemProps, IWithStyles {
     children?: React.ReactNode;
 }
 
-const DropdownItem = styled<IDropdownItemProps, 'li'>('li')`
+const DropdownItem = styled.li<IDropdownItemProps>`
     height: 36px;
     line-height: 1.5;
     box-sizing: border-box;
@@ -49,7 +49,7 @@ const DropdownItem = styled<IDropdownItemProps, 'li'>('li')`
     }
 `;
 
-const SelectOption = React.forwardRef<any, ISelectOptionProps>((props, ref) => {
+const SelectOption = React.forwardRef<HTMLLIElement, ISelectOptionProps>((props, ref) => {
     function onClick(e: React.MouseEvent) {
         if (props.onClick && !props.disabled) {
             props.onClick(e, {

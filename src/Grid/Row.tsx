@@ -7,7 +7,7 @@ interface IGridRowProps {
     gutter?: number;
 }
 
-const GridRow = styled<IGridRowProps, 'div'>('div')`
+const GridRow = styled.div<IGridRowProps>`
     display: grid;
     grid-template-columns: repeat(${GRID_COLUMN_MAX}, 1fr);
 
@@ -21,7 +21,7 @@ const GridRow = styled<IGridRowProps, 'div'>('div')`
 interface IRowProps extends IWithStyles {
     children?: React.ReactNode;
     gutter?: number;
-    tag?: string;
+    tag?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
 }
 
 /**
@@ -29,7 +29,7 @@ interface IRowProps extends IWithStyles {
  * so we are currently using type `any` for the ref.
  * https://github.com/DefinitelyTyped/DefinitelyTyped/issues/28884
  */
-const Row = React.forwardRef<any, IRowProps>((props, ref) => {
+const Row = React.forwardRef<HTMLDivElement, IRowProps>((props, ref) => {
     const children: React.ReactElement<IColProps>[] = [];
     let colPositions = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1 };
 

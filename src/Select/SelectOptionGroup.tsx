@@ -32,33 +32,35 @@ const Title = styled.li`
     line-height: 30px;
 `;
 
-const SelectOptionGroup = React.forwardRef<any, ISelectOptionGroupProps>((props, ref) => {
-    const children = React.Children.toArray(props.children)
-        .filter(filterByLabel(props.filterable, props.inputValue || ''))
-        .map(child => {
-            if (!React.isValidElement(child) || child.type !== SelectOption) {
-                throw new Error(
-                    'The only valid child to a Select Option Group element is a Select Option element.'
-                );
-            }
+const SelectOptionGroup = React.forwardRef<HTMLUListElement, ISelectOptionGroupProps>(
+    (props, ref) => {
+        const children = React.Children.toArray(props.children)
+            .filter(filterByLabel(props.filterable, props.inputValue || ''))
+            .map(child => {
+                if (!React.isValidElement(child) || child.type !== SelectOption) {
+                    throw new Error(
+                        'The only valid child to a Select Option Group element is a Select Option element.'
+                    );
+                }
 
-            let option = child as React.ReactElement<ISelectOptionProps>;
+                let option = child as React.ReactElement<ISelectOptionProps>;
 
-            let newOptionProps: ISelectOptionProps = { selectedValues: props.selectedValues };
-            // If option is disabled, don't give it a click handler at all.
-            if (!option.props.disabled) {
-                newOptionProps.onClick = props.onOptionClick;
-            }
+                let newOptionProps: ISelectOptionProps = { selectedValues: props.selectedValues };
+                // If option is disabled, don't give it a click handler at all.
+                if (!option.props.disabled) {
+                    newOptionProps.onClick = props.onOptionClick;
+                }
 
-            return React.cloneElement(option, newOptionProps);
-        });
+                return React.cloneElement(option, newOptionProps);
+            });
 
-    return (
-        <Group ref={ref} className={props.className} style={props.style}>
-            <Title>{props.label}</Title>
-            {children}
-        </Group>
-    );
-});
+        return (
+            <Group ref={ref} className={props.className} style={props.style}>
+                <Title>{props.label}</Title>
+                {children}
+            </Group>
+        );
+    }
+);
 
 export default SelectOptionGroup;

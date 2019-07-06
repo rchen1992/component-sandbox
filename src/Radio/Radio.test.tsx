@@ -46,7 +46,7 @@ describe('Radio', () => {
     });
 
     test('should be able to pass ref to input', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLInputElement>();
         render(<Radio ref={ref}>Option</Radio>);
         expect(ref.current instanceof HTMLInputElement).toBeTruthy();
     });

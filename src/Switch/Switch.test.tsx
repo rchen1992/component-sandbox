@@ -124,7 +124,7 @@ describe('Switch', () => {
     });
 
     test('should be able to pass ref to access input', () => {
-        const ref = React.createRef<any>();
+        const ref = React.createRef<HTMLInputElement>();
         render(<Switch ref={ref} />);
         expect(ref.current instanceof HTMLInputElement).toBeTruthy();
     });
