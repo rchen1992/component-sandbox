@@ -29,7 +29,7 @@ const Basic = (stories: any) => {
                         >
                             Cancel
                         </Button>
-                        <Button buttonSize="mini" type="primary" onClick={onClose}>
+                        <Button buttonSize="mini" buttonType="primary" onClick={onClose}>
                             Confirm
                         </Button>
                     </Modal.Footer>

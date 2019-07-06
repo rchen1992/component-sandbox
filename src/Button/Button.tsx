@@ -9,7 +9,7 @@ export interface IButtonProps {
     round?: boolean;
     plain?: boolean;
     disabled?: boolean;
-    type?: keyof typeof ButtonType;
+    buttonType?: keyof typeof ButtonType;
     buttonSize?: keyof typeof ButtonSize;
 }
 
@@ -24,7 +24,7 @@ export type ButtonCssFunction = (
     props: IButtonPropsAndTheme
 ) => FlattenSimpleInterpolation | undefined;
 
-export default styled.div<IButtonProps>`
+export default styled.button<IButtonProps>`
     /**
      * Default styling
      */
@@ -66,7 +66,7 @@ export default styled.div<IButtonProps>`
     /**
      * Button types (primary, success, danger, etc)
      */
-    ${props => props.type && getBasicButtonTypeCss(props.type)}
+    ${props => props.buttonType && getBasicButtonTypeCss(props.buttonType)}
 
     /**
      * Default plain button.
@@ -84,7 +84,7 @@ export default styled.div<IButtonProps>`
     /**
      * Plain buttons types.
      */
-    ${props => props.plain && props.type && getPlainButtonTypeCss(props.type)}
+    ${props => props.plain && props.buttonType && getPlainButtonTypeCss(props.buttonType)}
 
     /**
      * Disabled buttons.

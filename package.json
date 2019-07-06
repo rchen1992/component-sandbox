@@ -14,7 +14,8 @@
         "copy-public-to-static": "cp -R public/* storybook-static",
         "copy-css-to-lib": "cpx \"./src/**/*.css\" ./build/lib",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "postinstall": "yarn autoclean --force"
     },
     "repository": "https://github.com/sw-yx/react-typescript-storybook-starter.git",
     "author": "rchen1992 <raymoc2@uci.edu>",

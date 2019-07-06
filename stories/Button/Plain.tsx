@@ -12,19 +12,19 @@ const Plain = (stories: any) => {
                 <Button plain {...actions}>
                     Primary
                 </Button>
-                <Button plain type="primary" {...actions}>
+                <Button plain buttonType="primary" {...actions}>
                     Primary
                 </Button>
-                <Button plain type="success" {...actions}>
+                <Button plain buttonType="success" {...actions}>
                     Success
                 </Button>
-                <Button plain type="info" {...actions}>
+                <Button plain buttonType="info" {...actions}>
                     Info
                 </Button>
-                <Button plain type="warning" {...actions}>
+                <Button plain buttonType="warning" {...actions}>
                     Warning
                 </Button>
-                <Button plain type="danger" {...actions}>
+                <Button plain buttonType="danger" {...actions}>
                     Danger
                 </Button>
             </Container>
@@ -37,11 +37,11 @@ const Plain = (stories: any) => {
         ### Usage
         ~~~js
         <Button plain>Default</Button>
-        <Button plain type='primary'>Primary</Button>
-        <Button plain type='success'>Success</Button>
-        <Button plain type='info'>Info</Button>
-        <Button plain type='warning'>Warning</Button>
-        <Button plain type='danger'>Danger</Button>
+        <Button plain buttonType='primary'>Primary</Button>
+        <Button plain buttonType='success'>Success</Button>
+        <Button plain buttonType='info'>Info</Button>
+        <Button plain buttonType='warning'>Warning</Button>
+        <Button plain buttonType='danger'>Danger</Button>
         ~~~`)
     );
 };
