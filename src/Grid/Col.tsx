@@ -53,9 +53,9 @@ export interface IColProps {
     xl?: IColMediaProp;
 }
 
-const Col = styled.div.attrs<IColProps>({
-    as: (props: IColProps) => props.tag,
-})`
+const Col = styled.div.attrs<IColProps>(props => ({
+    as: props.tag,
+}))`
     ${colMediaQueries}
 `;
 

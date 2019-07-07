@@ -19,4 +19,7 @@ module.exports = {
         '\\.(ttf|svg)$': '<rootDir>/tests/mocks/fileMock.ts', // mocks out imports of static assets
         '\\.(css|scss)$': '<rootDir>/tests/mocks/styleMock.ts', // mocks out imports of css files
     },
+
+    // Skip tests that match the regexes.
+    testPathIgnorePatterns: ['/node_modules/', '/build/'],
 };

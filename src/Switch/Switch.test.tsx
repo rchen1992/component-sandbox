@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cleanup, render, fireEvent } from 'react-testing-library';
+import { cleanup, render, fireEvent } from '@testing-library/react';
 import Switch from './index';
 import { renderWithProvider, testComponentCanHandleStyles } from '../../tests/testUtils';
 import 'jest-styled-components';

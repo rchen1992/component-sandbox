@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cleanup, render, fireEvent } from 'react-testing-library';
+import { cleanup, render, fireEvent } from '@testing-library/react';
 import Checkbox from './index';
 import 'jest-styled-components';
 import { testComponentCanHandleStyles, expectRenderError } from '../../tests/testUtils';
