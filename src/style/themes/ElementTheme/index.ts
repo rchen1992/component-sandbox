@@ -1,4 +1,5 @@
 import ElementColors from './colors';
+import zIndexes from './zIndexes';
 import { ITheme } from '../theme-types';
 
 const ElementTheme: ITheme = {
@@ -10,6 +11,7 @@ const ElementTheme: ITheme = {
     defaultSwitchCorePadding: '4px',
 
     ...ElementColors,
+    ...zIndexes,
 };
 
 export default ElementTheme;
