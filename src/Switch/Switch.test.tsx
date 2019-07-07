@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cleanup, render, fireEvent } from 'react-testing-library';
+import { cleanup, render, fireEvent } from '@testing-library/react';
 import Switch from './index';
 import { renderWithProvider, testComponentCanHandleStyles } from '../../tests/testUtils';
 import 'jest-styled-components';
@@ -124,7 +124,7 @@ describe('Switch', () => {
     });
 
     test('should be able to pass ref to access input', () => {
-        const ref = React.createRef<any>();
+        const ref = React.createRef<HTMLInputElement>();
         render(<Switch ref={ref} />);
         expect(ref.current instanceof HTMLInputElement).toBeTruthy();
     });

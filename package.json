@@ -14,7 +14,8 @@
         "copy-public-to-static": "cp -R public/* storybook-static",
         "copy-css-to-lib": "cpx \"./src/**/*.css\" ./build/lib",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "postinstall": "yarn autoclean --force"
     },
     "repository": "https://github.com/sw-yx/react-typescript-storybook-starter.git",
     "author": "rchen1992 <raymoc2@uci.edu>",
@@ -29,8 +30,10 @@
         "@storybook/addon-knobs": "^4.0.4",
         "@storybook/addon-storyshots": "^4.0.4",
         "@storybook/react": "^4.0.4",
+        "@testing-library/react": "^8.0.4",
         "@types/jest": "^23.3.9",
-        "@types/react": "^16.7.4",
+        "@types/react": "^16.8.23",
+        "@types/react-dom": "^16.8.4",
         "@types/react-test-renderer": "^16.0.3",
         "@types/storybook__addon-actions": "^3.4.1",
         "@types/storybook__addon-info": "^3.4.2",
@@ -44,11 +47,10 @@
         "babel-loader": "^8.0.4",
         "babel-plugin-styled-components": "^1.8.0",
         "cpx": "^1.5.0",
-        "jest": "^23.6.0",
+        "jest": "^23.0.0",
         "jest-styled-components": "^6.3.1",
         "react-docgen-typescript-webpack-plugin": "^1.1.0",
         "react-test-renderer": "^16.6.1",
-        "react-testing-library": "^5.2.3",
         "ts-jest": "^23.10.4",
         "tslint": "^5.11.0",
         "tslint-microsoft-contrib": "^5.2.1",
@@ -58,7 +60,7 @@
     "dependencies": {
         "polished": "^2.3.0",
         "react": "^16.7.0-alpha.2",
-        "react-dom": "^16.7.0-alpha.2",
+        "react-dom": "^16.8.6",
         "styled-components": "^4.0.3"
     }
 }

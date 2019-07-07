@@ -1,6 +1,7 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import styled, { ITheme } from '../sc-utils';
-import { StyledComponentClass } from 'styled-components';
+import { StyledComponent } from 'styled-components';
 
 interface IModalProps {
     visible?: boolean;
@@ -13,9 +14,11 @@ interface IModalWrapperProps extends IModalProps {
 
 interface IModalHeaderProps {}
 
-type ModalWithRef = React.ForwardRefExoticComponent<IModalWrapperProps & React.RefAttributes<any>>;
+type ModalWithRef = React.ForwardRefExoticComponent<
+    IModalWrapperProps & React.RefAttributes<HTMLDivElement>
+>;
 
-const Modal = styled<IModalWrapperProps, 'div'>('div')`
+const Modal = styled.div<IModalWrapperProps>`
     position: absolute;
     top: 15%;
     left: 50%;
@@ -27,7 +30,7 @@ const Modal = styled<IModalWrapperProps, 'div'>('div')`
     z-index: ${({ theme }) => theme.zIndexModal};
 `;
 
-const ModalHeader = styled<IModalHeaderProps, 'div'>('div')`
+const ModalHeader = styled.div<IModalHeaderProps>`
     padding: 20px 20px 0px 20px;
 `;
 
@@ -37,6 +40,7 @@ const ModalBody = styled.div`
 
 const ModalFooter = styled.div`
     padding: 10px 20px 20px;
+    text-align: right;
 `;
 
 const Overlay = styled.div`
@@ -50,21 +54,26 @@ const Overlay = styled.div`
     z-index: ${({ theme }) => theme.zIndexOverlay};
 `;
 
-const ModalWrapper = React.forwardRef<any, IModalProps>((props, ref) => {
-    return props.visible ? (
-        <div>
-            <Modal>
-                <ModalHeader>{props.title}</ModalHeader>
-                {props.children}
-            </Modal>
-            <Overlay />
-        </div>
-    ) : null;
+const ModalWrapper = React.forwardRef<HTMLDivElement, IModalProps>((props, ref) => {
+    const documentBodyRef = React.useRef(document.querySelector('body'));
+
+    return props.visible
+        ? ReactDOM.createPortal(
+              <div>
+                  <Modal ref={ref}>
+                      <ModalHeader>{props.title}</ModalHeader>
+                      {props.children}
+                  </Modal>
+                  <Overlay />
+              </div>,
+              documentBodyRef.current as HTMLBodyElement
+          )
+        : null;
 });
 
 const ModalWithCompoundComponents = ModalWrapper as ModalWithRef & {
-    Body: StyledComponentClass<{}, ITheme>;
-    Footer: StyledComponentClass<{}, ITheme>;
+    Body: StyledComponent<'div', ITheme>;
+    Footer: StyledComponent<'div', ITheme>;
 };
 
 ModalWithCompoundComponents.Body = ModalBody;

@@ -9,22 +9,22 @@ const ButtonTypes = (stories: any) => {
         'Button Types',
         () => (
             <Container>
-                <Button type="primary" {...actions}>
+                <Button buttonType="primary" {...actions}>
                     Primary
                 </Button>
-                <Button type="success" {...actions}>
+                <Button buttonType="success" {...actions}>
                     Success
                 </Button>
-                <Button type="info" {...actions}>
+                <Button buttonType="info" {...actions}>
                     Info
                 </Button>
-                <Button type="warning" {...actions}>
+                <Button buttonType="warning" {...actions}>
                     Warning
                 </Button>
-                <Button type="danger" {...actions}>
+                <Button buttonType="danger" {...actions}>
                     Danger
                 </Button>
-                <Button type="text" {...actions}>
+                <Button buttonType="text" {...actions}>
                     Text
                 </Button>
             </Container>
@@ -36,12 +36,12 @@ const ButtonTypes = (stories: any) => {
 
         ### Usage
         ~~~js
-        <Button type='primary'>Primary</Button>
-        <Button type='success'>Success</Button>
-        <Button type='info'>Info</Button>
-        <Button type='warning'>Warning</Button>
-        <Button type='danger'>Danger</Button>
-        <Button type='text'>Text</Button>
+        <Button buttonType='primary'>Primary</Button>
+        <Button buttonType='success'>Success</Button>
+        <Button buttonType='info'>Info</Button>
+        <Button buttonType='warning'>Warning</Button>
+        <Button buttonType='danger'>Danger</Button>
+        <Button buttonType='text'>Text</Button>
         ~~~`)
     );
 };

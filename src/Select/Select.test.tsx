@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cleanup, render, fireEvent } from 'react-testing-library';
+import { cleanup, render, fireEvent } from '@testing-library/react';
 import Select from './index';
 import 'jest-styled-components';
 import { testComponentCanHandleStyles, expectRenderError } from '../../tests/testUtils';
@@ -40,7 +40,7 @@ describe('Select', () => {
     });
 
     test('should be able to pass ref to input', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLInputElement>();
         render(<Select ref={ref} />);
         expect(ref.current instanceof HTMLInputElement).toBeTruthy();
     });

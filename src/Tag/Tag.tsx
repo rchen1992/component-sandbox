@@ -13,7 +13,7 @@ interface ITagWrapperProps extends ITagProps, IWithStyles {
     onClose?: () => void;
 }
 
-const Tag = styled<ITagProps, 'span'>('span')`
+const Tag = styled.span<ITagProps>`
     display: inline-block;
     padding: 0 5px;
     height: 24px;
@@ -45,7 +45,7 @@ const Tag = styled<ITagProps, 'span'>('span')`
     ${props => getTypeStyles(props)};
 `;
 
-const TagWrapper = React.forwardRef<any, ITagWrapperProps>((props, ref) => {
+const TagWrapper = React.forwardRef<HTMLSpanElement, ITagWrapperProps>((props, ref) => {
     const Icon = !!props.closable ? getIcon('close') : null;
     return (
         <Tag ref={ref} style={props.style} className={props.className} type={props.type}>

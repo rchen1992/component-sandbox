@@ -40,11 +40,11 @@ interface ISwitchProps extends IWithStyles {
     onClick?: IClickHandlerWithData<ISwitchData>;
 }
 
-const Label = styled<ILabelProps, 'label'>('label')`
+const Label = styled.label<ILabelProps>`
     position: relative;
 `;
 
-const Input = styled<IInputProps, 'input'>('input')`
+const Input = styled.input<IInputProps>`
     opacity: 0;
     position: absolute;
     top: 0;
@@ -59,7 +59,7 @@ const Input = styled<IInputProps, 'input'>('input')`
     }
 `;
 
-const Slider = styled<ISliderProps, 'span'>('span')`
+const Slider = styled.span<ISliderProps>`
     width: ${props => (props.width ? `${props.width}px` : props.theme.defaultSwitchWidth)};
     height: 26px;
     display: inline-block;
@@ -105,7 +105,7 @@ const Slider = styled<ISliderProps, 'span'>('span')`
     }
 `;
 
-const Text = styled<ISwitchProps, 'span'>('span')`
+const Text = styled.span<ISwitchProps>`
     font-weight: 500;
     font-family: system-ui;
     transition: color 400ms;
@@ -122,12 +122,7 @@ const OffText = styled(Text)`
     color: ${props => (!props.checked ? props.theme.linkColor : 'black')};
 `;
 
-/**
- * Note: there is currently a TypeScript bug with passing refs to styled-components,
- * so we are currently using type `any` for the ref.
- * https://github.com/DefinitelyTyped/DefinitelyTyped/issues/28884
- */
-const Switch = React.forwardRef<any, ISwitchProps>((props, ref) => {
+const Switch = React.forwardRef<HTMLInputElement, ISwitchProps>((props, ref) => {
     const [checked, setChecked] = React.useState(!!props.defaultChecked);
     const ownRef = React.useRef(null);
 

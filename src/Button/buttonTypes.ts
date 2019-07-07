@@ -15,16 +15,16 @@ export enum ButtonType {
 /**
  * A mapping between valid button types and their corresponding CSS function.
  */
-export type IButtonTypeCssMapping = { [Type in ButtonType]: ButtonCssFunction };
+export type IButtonTypeCssMapping = { [Type in ButtonType]: (ButtonCssFunction) };
 
 /**
  * Takes a mapping between button types and their CSS functions and
  * returns another function that resolves a given type with the mapping.
  */
 export const getButtonTypeCssFromMapping = (mapping: IButtonTypeCssMapping) => (
-    type: string
+    type?: string
 ): ButtonCssFunction | undefined => {
-    if (!mapping.hasOwnProperty(type)) {
+    if (!type || !mapping.hasOwnProperty(type)) {
         console.error(`Button type '${type}' is not a valid button type`);
         return undefined;
     }

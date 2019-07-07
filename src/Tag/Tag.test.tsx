@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cleanup, render, fireEvent } from 'react-testing-library';
+import { cleanup, render, fireEvent } from '@testing-library/react';
 import Tag from './index';
 import 'jest-styled-components';
 import { testComponentCanHandleStyles } from '../../tests/testUtils';
@@ -10,7 +10,7 @@ describe('Tag', () => {
     testComponentCanHandleStyles(<Tag>Hello World</Tag>);
 
     test('should be able to pass ref', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLSpanElement>();
         render(<Tag ref={ref}>Hello World</Tag>);
         expect(ref.current instanceof HTMLSpanElement).toBeTruthy();
     });

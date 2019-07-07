@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, cleanup, fireEvent } from 'react-testing-library';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import Radio from './index';
 import 'jest-styled-components';
 import { testComponentCanHandleStyles, expectRenderError } from '../../tests/testUtils';

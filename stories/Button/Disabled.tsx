@@ -12,19 +12,19 @@ const Disabled = (stories: any) => {
                 <Button disabled {...actions}>
                     Default
                 </Button>
-                <Button disabled type="primary" {...actions}>
+                <Button disabled buttonType="primary" {...actions}>
                     Primary
                 </Button>
-                <Button disabled type="success" {...actions}>
+                <Button disabled buttonType="success" {...actions}>
                     Success
                 </Button>
-                <Button disabled type="info" {...actions}>
+                <Button disabled buttonType="info" {...actions}>
                     Info
                 </Button>
-                <Button disabled type="warning" {...actions}>
+                <Button disabled buttonType="warning" {...actions}>
                     Warning
                 </Button>
-                <Button disabled type="danger" {...actions}>
+                <Button disabled buttonType="danger" {...actions}>
                     Danger
                 </Button>
             </Container>
@@ -37,11 +37,11 @@ const Disabled = (stories: any) => {
         ### Usage
         ~~~js
         <Button disabled>Default</Button>
-        <Button disabled type='primary'>Primary</Button>
-        <Button disabled type='success'>Success</Button>
-        <Button disabled type='info'>Info</Button>
-        <Button disabled type='warning'>Warning</Button>
-        <Button disabled type='danger'>Danger</Button>
+        <Button disabled buttonType='primary'>Primary</Button>
+        <Button disabled buttonType='success'>Success</Button>
+        <Button disabled buttonType='info'>Info</Button>
+        <Button disabled buttonType='warning'>Warning</Button>
+        <Button disabled buttonType='danger'>Danger</Button>
         ~~~`)
     );
 };

@@ -20,9 +20,11 @@ interface ISelectProps extends IWithStyles {
     onChange?: (data: ISelectOption) => void;
 }
 
-type SelectWithRef = React.ForwardRefExoticComponent<ISelectProps & React.RefAttributes<any>>;
+type SelectWithRef = React.ForwardRefExoticComponent<
+    ISelectProps & React.RefAttributes<HTMLInputElement>
+>;
 
-const Wrapper = styled<ISelectProps, 'div'>('div')`
+const Wrapper = styled.div<ISelectProps>`
     display: inline-block;
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
     font-family: system-ui;
@@ -76,7 +78,7 @@ const Wrapper = styled<ISelectProps, 'div'>('div')`
 //     }
 // `;
 
-const Dropdown = styled<ISelectProps, 'div'>('div')`
+const Dropdown = styled.div<ISelectProps>`
     min-width: ${SELECT_WIDTH};
     max-height: 274px;
     overflow: scroll;
@@ -108,7 +110,7 @@ const DropdownList = styled.ul`
     font-size: 14px;
 `;
 
-const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
+const Select = React.forwardRef<HTMLInputElement, ISelectProps>((props, ref) => {
     const [open, setOpen] = React.useState(false);
 
     /**
@@ -281,9 +283,11 @@ const Select = React.forwardRef<any, ISelectProps>((props, ref) => {
 });
 
 const SelectWithCompoundComponents = Select as SelectWithRef & {
-    Option: React.ForwardRefExoticComponent<ISelectOptionProps & React.RefAttributes<any>>;
+    Option: React.ForwardRefExoticComponent<
+        ISelectOptionProps & React.RefAttributes<HTMLLIElement>
+    >;
     OptionGroup: React.ForwardRefExoticComponent<
-        ISelectOptionGroupProps & React.RefAttributes<any>
+        ISelectOptionGroupProps & React.RefAttributes<HTMLUListElement>
     >;
 };
 

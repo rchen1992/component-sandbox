@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cleanup, render } from 'react-testing-library';
+import { cleanup, render } from '@testing-library/react';
 import { Row, Col } from './index';
 import {
     expectRenderError,
@@ -72,13 +72,14 @@ describe('Grid', () => {
     });
 
     test('should be able to pass refs to Row', () => {
-        const ref = React.createRef<any>();
+        const ref = React.createRef<HTMLDivElement>();
         render(
             <Row ref={ref}>
                 <Col>Hello</Col>
             </Row>
         );
-        expect(ref.current.innerHTML).toMatch('Hello');
+        const row = ref.current as HTMLDivElement;
+        expect(row.innerHTML).toMatch('Hello');
     });
 
     test('should render Row as a div by default', () => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, cleanup, fireEvent } from 'react-testing-library';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import Radio from './index';
 import 'jest-styled-components';
 import { testComponentCanHandleStyles } from '../../tests/testUtils';
@@ -46,7 +46,7 @@ describe('Radio', () => {
     });
 
     test('should be able to pass ref to input', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLInputElement>();
         render(<Radio ref={ref}>Option</Radio>);
         expect(ref.current instanceof HTMLInputElement).toBeTruthy();
     });

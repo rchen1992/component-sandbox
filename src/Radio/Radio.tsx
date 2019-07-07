@@ -15,15 +15,17 @@ export interface IRadioProps extends IWithStyles {
     onChange?: IChangeHandlerWithData<IRadioData>;
 }
 
-type RadioWithRef = React.ForwardRefExoticComponent<IRadioProps & React.RefAttributes<any>>;
+type RadioWithRef = React.ForwardRefExoticComponent<
+    IRadioProps & React.RefAttributes<HTMLInputElement>
+>;
 
-const Label = styled<IRadioProps, 'label'>('label')`
+const Label = styled.label<IRadioProps>`
     display: inline-block;
     position: relative;
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 `;
 
-const Circle = styled<IRadioProps, 'span'>('span')`
+const Circle = styled.span<IRadioProps>`
     position: relative;
     display: inline-block;
     width: 18px;
@@ -83,7 +85,7 @@ const Circle = styled<IRadioProps, 'span'>('span')`
     }
 `;
 
-const Input = styled<IRadioProps, 'input'>('input')`
+const Input = styled.input<IRadioProps>`
     opacity: 0;
     position: absolute;
     top: 0;
@@ -93,7 +95,7 @@ const Input = styled<IRadioProps, 'input'>('input')`
     z-index: -1;
 `;
 
-const CircleLabel = styled<IRadioProps, 'span'>('span')`
+const CircleLabel = styled.span<IRadioProps>`
     font-size: 14px;
     padding-left: 5px;
     font-family: system-ui;
@@ -102,7 +104,7 @@ const CircleLabel = styled<IRadioProps, 'span'>('span')`
     color: ${props => (props.disabled ? props.theme.infoColorAccent : 'black')};
 `;
 
-const Radio = React.forwardRef<any, IRadioProps>((props, ref) => {
+const Radio = React.forwardRef<HTMLInputElement, IRadioProps>((props, ref) => {
     function onChange(e: React.ChangeEvent) {
         if (!props.disabled && props.onChange) {
             props.onChange(e, {

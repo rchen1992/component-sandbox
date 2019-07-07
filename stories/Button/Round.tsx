@@ -12,19 +12,19 @@ const Round = (stories: any) => {
                 <Button round {...actions}>
                     Default
                 </Button>
-                <Button round type="primary" {...actions}>
+                <Button round buttonType="primary" {...actions}>
                     Primary
                 </Button>
-                <Button round type="success" {...actions}>
+                <Button round buttonType="success" {...actions}>
                     Success
                 </Button>
-                <Button round type="info" {...actions}>
+                <Button round buttonType="info" {...actions}>
                     Info
                 </Button>
-                <Button round type="warning" {...actions}>
+                <Button round buttonType="warning" {...actions}>
                     Warning
                 </Button>
-                <Button round type="danger" {...actions}>
+                <Button round buttonType="danger" {...actions}>
                     Danger
                 </Button>
             </Container>
@@ -37,11 +37,11 @@ const Round = (stories: any) => {
         ### Usage
         ~~~js
         <Button round>Default</Button>
-        <Button round type='primary'>Primary</Button>
-        <Button round type='success'>Success</Button>
-        <Button round type='info'>Info</Button>
-        <Button round type='warning'>Warning</Button>
-        <Button round type='danger'>Danger</Button>
+        <Button round buttonType='primary'>Primary</Button>
+        <Button round buttonType='success'>Success</Button>
+        <Button round buttonType='info'>Info</Button>
+        <Button round buttonType='warning'>Warning</Button>
+        <Button round buttonType='danger'>Danger</Button>
         ~~~`)
     );
 };

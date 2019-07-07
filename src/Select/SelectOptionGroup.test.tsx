@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cleanup, render } from 'react-testing-library';
+import { cleanup, render } from '@testing-library/react';
 import Select from './index';
 import 'jest-styled-components';
 import { testComponentCanHandleStyles, expectRenderError } from '../../tests/testUtils';
@@ -20,7 +20,7 @@ describe('Select Option Group', () => {
     });
 
     test('should be able to pass ref to select option group', () => {
-        const ref = React.createRef();
+        const ref = React.createRef<HTMLUListElement>();
         render(<Select.OptionGroup ref={ref} />);
         expect(ref.current instanceof HTMLUListElement).toBeTruthy();
     });
