@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import styled, { ITheme } from '../sc-utils';
+import styled, { ITheme, css } from '../sc-utils';
 import { StyledComponent } from 'styled-components';
+import { fadeSlide, fadeSlideRev, ANIMATION_DURATION } from './animations';
+import { halfFade, halfFadeRev } from '../style/animations/halfFade';
+import usePreviousProp from '../hooks/usePreviousProp';
 
 interface IModalProps {
     visible?: boolean;
@@ -14,9 +17,17 @@ interface IModalWrapperProps extends IModalProps {
 
 interface IModalHeaderProps {}
 
+interface IOverlayProps {
+    visible?: boolean;
+}
+
 type ModalWithRef = React.ForwardRefExoticComponent<
     IModalWrapperProps & React.RefAttributes<HTMLDivElement>
 >;
+
+const Wrapper = styled.div<IModalWrapperProps>`
+    display: ${props => (props.visible ? 'block' : 'none')};
+`;
 
 const Modal = styled.div<IModalWrapperProps>`
     position: absolute;
@@ -28,6 +39,15 @@ const Modal = styled.div<IModalWrapperProps>`
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
     transform: translateX(-50%);
     z-index: ${({ theme }) => theme.zIndexModal};
+    animation: ${props =>
+        props.visible
+            ? css`
+                  ${fadeSlide} ${ANIMATION_DURATION}ms
+              `
+            : css`
+                  ${fadeSlideRev} ${ANIMATION_DURATION}ms
+              `};
+    animation-fill-mode: forwards;
 `;
 
 const ModalHeader = styled.div<IModalHeaderProps>`
@@ -43,7 +63,7 @@ const ModalFooter = styled.div`
     text-align: right;
 `;
 
-const Overlay = styled.div`
+const Overlay = styled.div<IOverlayProps>`
     position: fixed;
     top: 0px;
     left: 0px;
@@ -52,23 +72,42 @@ const Overlay = styled.div`
     opacity: 0.5;
     background-color: black;
     z-index: ${({ theme }) => theme.zIndexOverlay};
+    animation: ${props =>
+        props.visible
+            ? css`
+                  ${halfFade} ${ANIMATION_DURATION}ms
+              `
+            : css`
+                  ${halfFadeRev} ${ANIMATION_DURATION}ms
+              `};
+    animation-fill-mode: forwards;
 `;
 
 const ModalWrapper = React.forwardRef<HTMLDivElement, IModalProps>((props, ref) => {
+    const [shouldRender, setShouldRender] = React.useState(false);
+    const prevVisible = usePreviousProp(!!props.visible);
     const documentBodyRef = React.useRef(document.querySelector('body'));
 
-    return props.visible
-        ? ReactDOM.createPortal(
-              <div>
-                  <Modal ref={ref}>
-                      <ModalHeader>{props.title}</ModalHeader>
-                      {props.children}
-                  </Modal>
-                  <Overlay />
-              </div>,
-              documentBodyRef.current as HTMLBodyElement
-          )
-        : null;
+    React.useEffect(() => {
+        if (prevVisible && !props.visible) {
+            setTimeout(() => {
+                setShouldRender(false);
+            }, ANIMATION_DURATION);
+        } else if (!prevVisible && props.visible) {
+            setShouldRender(true);
+        }
+    });
+
+    return ReactDOM.createPortal(
+        <Wrapper visible={shouldRender}>
+            <Modal visible={props.visible} ref={ref}>
+                <ModalHeader>{props.title}</ModalHeader>
+                {props.children}
+            </Modal>
+            <Overlay visible={props.visible} />
+        </Wrapper>,
+        documentBodyRef.current as HTMLBodyElement
+    );
 });
 
 const ModalWithCompoundComponents = ModalWrapper as ModalWithRef & {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled, { IWithStyles, css } from '../sc-utils';
 import Input from '../Input';
 // import Tag from '../Tag';
-import { expandAndShow } from '../keyframes';
+import { expandAndShow } from '../style/animations/expandAndShow';
 import { SELECT_WIDTH, DROPDOWN_ANIMATION_DURATION } from './styleConstants';
 import { getIconContent } from '../icons';
 import SelectOption, { ISelectOption, ISelectOptionProps } from './SelectOption';
