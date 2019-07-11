@@ -8,6 +8,7 @@ import { getIconContent } from '../icons';
 import SelectOption, { ISelectOption, ISelectOptionProps } from './SelectOption';
 import SelectOptionGroup, { ISelectOptionGroupProps } from './SelectOptionGroup';
 import filterByLabel from './filterable';
+import useCloseOnClickAway from '../hooks/useCloseOnClickAway';
 
 interface ISelectProps extends IWithStyles {
     open?: boolean;
@@ -131,43 +132,11 @@ const Select = React.forwardRef<HTMLInputElement, ISelectProps>((props, ref) => 
     const wrapperRef = React.useRef(null);
 
     /**
-     * This effect listens for clicks on the document so that we can close the dropdown
-     * when we click outside of the input.
-     *
-     * By providing empty array [] as second parameter to useEffect,
-     * we are telling React that this effect doesn't depend on any
-     * values from props or state, which means it will not re-run this effect
-     * on every re-render.
-     * This means it will behave much like componentDidMount and componentWillUnmount.
+     * Close dropdown when clicking away.
      */
-    React.useEffect(() => {
-        /**
-         * The third parameter is `useCapture`, which captures this event and ensures
-         * it fires before event listeners on the EventTarget.
-         * More details: https://stackoverflow.com/questions/7398290/unable-to-understand-usecapture-parameter-in-addeventlistener
-         *
-         * We want `useCapture` to be true in case we click somewhere on the document that has an event handler
-         * that stops propagation. We don't want to wait until the event bubbles up to the document.
-         */
-        document.addEventListener('click', closeDropdownOnClickAway, true);
-
-        // Return function to cleanup on unmount.
-        return () => {
-            document.removeEventListener('click', closeDropdownOnClickAway, true);
-        };
-    }, []);
-
-    function closeDropdownOnClickAway(e: any) {
-        /**
-         * If the element we clicked on is NOT our select element nor any
-         * child node of it, then we clicked away from the select.
-         * This should cause the dropdown to close.
-         */
-        let wrapperElement = (wrapperRef.current as unknown) as HTMLDivElement;
-        if (wrapperElement !== e.target && !wrapperElement.contains(e.target)) {
-            setOpen(false);
-        }
-    }
+    useCloseOnClickAway(wrapperRef.current, () => {
+        setOpen(false);
+    });
 
     function onInputClick() {
         if (!props.disabled) {

@@ -5,6 +5,7 @@ import { StyledComponent } from 'styled-components';
 import { fadeSlide, fadeSlideRev, ANIMATION_DURATION } from './animations';
 import { halfFade, halfFadeRev } from '../style/animations/halfFade';
 import usePreviousProp from '../hooks/usePreviousProp';
+import useCloseOnClickAway from '../hooks/useCloseOnClickAway';
 
 interface IModalProps {
     visible?: boolean;
@@ -13,6 +14,7 @@ interface IModalProps {
 
 interface IModalWrapperProps extends IModalProps {
     children?: React.ReactNode;
+    onClose: Function;
 }
 
 interface IModalHeaderProps {}
@@ -25,11 +27,11 @@ type ModalWithRef = React.ForwardRefExoticComponent<
     IModalWrapperProps & React.RefAttributes<HTMLDivElement>
 >;
 
-const Wrapper = styled.div<IModalWrapperProps>`
+const Wrapper = styled.div<IModalProps>`
     display: ${props => (props.visible ? 'block' : 'none')};
 `;
 
-const Modal = styled.div<IModalWrapperProps>`
+const Modal = styled.div<IModalProps>`
     position: absolute;
     top: 15%;
     left: 50%;
@@ -83,10 +85,14 @@ const Overlay = styled.div<IOverlayProps>`
     animation-fill-mode: forwards;
 `;
 
-const ModalWrapper = React.forwardRef<HTMLDivElement, IModalProps>((props, ref) => {
+const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props, ref) => {
     const [shouldRender, setShouldRender] = React.useState(false);
     const prevVisible = usePreviousProp(!!props.visible);
     const documentBodyRef = React.useRef(document.querySelector('body'));
+    const ownRef = React.useRef(null);
+    const modalRef = ref || ownRef;
+
+    useCloseOnClickAway((modalRef as any).current, props.onClose);
 
     React.useEffect(() => {
         if (prevVisible && !props.visible) {
@@ -100,7 +106,7 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalProps>((props, ref) 
 
     return ReactDOM.createPortal(
         <Wrapper visible={shouldRender}>
-            <Modal visible={props.visible} ref={ref}>
+            <Modal visible={props.visible} ref={modalRef}>
                 <ModalHeader>{props.title}</ModalHeader>
                 {props.children}
             </Modal>

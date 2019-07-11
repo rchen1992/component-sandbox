@@ -18,7 +18,7 @@ const Basic = (stories: any) => {
         return (
             <>
                 <Button onClick={open}>Open Modal</Button>
-                <Modal visible={visible} title="Modal Title">
+                <Modal visible={visible} title="Modal Title" onClose={onClose}>
                     <Modal.Body>Modal Body</Modal.Body>
                     <Modal.Footer>
                         <Button
