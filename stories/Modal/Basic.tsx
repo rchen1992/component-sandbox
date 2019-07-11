@@ -18,7 +18,7 @@ const Basic = (stories: any) => {
         return (
             <>
                 <Button onClick={open}>Open Modal</Button>
-                <Modal visible={visible} title="Modal Title" onClose={onClose}>
+                <Modal visible={visible} title="Modal Title" onClose={onClose} showClose>
                     <Modal.Body>Modal Body</Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -48,6 +48,8 @@ const Basic = (stories: any) => {
         
         Use **\`visible\`** prop to control modal open/close.
 
+        Use **\`showClose\`** prop to add close button.
+
         Provide an **\`onClose\`** prop to control what should happen when modal closes.
         This is required, because modal visibility is controlled by the consuming comopnent.
 
@@ -67,7 +69,7 @@ const Basic = (stories: any) => {
             return (
                 <>
                     <Button onClick={open}>Open Modal</Button>
-                    <Modal visible={visible} title="Modal Title" onClose={onClose}>
+                    <Modal visible={visible} title="Modal Title" onClose={onClose} showClose>
                         <Modal.Body>Modal Body</Modal.Body>
                         <Modal.Footer>
                             <Button
