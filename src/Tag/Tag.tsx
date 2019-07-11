@@ -23,7 +23,6 @@ const Tag = styled.span<ITagProps>`
     border-radius: 4px;
     box-sizing: border-box;
     border: 1px solid transparent;
-    font-family: system-ui;
 
     i {
         display: inline-block;

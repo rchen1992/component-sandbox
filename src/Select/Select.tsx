@@ -28,7 +28,6 @@ type SelectWithRef = React.ForwardRefExoticComponent<
 const Wrapper = styled.div<ISelectProps>`
     display: inline-block;
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-    font-family: system-ui;
     position: relative;
 
     input {

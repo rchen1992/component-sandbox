@@ -107,7 +107,6 @@ const Slider = styled.span<ISliderProps>`
 
 const Text = styled.span<ISwitchProps>`
     font-weight: 500;
-    font-family: system-ui;
     transition: color 400ms;
     cursor: pointer;
 `;

@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle<IGlobalStyleProps>`
     }
 
     body {
-        font-family: Roboto;
+        font-family: system-ui;
         font-size: ${({ theme }) => theme && theme.fontSize};
     }
 `;

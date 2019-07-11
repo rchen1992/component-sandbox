@@ -104,7 +104,6 @@ const Input = styled.input`
 
 const BoxLabel = styled.span<ICheckboxProps>`
     font-size: 14px;
-    font-family: system-ui;
     padding-left: 5px;
     position: relative;
     top: 1px;

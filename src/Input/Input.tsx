@@ -137,7 +137,6 @@ const Extension = styled.div<IInputProps>`
     border-radius: ${BORDER_RADIUS};
     padding: 0 10px;
     color: ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.infoColor)};
-    font-family: system-ui;
     font-size: ${props => inputFontSize(props)};
     vertical-align: middle;
 `;
