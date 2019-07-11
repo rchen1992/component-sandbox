@@ -48,9 +48,44 @@ const Basic = (stories: any) => {
         
         Use **\`visible\`** prop to control modal open/close.
 
+        Provide an **\`onClose\`** prop to control what should happen when modal closes.
+        This is required, because modal visibility is controlled by the consuming comopnent.
+
         ### Usage
         ~~~js
-        
+        const BasicModal = () => {
+            const [visible, setVisible] = React.useState(false);
+
+            function open() {
+                setVisible(true);
+            }
+
+            function onClose() {
+                setVisible(false);
+            }
+
+            return (
+                <>
+                    <Button onClick={open}>Open Modal</Button>
+                    <Modal visible={visible} title="Modal Title" onClose={onClose}>
+                        <Modal.Body>Modal Body</Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                buttonSize="mini"
+                                plain
+                                onClick={onClose}
+                                style={{ marginRight: '10px' }}
+                            >
+                                Cancel
+                            </Button>
+                            <Button buttonSize="mini" buttonType="primary" onClick={onClose}>
+                                Confirm
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </>
+            );
+        };
         ~~~
         `)
     );

@@ -6,11 +6,13 @@ import { fadeSlide, fadeSlideRev, ANIMATION_DURATION } from './animations';
 import { halfFade, halfFadeRev } from '../style/animations/halfFade';
 import usePreviousProp from '../hooks/usePreviousProp';
 import useCloseOnClickAway from '../hooks/useCloseOnClickAway';
+import getIcon from '../icons';
 
 interface IModalProps {
     visible?: boolean;
     title?: string;
     showOverlay?: boolean;
+    showClose?: boolean;
 }
 
 interface IModalWrapperProps extends IModalProps {
@@ -54,6 +56,8 @@ const Modal = styled.div<IModalProps>`
 `;
 
 const ModalHeader = styled.div<IModalHeaderProps>`
+    display: flex;
+    justify-content: space-between;
     padding: 20px 20px 0px 20px;
 `;
 
@@ -86,8 +90,25 @@ const Overlay = styled.div<IOverlayProps>`
     animation-fill-mode: forwards;
 `;
 
+const CloseButton = styled.button`
+    border: none;
+    cursor: pointer;
+
+    :focus {
+        outline: none;
+    }
+
+    :hover i {
+        color: ${({ theme }) => theme.primaryColor};
+    }
+
+    i {
+        color: ${({ theme }) => theme.defaultBorderColor};
+    }
+`;
+
 const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props, ref) => {
-    const { showOverlay = true, visible } = props;
+    const { showOverlay = true, showClose = false, visible, onClose, title, children } = props;
 
     const [shouldRender, setShouldRender] = React.useState(false);
     const prevVisible = usePreviousProp(!!visible);
@@ -96,7 +117,9 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
     const ownRef = React.useRef(null);
     const modalRef = ref || ownRef;
 
-    useCloseOnClickAway((modalRef as any).current, props.onClose);
+    const CloseIcon = showClose ? getIcon('close') : null;
+
+    useCloseOnClickAway((modalRef as any).current, onClose);
 
     React.useEffect(() => {
         if (prevVisible && !visible) {
@@ -111,8 +134,15 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
     return ReactDOM.createPortal(
         <Wrapper visible={shouldRender}>
             <Modal visible={visible} ref={modalRef}>
-                <ModalHeader>{props.title}</ModalHeader>
-                {props.children}
+                <ModalHeader>
+                    {title}
+                    {showClose && (
+                        <CloseButton onClick={() => onClose()}>
+                            <CloseIcon />
+                        </CloseButton>
+                    )}
+                </ModalHeader>
+                {children}
             </Modal>
             {showOverlay && <Overlay visible={visible} />}
         </Wrapper>,
