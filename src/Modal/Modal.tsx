@@ -10,6 +10,7 @@ import useCloseOnClickAway from '../hooks/useCloseOnClickAway';
 interface IModalProps {
     visible?: boolean;
     title?: string;
+    showOverlay?: boolean;
 }
 
 interface IModalWrapperProps extends IModalProps {
@@ -86,31 +87,34 @@ const Overlay = styled.div<IOverlayProps>`
 `;
 
 const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props, ref) => {
+    const { showOverlay = true, visible } = props;
+
     const [shouldRender, setShouldRender] = React.useState(false);
-    const prevVisible = usePreviousProp(!!props.visible);
+    const prevVisible = usePreviousProp(!!visible);
     const documentBodyRef = React.useRef(document.querySelector('body'));
+
     const ownRef = React.useRef(null);
     const modalRef = ref || ownRef;
 
     useCloseOnClickAway((modalRef as any).current, props.onClose);
 
     React.useEffect(() => {
-        if (prevVisible && !props.visible) {
+        if (prevVisible && !visible) {
             setTimeout(() => {
                 setShouldRender(false);
             }, ANIMATION_DURATION);
-        } else if (!prevVisible && props.visible) {
+        } else if (!prevVisible && visible) {
             setShouldRender(true);
         }
     });
 
     return ReactDOM.createPortal(
         <Wrapper visible={shouldRender}>
-            <Modal visible={props.visible} ref={modalRef}>
+            <Modal visible={visible} ref={modalRef}>
                 <ModalHeader>{props.title}</ModalHeader>
                 {props.children}
             </Modal>
-            <Overlay visible={props.visible} />
+            {showOverlay && <Overlay visible={visible} />}
         </Wrapper>,
         documentBodyRef.current as HTMLBodyElement
     );
