@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import styled, { ITheme, css } from '../sc-utils';
+import styled, { ITheme, css, IWithStyles } from '../sc-utils';
 import { StyledComponent } from 'styled-components';
 import { fadeSlide, fadeSlideRev, ANIMATION_DURATION } from './animations';
 import { halfFade, halfFadeRev } from '../style/animations/halfFade';
@@ -9,13 +9,13 @@ import useCloseOnClickAway from '../hooks/useCloseOnClickAway';
 import getIcon from '../icons';
 
 interface IModalProps {
-    visible?: boolean;
+    visible: boolean;
     title?: string;
     showOverlay?: boolean;
     showClose?: boolean;
 }
 
-interface IModalWrapperProps extends IModalProps {
+interface IModalWrapperProps extends IModalProps, IWithStyles {
     children?: React.ReactNode;
     onClose: Function;
 }
@@ -108,7 +108,16 @@ const CloseButton = styled.button`
 `;
 
 const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props, ref) => {
-    const { showOverlay = true, showClose = false, visible, onClose, title, children } = props;
+    const {
+        showOverlay = true,
+        showClose = false,
+        visible,
+        onClose,
+        title,
+        children,
+        style,
+        className,
+    } = props;
 
     const [shouldRender, setShouldRender] = React.useState(false);
     const prevVisible = usePreviousProp(!!visible);
@@ -119,7 +128,7 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
 
     const CloseIcon = showClose ? getIcon('close') : null;
 
-    useCloseOnClickAway((modalRef as any).current, onClose);
+    useCloseOnClickAway((modalRef as any).current, visible, onClose);
 
     React.useEffect(() => {
         if (prevVisible && !visible) {
@@ -132,8 +141,8 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
     });
 
     return ReactDOM.createPortal(
-        <Wrapper visible={shouldRender}>
-            <Modal visible={visible} ref={modalRef}>
+        <Wrapper visible={shouldRender} data-testid="modal">
+            <Modal visible={visible} ref={modalRef} style={style} className={className}>
                 <ModalHeader>
                     {title}
                     {showClose && (
@@ -144,7 +153,7 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
                 </ModalHeader>
                 {children}
             </Modal>
-            {showOverlay && <Overlay visible={visible} />}
+            {showOverlay && <Overlay visible={visible} data-testid="modal-overlay" />}
         </Wrapper>,
         documentBodyRef.current as HTMLBodyElement
     );

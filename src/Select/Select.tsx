@@ -133,7 +133,7 @@ const Select = React.forwardRef<HTMLInputElement, ISelectProps>((props, ref) => 
     /**
      * Close dropdown when clicking away.
      */
-    useCloseOnClickAway(wrapperRef.current, () => {
+    useCloseOnClickAway(wrapperRef.current, open, () => {
         setOpen(false);
     });
 

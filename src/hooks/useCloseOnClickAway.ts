@@ -2,19 +2,28 @@ import * as React from 'react';
 
 /**
  * Custom hook that calls a custom close function
- * when clicking away from a particular element.
+ * when clicking away from a particular "open" element.
  */
-export default function useCloseOnClickAway(targetElement: HTMLElement | null, closeFn: Function) {
+export default function useCloseOnClickAway(
+    targetElement: HTMLElement | null,
+    isOpen: boolean,
+    closeFn: Function
+) {
     function closeOnClickAway(e: any) {
         /**
-         * If we DON'T a target element,
-         * any click should call the close function.
+         * If we DO have target element and it is "open",
+         * check that we did not click on target element nor any
+         * child node of it.
          *
-         * If we DO have target element and we did not click on target element nor any
-         * child node of it, then we have "clicked away".
+         * If we haven't, then we have "clicked away".
          * This should cause our close function to run.
          */
-        if (!targetElement || (targetElement !== e.target && !targetElement.contains(e.target))) {
+        if (
+            isOpen &&
+            targetElement &&
+            targetElement !== e.target &&
+            !targetElement.contains(e.target)
+        ) {
             closeFn();
         }
     }
@@ -40,5 +49,5 @@ export default function useCloseOnClickAway(targetElement: HTMLElement | null, c
         return () => {
             document.removeEventListener('click', closeOnClickAway, true);
         };
-    }, [targetElement]);
+    }, [targetElement, isOpen]);
 }
