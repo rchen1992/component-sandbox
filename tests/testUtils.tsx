@@ -114,3 +114,38 @@ export function testElementCanAttachStyleObject(element: any, useDocument = fals
         expect(container.innerHTML).toMatch('background-color: orange');
     }
 }
+
+/**
+ * Helper component used to test custom React hooks.
+ * Provide a `useHook` prop that will run arbitrary hooks code.
+ *
+ * This component will provide any forwarded `ref` to the
+ * `useHook` prop, in case you need access to it.
+ */
+export const HookTester = React.forwardRef((props: any, ref: any) => {
+    props.useHook(ref);
+
+    return <div ref={ref}>{props.children}</div>;
+});
+
+/**
+ * Helper function that renders the `HookTester` component to test
+ * custom React hooks.
+ *
+ * Returns the the default object from rendering a component
+ * with `react-testing-library`, along with a `ref` for the component.
+ *
+ * @param hook - hook function you want to run
+ * @param children - optional React children to render in test component
+ */
+export function renderHookTester(hook: Function, children?: React.ReactNode) {
+    const ref = React.createRef();
+    return {
+        ...render(
+            <HookTester ref={ref} useHook={hook}>
+                {children}
+            </HookTester>
+        ),
+        ref,
+    };
+}
