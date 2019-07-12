@@ -8,11 +8,19 @@ import usePreviousProp from '../hooks/usePreviousProp';
 import useCloseOnClickAway from '../hooks/useCloseOnClickAway';
 import getIcon from '../icons';
 
+enum Size {
+    small = 'small',
+    medium = 'medium',
+    large = 'large',
+    full = 'full',
+}
+
 interface IModalProps {
     visible: boolean;
     title?: string;
     showOverlay?: boolean;
     showClose?: boolean;
+    size?: keyof typeof Size;
 }
 
 interface IModalWrapperProps extends IModalProps, IWithStyles {
@@ -38,12 +46,24 @@ const Modal = styled.div<IModalProps>`
     position: absolute;
     top: 15%;
     left: 50%;
-    width: 30%;
     border-radius: 2px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px;
     transform: translateX(-50%);
     z-index: ${({ theme }) => theme.zIndexModal};
+
+    width: ${props => {
+        switch (props.size) {
+            case Size.large:
+                return '50%';
+            case Size.medium:
+                return '40%';
+            case Size.small:
+            default:
+                return '30%';
+        }
+    }};
+
     animation: ${props =>
         props.visible
             ? css`
@@ -111,6 +131,7 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
     const {
         showOverlay = true,
         showClose = false,
+        size = Size.small,
         visible,
         onClose,
         title,
@@ -142,7 +163,7 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
 
     return ReactDOM.createPortal(
         <Wrapper visible={shouldRender} data-testid="modal">
-            <Modal visible={visible} ref={modalRef} style={style} className={className}>
+            <Modal visible={visible} ref={modalRef} style={style} className={className} size={size}>
                 <ModalHeader>
                     {title}
                     {showClose && (
