@@ -50,6 +50,8 @@ const Basic = (stories: any) => {
 
         Use **\`showClose\`** prop to add close button.
 
+        Use **\`showOverlay\`** prop to control whether or not background overlay should appear. By default it always shows.
+
         Provide an **\`onClose\`** prop to control what should happen when modal closes.
         This is required, because modal visibility is controlled by the consuming comopnent.
 
