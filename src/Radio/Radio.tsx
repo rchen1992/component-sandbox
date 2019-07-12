@@ -48,7 +48,6 @@ const Circle = styled.span<IRadioProps>`
             return props.disabled ? props.theme.infoColorLight : 'white';
         }
     }};
-    box-sizing: border-box;
     vertical-align: middle;
     line-height: 1;
 

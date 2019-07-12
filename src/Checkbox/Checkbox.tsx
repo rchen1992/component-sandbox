@@ -52,7 +52,6 @@ const Box = styled.span<ICheckboxProps>`
                     : props.theme.defaultBorderColor;
             }
         }};
-    box-sizing: border-box;
     transition: background-color 100ms;
     line-height: 1;
     vertical-align: middle;

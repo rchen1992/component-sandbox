@@ -19,6 +19,10 @@ const GlobalStyle = createGlobalStyle<IGlobalStyleProps>`
         font-family: system-ui;
         font-size: ${({ theme }) => theme && theme.fontSize};
     }
+
+    * {
+        box-sizing: border-box;
+    }
 `;
 
 /**

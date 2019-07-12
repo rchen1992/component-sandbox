@@ -23,7 +23,6 @@ export interface ISelectOptionProps extends IDropdownItemProps, IWithStyles {
 const DropdownItem = styled.li<IDropdownItemProps>`
     height: 36px;
     line-height: 1.5;
-    box-sizing: border-box;
     padding: 8px 10px;
     white-space: nowrap;
     text-overflow: ellipsis;

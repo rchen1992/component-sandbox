@@ -36,7 +36,6 @@ const Input = styled.input<InputType>`
     border: 1px solid
         ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.defaultBorderColor)};
     border-radius: ${BORDER_RADIUS};
-    box-sizing: border-box;
     padding: 3px 10px;
     height: ${props => inputHeight(props)};
     font-size: ${props => inputFontSize(props)};
