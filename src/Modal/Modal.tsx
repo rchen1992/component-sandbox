@@ -20,6 +20,7 @@ interface IModalProps {
     title?: string;
     showOverlay?: boolean;
     showClose?: boolean;
+    lockScroll?: boolean;
     size?: keyof typeof Size;
 }
 
@@ -56,11 +57,11 @@ const Modal = styled.div<IModalProps>`
         switch (props.size) {
             case Size.large:
                 return '50%';
-            case Size.medium:
-                return '40%';
             case Size.small:
-            default:
                 return '30%';
+            case Size.medium:
+            default:
+                return '40%';
         }
     }};
 
@@ -73,6 +74,16 @@ const Modal = styled.div<IModalProps>`
                   ${fadeSlideRev} ${ANIMATION_DURATION}ms
               `};
     animation-fill-mode: forwards;
+
+    ${props =>
+        props.size === Size.full &&
+        css`
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            box-shadow: none;
+        `};
 `;
 
 const ModalHeader = styled.div<IModalHeaderProps>`
@@ -131,7 +142,8 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
     const {
         showOverlay = true,
         showClose = false,
-        size = Size.small,
+        lockScroll = false,
+        size = Size.medium,
         visible,
         onClose,
         title,
@@ -151,13 +163,35 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
 
     useCloseOnClickAway((modalRef as any).current, visible, onClose);
 
+    /**
+     * Handle close animation.
+     */
     React.useEffect(() => {
+        /**
+         * If we are closing the modal,
+         * delay the hiding of the modal until
+         * the close animation finishes.
+         */
         if (prevVisible && !visible) {
             setTimeout(() => {
                 setShouldRender(false);
             }, ANIMATION_DURATION);
         } else if (!prevVisible && visible) {
             setShouldRender(true);
+        }
+    });
+
+    /**
+     * Handle locking scroll when modal is open.
+     * Full size modals will automatically have lock scroll.
+     */
+    React.useEffect(() => {
+        if (documentBodyRef.current && (lockScroll || props.size === Size.full)) {
+            if (visible) {
+                documentBodyRef.current.style.overflow = 'hidden';
+            } else {
+                documentBodyRef.current.style.overflow = 'auto';
+            }
         }
     });
 
@@ -174,7 +208,9 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
                 </ModalHeader>
                 {children}
             </Modal>
-            {showOverlay && <Overlay visible={visible} data-testid="modal-overlay" />}
+            {showOverlay && size !== Size.full && (
+                <Overlay visible={visible} data-testid="modal-overlay" />
+            )}
         </Wrapper>,
         documentBodyRef.current as HTMLBodyElement
     );
