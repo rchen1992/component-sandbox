@@ -1,4 +1,4 @@
-import { keyframes } from './sc-utils';
+import { keyframes } from '../../sc-utils';
 
 export const expandAndShow = keyframes`
     from {

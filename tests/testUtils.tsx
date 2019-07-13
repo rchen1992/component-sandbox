@@ -67,35 +67,85 @@ export function renderWithProvider(element: any) {
 
 /**
  * Runs tests to check if a component can handle applying className and style object.
+ *
+ * @param element - React element to test
+ * @param useDocument - if true, all tests will use document to search
+ * for element instead of element container. This is useful for testing
+ * elements created from portals.
  */
-export function testComponentCanHandleStyles(element: any) {
+export function testComponentCanHandleStyles(element: any, useDocument = false) {
     test('should be able to apply className', () => {
-        testElementCanAttachClassName(element);
+        testElementCanAttachClassName(element, useDocument);
     });
 
     test('should be able to apply style object', () => {
-        testElementCanAttachStyleObject(element);
+        testElementCanAttachStyleObject(element, useDocument);
     });
 }
 
 /**
  * Test case that checks whether an element can apply a className.
  */
-export function testElementCanAttachClassName(element: any) {
+export function testElementCanAttachClassName(element: any, useDocument = false) {
     const className = 'testclassname';
     let elementWithClassName = React.cloneElement(element, { className: className });
     const { container } = render(elementWithClassName);
-    expect(container.querySelector(`.${className}`)).toBeTruthy();
+
+    if (useDocument) {
+        expect(document.querySelector(`.${className}`)).toBeTruthy();
+    } else {
+        expect(container.querySelector(`.${className}`)).toBeTruthy();
+    }
 }
 
 /**
  * Test case that checks whether an element can apply a style object.
  */
-export function testElementCanAttachStyleObject(element: any) {
+export function testElementCanAttachStyleObject(element: any, useDocument = false) {
     const style = {
         backgroundColor: 'orange',
     };
     let elementWithStyle = React.cloneElement(element, { style: style });
     const { container } = render(elementWithStyle);
-    expect(container.innerHTML).toMatch('background-color: orange');
+
+    if (useDocument) {
+        expect(document.body.innerHTML).toMatch('background-color: orange');
+    } else {
+        expect(container.innerHTML).toMatch('background-color: orange');
+    }
+}
+
+/**
+ * Helper component used to test custom React hooks.
+ * Provide a `useHook` prop that will run arbitrary hooks code.
+ *
+ * This component will provide any forwarded `ref` to the
+ * `useHook` prop, in case you need access to it.
+ */
+export const HookTester = React.forwardRef((props: any, ref: any) => {
+    props.useHook(ref);
+
+    return <div ref={ref}>{props.children}</div>;
+});
+
+/**
+ * Helper function that renders the `HookTester` component to test
+ * custom React hooks.
+ *
+ * Returns the the default object from rendering a component
+ * with `react-testing-library`, along with a `ref` for the component.
+ *
+ * @param hook - hook function you want to run
+ * @param children - optional React children to render in test component
+ */
+export function renderHookTester(hook: Function, children?: React.ReactNode) {
+    const ref = React.createRef();
+    return {
+        ...render(
+            <HookTester ref={ref} useHook={hook}>
+                {children}
+            </HookTester>
+        ),
+        ref,
+    };
 }

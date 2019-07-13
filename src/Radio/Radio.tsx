@@ -48,7 +48,6 @@ const Circle = styled.span<IRadioProps>`
             return props.disabled ? props.theme.infoColorLight : 'white';
         }
     }};
-    box-sizing: border-box;
     vertical-align: middle;
     line-height: 1;
 
@@ -98,7 +97,6 @@ const Input = styled.input<IRadioProps>`
 const CircleLabel = styled.span<IRadioProps>`
     font-size: 14px;
     padding-left: 5px;
-    font-family: system-ui;
     position: relative;
     top: 1px;
     color: ${props => (props.disabled ? props.theme.infoColorAccent : 'black')};

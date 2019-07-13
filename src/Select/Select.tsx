@@ -2,12 +2,13 @@ import * as React from 'react';
 import styled, { IWithStyles, css } from '../sc-utils';
 import Input from '../Input';
 // import Tag from '../Tag';
-import { expandAndShow } from '../keyframes';
+import { expandAndShow } from '../style/animations/expandAndShow';
 import { SELECT_WIDTH, DROPDOWN_ANIMATION_DURATION } from './styleConstants';
 import { getIconContent } from '../icons';
 import SelectOption, { ISelectOption, ISelectOptionProps } from './SelectOption';
 import SelectOptionGroup, { ISelectOptionGroupProps } from './SelectOptionGroup';
 import filterByLabel from './filterable';
+import useCloseOnClickAway from '../hooks/useCloseOnClickAway';
 
 interface ISelectProps extends IWithStyles {
     open?: boolean;
@@ -27,7 +28,6 @@ type SelectWithRef = React.ForwardRefExoticComponent<
 const Wrapper = styled.div<ISelectProps>`
     display: inline-block;
     cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-    font-family: system-ui;
     position: relative;
 
     input {
@@ -85,7 +85,6 @@ const Dropdown = styled.div<ISelectProps>`
     z-index: 10;
     border: 1px solid ${props => props.theme.defaultBorderColor};
     border-radius: 2px;
-    box-sizing: border-box;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
     background-color: white;
     margin: 5px 0;
@@ -131,43 +130,11 @@ const Select = React.forwardRef<HTMLInputElement, ISelectProps>((props, ref) => 
     const wrapperRef = React.useRef(null);
 
     /**
-     * This effect listens for clicks on the document so that we can close the dropdown
-     * when we click outside of the input.
-     *
-     * By providing empty array [] as second parameter to useEffect,
-     * we are telling React that this effect doesn't depend on any
-     * values from props or state, which means it will not re-run this effect
-     * on every re-render.
-     * This means it will behave much like componentDidMount and componentWillUnmount.
+     * Close dropdown when clicking away.
      */
-    React.useEffect(() => {
-        /**
-         * The third parameter is `useCapture`, which captures this event and ensures
-         * it fires before event listeners on the EventTarget.
-         * More details: https://stackoverflow.com/questions/7398290/unable-to-understand-usecapture-parameter-in-addeventlistener
-         *
-         * We want `useCapture` to be true in case we click somewhere on the document that has an event handler
-         * that stops propagation. We don't want to wait until the event bubbles up to the document.
-         */
-        document.addEventListener('click', closeDropdownOnClickAway, true);
-
-        // Return function to cleanup on unmount.
-        return () => {
-            document.removeEventListener('click', closeDropdownOnClickAway, true);
-        };
-    }, []);
-
-    function closeDropdownOnClickAway(e: any) {
-        /**
-         * If the element we clicked on is NOT our select element nor any
-         * child node of it, then we clicked away from the select.
-         * This should cause the dropdown to close.
-         */
-        let wrapperElement = (wrapperRef.current as unknown) as HTMLDivElement;
-        if (wrapperElement !== e.target && !wrapperElement.contains(e.target)) {
-            setOpen(false);
-        }
-    }
+    useCloseOnClickAway(wrapperRef.current, open, () => {
+        setOpen(false);
+    });
 
     function onInputClick() {
         if (!props.disabled) {

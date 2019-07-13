@@ -21,9 +21,7 @@ const Tag = styled.span<ITagProps>`
     font-size: 12px;
     color: #fff;
     border-radius: 4px;
-    box-sizing: border-box;
     border: 1px solid transparent;
-    font-family: system-ui;
 
     i {
         display: inline-block;

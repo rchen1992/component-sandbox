@@ -52,7 +52,6 @@ const Box = styled.span<ICheckboxProps>`
                     : props.theme.defaultBorderColor;
             }
         }};
-    box-sizing: border-box;
     transition: background-color 100ms;
     line-height: 1;
     vertical-align: middle;
@@ -104,7 +103,6 @@ const Input = styled.input`
 
 const BoxLabel = styled.span<ICheckboxProps>`
     font-size: 14px;
-    font-family: system-ui;
     padding-left: 5px;
     position: relative;
     top: 1px;
