@@ -93,4 +93,20 @@ describe('Modal', () => {
         const overlay = queryByTestId('modal-overlay');
         expect(overlay).toBeFalsy();
     });
+
+    test('should fire onClose when closeOnPressEscape is true and we pressed escape key', () => {
+        const onClose = jest.fn();
+        const { container } = render(<Modal visible onClose={onClose} closeOnPressEscape />);
+        fireEvent.keyDown(container, { key: 'Escape' });
+        expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    test('should not fire onClose when closeOnPressEscape is false and we pressed escape key', () => {
+        const onClose = jest.fn();
+        const { container } = render(
+            <Modal visible onClose={onClose} closeOnPressEscape={false} />
+        );
+        fireEvent.keyDown(container, { key: 'Escape' });
+        expect(onClose).not.toHaveBeenCalled();
+    });
 });
