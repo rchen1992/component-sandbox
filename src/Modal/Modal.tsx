@@ -6,6 +6,7 @@ import { fadeSlide, fadeSlideRev, ANIMATION_DURATION } from './animations';
 import { halfFade, halfFadeRev } from '../style/animations/halfFade';
 import usePreviousProp from '../hooks/usePreviousProp';
 import useCloseOnClickAway from '../hooks/useCloseOnClickAway';
+import useEscKeyListener from '../hooks/useEscKeyListener';
 import getIcon from '../icons';
 
 enum Size {
@@ -21,6 +22,7 @@ interface IModalProps {
     showOverlay?: boolean;
     showClose?: boolean;
     lockScroll?: boolean;
+    closeOnPressEscape?: boolean;
     size?: keyof typeof Size;
 }
 
@@ -143,6 +145,7 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
         showOverlay = true,
         showClose = false,
         lockScroll = false,
+        closeOnPressEscape = false,
         size = Size.medium,
         visible,
         onClose,
@@ -162,6 +165,11 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
     const CloseIcon = showClose ? getIcon('close') : null;
 
     useCloseOnClickAway((modalRef as any).current, visible, onClose);
+    useEscKeyListener(() => {
+        if (closeOnPressEscape && visible) {
+            onClose();
+        }
+    });
 
     /**
      * Handle close animation.
@@ -183,10 +191,10 @@ const ModalWrapper = React.forwardRef<HTMLDivElement, IModalWrapperProps>((props
 
     /**
      * Handle locking scroll when modal is open.
-     * Full size modals will automatically have lock scroll.
+     * Full size modals will automatically have locked scroll.
      */
     React.useEffect(() => {
-        if (documentBodyRef.current && (lockScroll || props.size === Size.full)) {
+        if (documentBodyRef.current && (lockScroll || size === Size.full)) {
             if (visible) {
                 documentBodyRef.current.style.overflow = 'hidden';
             } else {

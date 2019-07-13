@@ -114,6 +114,43 @@ const LockScroll = () => {
     );
 };
 
+const CloseWithEsc = () => {
+    const [visible, setVisible] = React.useState(false);
+
+    function open() {
+        setVisible(true);
+    }
+
+    function onClose() {
+        setVisible(false);
+    }
+
+    return (
+        <span style={{ marginLeft: '10px' }}>
+            <Button onClick={open} buttonSize="mini">
+                Close with Esc
+            </Button>
+
+            <Modal visible={visible} title="Modal Title" onClose={onClose} closeOnPressEscape>
+                <Modal.Body>Modal Body</Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        style={{ marginRight: '10px' }}
+                        buttonSize="mini"
+                        plain
+                        onClick={onClose}
+                    >
+                        Cancel
+                    </Button>
+                    <Button buttonSize="mini" buttonType="primary" onClick={onClose}>
+                        Confirm
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </span>
+    );
+};
+
 const Basic = (stories: any) => {
     stories.add(
         'Basic',
@@ -122,6 +159,7 @@ const Basic = (stories: any) => {
                 <BasicModal />
                 <ShowOverlay />
                 <LockScroll />
+                <CloseWithEsc />
             </>
         ),
         wInfo(`
@@ -136,6 +174,8 @@ const Basic = (stories: any) => {
         Use **\`showOverlay\`** prop to control whether or not background overlay should appear. By default it always shows.
         
         Use **\`lockScroll\`** prop to prevent scrolling the background while modal is open.
+
+        Use **\`closeOnPressEscape\`** prop to allow closing the modal with Esc key.
 
         Provide an **\`onClose\`** prop to control what should happen when modal closes.
         This is required, because modal visibility is controlled by the consuming comopnent.
