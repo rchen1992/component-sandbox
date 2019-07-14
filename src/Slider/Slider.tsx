@@ -138,12 +138,20 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
      */
     const currentValue = React.useRef(startingValue);
     React.useEffect(() => {
-        currentValue.current = convertOffsetPositionToSliderValue(
+        const newValue = convertOffsetPositionToSliderValue(
             max,
             min,
             handlePositionX,
             sliderRef.current.offsetWidth
         );
+
+        if (currentValue.current !== newValue) {
+            currentValue.current = newValue;
+
+            if (onChange) {
+                onChange(newValue);
+            }
+        }
     });
 
     function onHandleDown(e: React.MouseEvent) {
@@ -197,10 +205,6 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         window.removeEventListener('mousemove', onDragging);
         window.removeEventListener('mouseup', onDragEnd);
         window.removeEventListener('contextmenu', onDragEnd);
-
-        if (onChange) {
-            onChange(currentValue.current);
-        }
     }
 
     return (
