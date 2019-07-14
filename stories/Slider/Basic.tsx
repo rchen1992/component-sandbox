@@ -7,7 +7,7 @@ const Basic = (stories: any) => {
         'Basic',
         () => (
             <div style={{ marginLeft: '20px' }}>
-                <Slider />
+                <Slider onChange={val => console.log(val)} />
             </div>
         ),
         wInfo(`

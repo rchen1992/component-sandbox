@@ -1,7 +1,13 @@
 import * as React from 'react';
 import styled, { css } from '../sc-utils';
+import { convertSliderValueToOffsetPosition, convertOffsetPositionToSliderValue } from './util';
 
-interface ISliderProps {}
+interface ISliderProps {
+    startingValue?: number;
+    min?: number;
+    max?: number;
+    onChange?: (value: number) => void;
+}
 
 interface IHandleWrapperProps {
     offsetX?: number;
@@ -56,6 +62,7 @@ const HandleWrapperStyles = (props: IHandleWrapperProps) => css`
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
 `;
 
 const HandleWrapper = styled.div.attrs<IHandleWrapperProps, IHandleWrapperProps>(props => ({
@@ -75,6 +82,18 @@ const Handle = styled.div`
 `;
 
 const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
+    const { min = 0, max = 100, startingValue = min, onChange } = props;
+
+    if (min >= max) {
+        console.error(
+            `Slider component: \`min\` prop value (${min}) should be less than \`max\` prop value (${max}).`
+        );
+    } else if (startingValue < min || startingValue > max) {
+        console.error(
+            `Slider component: \`startingValue\` prop value (${startingValue}) should be between min prop value (${min}) and max prop value (${max}).`
+        );
+    }
+
     /**
      * @dragging - am I currently dragging?
      * @handlePositionX - the position of the slider handle.
@@ -87,6 +106,23 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     const [mouseX, setMouseX] = React.useState(0);
     const [startMouseX, setStartMouseX] = React.useState(0);
 
+    const ownRef = React.useRef(null);
+    const sliderRef: any = ref || ownRef;
+
+    /**
+     * Calculate initial position of slider before initial render.
+     */
+    React.useLayoutEffect(() => {
+        setHandlePositionX(
+            convertSliderValueToOffsetPosition(
+                max,
+                min,
+                startingValue,
+                sliderRef.current.offsetWidth
+            )
+        );
+    }, []);
+
     /**
      * Keep track of the computed difference between
      * where we first started dragging and where we are
@@ -95,6 +131,19 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     const dragDeltaX = React.useRef(0);
     React.useEffect(() => {
         dragDeltaX.current = mouseX - startMouseX;
+    });
+
+    /**
+     * Keep track of the current value of the slider.
+     */
+    const currentValue = React.useRef(startingValue);
+    React.useEffect(() => {
+        currentValue.current = convertOffsetPositionToSliderValue(
+            max,
+            min,
+            handlePositionX,
+            sliderRef.current.offsetWidth
+        );
     });
 
     function onHandleDown(e: React.MouseEvent) {
@@ -134,7 +183,12 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
          * while it is moving (with the same value for `handlePositionX`),
          * even if the component re-renders in the middle of the event.
          */
-        setHandlePositionX(Math.max(0, handlePositionX + dragDeltaX.current));
+        setHandlePositionX(
+            Math.min(
+                Math.max(0, handlePositionX + dragDeltaX.current),
+                sliderRef.current.offsetWidth
+            )
+        );
     }
 
     function onDragEnd(e: MouseEvent) {
@@ -143,16 +197,23 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         window.removeEventListener('mousemove', onDragging);
         window.removeEventListener('mouseup', onDragEnd);
         window.removeEventListener('contextmenu', onDragEnd);
+
+        if (onChange) {
+            onChange(currentValue.current);
+        }
     }
 
     return (
         <>
             <div>{dragging ? 'dragging' : 'not dragging'}</div>
+            <div>slider width: {sliderRef.current ? sliderRef.current.offsetWidth : 0}</div>
             <div>offset: {handlePositionX}</div>
             <div>start drag x: {startMouseX}</div>
             <div>current drag x: {mouseX}</div>
             <div>offset delta x: {dragDeltaX.current}</div>
-            <Runway>
+            <div>starting value: {startingValue}</div>
+            <div>current value: {currentValue.current}</div>
+            <Runway ref={sliderRef}>
                 <Bar width={handlePositionX} />
                 <HandleWrapper
                     offsetX={handlePositionX}
