@@ -6,6 +6,12 @@ interface ISliderProps {}
 interface IHandleWrapperProps {
     offsetX?: number;
     style?: object;
+    dragging?: boolean;
+}
+
+interface IBarProps {
+    width?: number;
+    style?: object;
 }
 
 const Runway = styled.div`
@@ -19,7 +25,23 @@ const Runway = styled.div`
     vertical-align: middle;
 `;
 
-const Bar = styled.div``;
+const BarStyles = (props: IBarProps) => css`
+    height: 4px;
+    background-color: ${({ theme }) => theme.primaryColor};
+    position: absolute;
+    left: 0%;
+    width: 10%;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+`;
+
+const Bar = styled.div.attrs<IBarProps, IBarProps>(props => ({
+    style: {
+        width: `${props.width}px`,
+    },
+}))`
+    ${props => BarStyles(props)}
+`;
 
 const HandleWrapperStyles = (props: IHandleWrapperProps) => css`
     width: 36px;
@@ -30,7 +52,7 @@ const HandleWrapperStyles = (props: IHandleWrapperProps) => css`
     transform: translateX(-50%);
     border: 1px solid black;
     text-align: center;
-    cursor: grab;
+    cursor: ${props.dragging ? 'grabbing' : 'grab'};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,8 +153,12 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
             <div>current drag x: {mouseX}</div>
             <div>offset delta x: {dragDeltaX.current}</div>
             <Runway>
-                <Bar />
-                <HandleWrapper offsetX={handlePositionX} onMouseDown={onHandleDown}>
+                <Bar width={handlePositionX} />
+                <HandleWrapper
+                    offsetX={handlePositionX}
+                    onMouseDown={onHandleDown}
+                    dragging={dragging}
+                >
                     <Handle />
                 </HandleWrapper>
             </Runway>
