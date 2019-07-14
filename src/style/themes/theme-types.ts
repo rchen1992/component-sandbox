@@ -37,6 +37,7 @@ export interface IThemeColors {
 export interface IThemeZIndexes {
     zIndexOverlay: number;
     zIndexModal: number;
+    zIndexSliderHandle: number;
 }
 
 /**
