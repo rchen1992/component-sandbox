@@ -31,7 +31,7 @@ export interface IThemeColors {
     dangerColorHighlight: string;
     dangerColorDark: string;
     linkColor: string;
-    disabledColor: string;
+    lightBlueGray: string;
 }
 
 export interface IThemeZIndexes {

@@ -28,7 +28,7 @@ const Runway = styled.div`
     width: 100%;
     height: 4px;
     margin: 16px 0;
-    background-color: ${({ theme }) => theme.defaultBorderColor};
+    background-color: ${({ theme }) => theme.lightBlueGray};
     border-radius: 3px;
     position: relative;
     cursor: pointer;
@@ -60,7 +60,6 @@ const HandleWrapperStyles = (props: IHandleWrapperProps) => css`
     top: -16px;
     z-index: ${({ theme }) => theme.zIndexSliderHandle};
     transform: translateX(-50%);
-    border: 1px solid black;
     text-align: center;
     cursor: ${props.dragging ? 'grabbing' : 'grab'};
     display: flex;
@@ -116,6 +115,7 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     const [mouseX, setMouseX] = React.useState(0);
     const [startMouseX, setStartMouseX] = React.useState(0);
 
+    const barRef = React.useRef(null);
     const ownRef = React.useRef(null);
     const sliderRef: any = ref || ownRef;
 
@@ -165,6 +165,8 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     });
 
     function onHandleDown(e: React.MouseEvent) {
+        e.preventDefault();
+
         onDragStart(e);
 
         window.addEventListener('mousemove', onDragging);
@@ -217,6 +219,21 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         window.removeEventListener('contextmenu', onDragEnd);
     }
 
+    function onSliderClick(e: React.MouseEvent) {
+        /**
+         * If we clicked on either the slider or the slider's bar:
+         *
+         * - get the slider's offset from the left side of the window
+         * - get the current mouse X position
+         * - subtract the current mouse position from the slider's left offset
+         *  to get the new handle position;
+         */
+        if (e.target === e.currentTarget || e.target === barRef.current) {
+            const sliderOffsetLeft = e.currentTarget.getBoundingClientRect().left;
+            setHandlePositionX(e.clientX - sliderOffsetLeft);
+        }
+    }
+
     return (
         <>
             <div>{dragging ? 'dragging' : 'not dragging'}</div>
@@ -226,10 +243,10 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
             <div>current drag x: {mouseX}</div>
             <div>offset delta x: {dragDeltaX.current}</div>
             <div>starting value: {startingValue}</div>
-            <div>current value: {currentValue.current}</div>
+            <div>internal current value: {currentValue.current}</div>
 
-            <Runway ref={sliderRef}>
-                <Bar width={handlePositionX} />
+            <Runway ref={sliderRef} onClick={onSliderClick}>
+                <Bar ref={barRef} width={handlePositionX} />
                 <HandleWrapper
                     offsetX={handlePositionX}
                     onMouseDown={onHandleDown}

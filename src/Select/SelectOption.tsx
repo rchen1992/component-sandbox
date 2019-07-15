@@ -44,7 +44,7 @@ const DropdownItem = styled.li<IDropdownItemProps>`
         background-color: ${props =>
             optionIsSelected(props.selectedValues, props.value)
                 ? props.theme.primaryColor
-                : props.theme.disabledColor};
+                : props.theme.lightBlueGray};
     }
 `;
 

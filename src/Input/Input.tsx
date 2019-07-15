@@ -32,7 +32,7 @@ const Input = styled.input<InputType>`
     -moz-appearance: none;
 
     display: table-cell;
-    background-color: ${props => (props.disabled ? props.theme.disabledColor : 'white')};
+    background-color: ${props => (props.disabled ? props.theme.lightBlueGray : 'white')};
     border: 1px solid
         ${props => (props.disabled ? props.theme.infoColorAccent : props.theme.defaultBorderColor)};
     border-radius: ${BORDER_RADIUS};
