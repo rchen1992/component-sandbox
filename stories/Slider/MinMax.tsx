@@ -28,12 +28,12 @@ function MinMaxSlider() {
 
 const MinMax = (stories: any) => {
     stories.add(
-        'MinMax',
+        'Min/Max',
         () => <MinMaxSlider />,
         wInfo(`
         ### Notes
 
-        Use **\`min\`** and **\`max\`** props to set custom min/max values for the slider.
+        Use **\`min\`** and **\`max\`** props to set custom min/max values for the slider. Defaults to 0 and 100.
 
         Use **\`startingValue\`** prop to set default starting value for slider.
 
@@ -42,7 +42,7 @@ const MinMax = (stories: any) => {
         const min = -100;
         const max = 100;
         const startingValue = 50;
-        
+
         function MinMaxSlider() {
             const [value, setValue] = React.useState(startingValue);
 
