@@ -125,16 +125,6 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         className,
     } = props;
 
-    if (min >= max) {
-        console.error(
-            `Slider component: \`min\` prop value (${min}) should be less than \`max\` prop value (${max}).`
-        );
-    } else if (startingValue < min || startingValue > max) {
-        console.error(
-            `Slider component: \`startingValue\` prop value (${startingValue}) should be between min prop value (${min}) and max prop value (${max}).`
-        );
-    }
-
     /**
      * @dragging - am I currently dragging?
      * @handlePositionX - the position of the slider handle.
@@ -195,6 +185,21 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
             }
         }
     });
+
+    /**
+     * Log any prop validation errors on mount.
+     */
+    React.useEffect(() => {
+        if (min >= max) {
+            console.error(
+                `Slider component: \`min\` prop value (${min}) should be less than \`max\` prop value (${max}).`
+            );
+        } else if (startingValue < min || startingValue > max) {
+            console.error(
+                `Slider component: \`startingValue\` prop value (${startingValue}) should be between min prop value (${min}) and max prop value (${max}).`
+            );
+        }
+    }, []);
 
     function onHandleDown(e: React.MouseEvent) {
         e.preventDefault();
