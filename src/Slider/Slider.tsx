@@ -1,8 +1,8 @@
 import * as React from 'react';
-import styled, { css } from '../sc-utils';
+import styled, { css, IWithStyles } from '../sc-utils';
 import { convertSliderValueToOffsetPosition, convertOffsetPositionToSliderValue } from './util';
 
-interface ISliderProps {
+interface ISliderProps extends IWithStyles {
     startingValue?: number;
     min?: number;
     max?: number;
@@ -115,7 +115,15 @@ const Handle = styled.div<IHandleProps>`
 `;
 
 const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
-    const { min = 0, max = 100, startingValue = min, disabled = false, onChange } = props;
+    const {
+        min = 0,
+        max = 100,
+        startingValue = min,
+        disabled = false,
+        onChange,
+        style,
+        className,
+    } = props;
 
     if (min >= max) {
         console.error(
@@ -268,16 +276,22 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
 
     return (
         <>
-            <div>{dragging ? 'dragging' : 'not dragging'}</div>
+            {/* <div>{dragging ? 'dragging' : 'not dragging'}</div>
             <div>slider width: {sliderRef.current ? sliderRef.current.offsetWidth : 0}</div>
             <div>offset: {handlePositionX}</div>
             <div>start drag x: {startMouseX}</div>
             <div>current drag x: {mouseX}</div>
             <div>offset delta x: {dragDeltaX.current}</div>
             <div>starting value: {startingValue}</div>
-            <div>internal current value: {currentValue.current}</div>
+            <div>internal current value: {currentValue.current}</div> */}
 
-            <Runway ref={sliderRef} onClick={onSliderClick} disabled={disabled}>
+            <Runway
+                ref={sliderRef}
+                style={style}
+                className={className}
+                onClick={onSliderClick}
+                disabled={disabled}
+            >
                 <Bar ref={barRef} width={handlePositionX} disabled={disabled} />
                 <HandleWrapper
                     offsetX={handlePositionX}
