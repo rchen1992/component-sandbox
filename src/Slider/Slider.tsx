@@ -6,6 +6,7 @@ interface ISliderProps {
     startingValue?: number;
     min?: number;
     max?: number;
+    disabled?: boolean;
     onChange?: (value: number) => void;
 }
 
@@ -13,31 +14,39 @@ interface IHandleWrapperProps {
     offsetX?: number;
     style?: object;
     dragging?: boolean;
+    disabled?: boolean;
 }
 
 interface IHandleProps {
     dragging?: boolean;
+    disabled?: boolean;
 }
 
 interface IBarProps {
     width?: number;
+    disabled?: boolean;
     style?: object;
 }
 
-const Runway = styled.div`
+interface IRunwayProps {
+    disabled?: boolean;
+}
+
+const Runway = styled.div<IRunwayProps>`
     width: 100%;
     height: 4px;
     margin: 16px 0;
     background-color: ${({ theme }) => theme.lightBlueGray};
     border-radius: 3px;
     position: relative;
-    cursor: pointer;
+    cursor: ${props => (props.disabled ? 'default' : 'pointer')};
     vertical-align: middle;
 `;
 
 const BarStyles = (props: IBarProps) => css`
     height: 4px;
-    background-color: ${({ theme }) => theme.primaryColor};
+    background-color: ${({ theme }) =>
+        props.disabled ? theme.defaultBorderColor : theme.primaryColor};
     position: absolute;
     left: 0%;
     width: 10%;
@@ -61,14 +70,21 @@ const HandleWrapperStyles = (props: IHandleWrapperProps) => css`
     z-index: ${({ theme }) => theme.zIndexSliderHandle};
     transform: translateX(-50%);
     text-align: center;
-    cursor: ${props.dragging ? 'grabbing' : 'grab'};
     display: flex;
     justify-content: center;
     align-items: center;
     user-select: none;
 
+    cursor: ${() => {
+        if (props.disabled) {
+            return 'not-allowed';
+        }
+
+        return props.dragging ? 'grabbing' : 'grab';
+    }};
+
     :hover > div {
-        transform: scale(1.5);
+        transform: ${props.disabled ? 'none' : 'scale(1.5)'};
     }
 `;
 
@@ -84,14 +100,22 @@ const Handle = styled.div<IHandleProps>`
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: ${({ theme }) => theme.primaryColor};
+    background-color: ${({ disabled, theme }) =>
+        disabled ? theme.defaultBorderColor : theme.primaryColor};
     border-radius: 50%;
-    transform: ${props => (props.dragging ? 'scale(1.5)' : 'none')};
     transition: transform 200ms;
+
+    transform: ${props => {
+        if (props.disabled) {
+            return 'none';
+        }
+
+        return props.dragging ? 'scale(1.5)' : 'none';
+    }};
 `;
 
 const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
-    const { min = 0, max = 100, startingValue = min, onChange } = props;
+    const { min = 0, max = 100, startingValue = min, disabled = false, onChange } = props;
 
     if (min >= max) {
         console.error(
@@ -167,6 +191,10 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     function onHandleDown(e: React.MouseEvent) {
         e.preventDefault();
 
+        if (disabled) {
+            return;
+        }
+
         onDragStart(e);
 
         window.addEventListener('mousemove', onDragging);
@@ -220,6 +248,10 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     }
 
     function onSliderClick(e: React.MouseEvent) {
+        if (disabled) {
+            return;
+        }
+
         /**
          * If we clicked on either the slider or the slider's bar:
          *
@@ -245,14 +277,15 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
             <div>starting value: {startingValue}</div>
             <div>internal current value: {currentValue.current}</div>
 
-            <Runway ref={sliderRef} onClick={onSliderClick}>
-                <Bar ref={barRef} width={handlePositionX} />
+            <Runway ref={sliderRef} onClick={onSliderClick} disabled={disabled}>
+                <Bar ref={barRef} width={handlePositionX} disabled={disabled} />
                 <HandleWrapper
                     offsetX={handlePositionX}
                     onMouseDown={onHandleDown}
                     dragging={dragging}
+                    disabled={disabled}
                 >
-                    <Handle dragging={dragging} />
+                    <Handle dragging={dragging} disabled={disabled} />
                 </HandleWrapper>
             </Runway>
         </>
