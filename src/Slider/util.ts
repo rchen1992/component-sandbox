@@ -45,3 +45,26 @@ export function convertOffsetPositionToSliderValue(
     const offsetValue = Math.round(offsetPercentage * absoluteWidth);
     return offsetValue + min;
 }
+
+/**
+ * Gets new position while factoring in the step breakpoints.
+ *
+ * @param positionX - the X position in pixels of the current position
+ * @param stopWidth - the width of each stop (in pixels)
+ * @param numStops - the total number of stops
+ */
+export function getNewPositionWithStep(positionX: number, stopWidth: number, numStops: number) {
+    let nearestStep = Math.round(positionX / stopWidth);
+
+    /**
+     * Because we are rounding to the nearest step,
+     * we could actually end up rounding above
+     * the maximum number of stops.
+     * We account for this here.
+     */
+    if (nearestStep > numStops) {
+        nearestStep -= 1;
+    }
+
+    return nearestStep * stopWidth;
+}

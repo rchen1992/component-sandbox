@@ -1,12 +1,17 @@
 import * as React from 'react';
 import styled, { css, IWithStyles } from '../sc-utils';
-import { convertSliderValueToOffsetPosition, convertOffsetPositionToSliderValue } from './util';
+import {
+    convertSliderValueToOffsetPosition,
+    convertOffsetPositionToSliderValue,
+    getNewPositionWithStep,
+} from './util';
 
 interface ISliderProps extends IWithStyles {
     startingValue?: number;
     min?: number;
     max?: number;
     disabled?: boolean;
+    step?: number;
     onChange?: (value: number) => void;
 }
 
@@ -119,6 +124,7 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         min = 0,
         max = 100,
         startingValue = min,
+        step = 1,
         disabled = false,
         onChange,
         style,
@@ -187,6 +193,24 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     });
 
     /**
+     * Get the absolute width (in pixels) between every "stop".
+     * A stop is each point on the slider defined by the length of the `step`.
+     *
+     * For example, a slider that goes from 0-200 with a `step` of 10 will have 20 stops,
+     * and the width of each of those stops will be the width of the slider divided by 20.
+     *
+     * This number can end up being a float.
+     * We don't do any rounding here so that we can
+     * keep the precision as high as possible.
+     */
+    const stopWidth = React.useRef(1);
+    const numStops = React.useRef(1);
+    React.useEffect(() => {
+        numStops.current = (max - min) / step;
+        stopWidth.current = sliderRef.current.offsetWidth / numStops.current;
+    }, []);
+
+    /**
      * Log any prop validation errors on mount.
      */
     React.useEffect(() => {
@@ -197,6 +221,18 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         } else if (startingValue < min || startingValue > max) {
             console.error(
                 `Slider component: \`startingValue\` prop value (${startingValue}) should be between min prop value (${min}) and max prop value (${max}).`
+            );
+        }
+
+        if (step > max - min) {
+            console.error(
+                `Slider component: \`step\` prop value (${step}) should not be larger than the difference between max and min.`
+            );
+        }
+
+        if (step < 0) {
+            console.error(
+                `Slider component: \`step\` prop value (${step}) should not be negative.`
             );
         }
     }, []);
@@ -231,12 +267,8 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         setMouseX(e.clientX);
 
         /**
-         * We then adjust the handle position based on that delta.
-         *
-         * Note: we don't use a callback here to access the previous
-         * `handlePositionX` because if we used the value from
-         * the previous render, every pixel we drag would change the
-         * position by the current delta.
+         * Get new handle position based on mouse delta.
+         * Ensure it doesn't exceend min/max constraints.
          *
          * The `handlePositionX` below is static because we add/remove the
          * `mousemove` event listener every time we start/stop dragging.
@@ -244,12 +276,23 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
          * while it is moving (with the same value for `handlePositionX`),
          * even if the component re-renders in the middle of the event.
          */
-        setHandlePositionX(
-            Math.min(
-                Math.max(0, handlePositionX + dragDeltaX.current),
-                sliderRef.current.offsetWidth
-            )
+        const newPosition = Math.min(
+            Math.max(0, handlePositionX + dragDeltaX.current),
+            sliderRef.current.offsetWidth
         );
+
+        /**
+         * In case `step` prop was specified,
+         * we calculate the nearest step here in order
+         * to get the position based on the nearest step.
+         */
+        const newPositionWithStep = getNewPositionWithStep(
+            newPosition,
+            stopWidth.current,
+            numStops.current
+        );
+
+        setHandlePositionX(newPositionWithStep);
     }
 
     function onDragEnd(e: MouseEvent) {
@@ -266,29 +309,39 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         }
 
         /**
-         * If we clicked on either the slider or the slider's bar:
-         *
+         * Make sure we clicked on either the slider or the bar, not the handle.
+         */
+        if (e.target !== e.currentTarget && e.target !== barRef.current) {
+            return;
+        }
+
+        /**
          * - get the slider's offset from the left side of the window
          * - get the current mouse X position
          * - subtract the current mouse position from the slider's left offset
-         *  to get the new handle position;
+         *  to get the new handle position
+         * - make sure that new position conforms with step value
          */
-        if (e.target === e.currentTarget || e.target === barRef.current) {
-            const sliderOffsetLeft = e.currentTarget.getBoundingClientRect().left;
-            setHandlePositionX(e.clientX - sliderOffsetLeft);
-        }
+        const sliderOffsetLeft = e.currentTarget.getBoundingClientRect().left;
+        const newPosition = getNewPositionWithStep(
+            e.clientX - sliderOffsetLeft,
+            stopWidth.current,
+            numStops.current
+        );
+
+        setHandlePositionX(newPosition);
     }
 
     return (
         <>
-            {/* <div>{dragging ? 'dragging' : 'not dragging'}</div>
+            <div>{dragging ? 'dragging' : 'not dragging'}</div>
             <div>slider width: {sliderRef.current ? sliderRef.current.offsetWidth : 0}</div>
             <div>offset: {handlePositionX}</div>
             <div>start drag x: {startMouseX}</div>
             <div>current drag x: {mouseX}</div>
             <div>offset delta x: {dragDeltaX.current}</div>
             <div>starting value: {startingValue}</div>
-            <div>internal current value: {currentValue.current}</div> */}
+            <div>internal current value: {currentValue.current}</div>
 
             <Runway
                 ref={sliderRef}
