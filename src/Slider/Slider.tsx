@@ -6,6 +6,7 @@ import {
     getNewPositionWithStep,
 } from './util';
 import { getStops } from './Stop';
+import useMouseDrag, { onDraggingData } from '../hooks/useMouseDrag';
 
 interface ISliderProps extends IWithStyles {
     startingValue?: number;
@@ -136,21 +137,45 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         className,
     } = props;
 
-    /**
-     * @dragging - am I currently dragging?
-     * @handlePositionX - the position of the slider handle.
-     *  Represents a px value for the offset from the left.
-     * @mouseX - the current clientX position of the mouse
-     * @startMouseX - the starting clientX position of the mouse when we started dragging
-     */
-    const [dragging, setDragging] = React.useState(false);
     const [handlePositionX, setHandlePositionX] = React.useState(0);
-    const [mouseX, setMouseX] = React.useState(0);
-    const [startMouseX, setStartMouseX] = React.useState(0);
+    const { onMouseDown, dragging } = useMouseDrag(onDragging);
 
     const handleRef = React.useRef(null);
     const ownRef = React.useRef(null);
     const sliderRef: any = ref || ownRef;
+
+    /**
+     * Callback function to call when dragging.
+     *
+     * Note: we have to use the `dragDeltaX` provided to the callback instead of
+     * the one destructured from the `useMouseDrag` hook.
+     * This is because this function forms a closure over the destructured
+     * `dragDeltaX` variable, and while the dragging is happening, this callback
+     * will be always fired with the same `dragDeltaX`.
+     * By using the one provided as an argument, we get the accurate up-to-date value.
+     */
+    function onDragging(e: MouseEvent, { dragDeltaX }: onDraggingData) {
+        /**
+         * Get new handle position based on mouse delta.
+         * Ensure it doesn't exceend min/max constraints.
+         */
+        const newPosition = Math.min(
+            Math.max(0, handlePositionX + dragDeltaX),
+            sliderRef.current.offsetWidth
+        );
+        /**
+         * In case `step` prop was specified,
+         * we calculate the nearest step here in order
+         * to get the position based on the nearest step.
+         */
+        const newPositionWithStep = getNewPositionWithStep(
+            newPosition,
+            stopWidth.current,
+            numStops.current
+        );
+
+        setHandlePositionX(newPositionWithStep);
+    }
 
     /**
      * Calculate initial position of slider before initial render.
@@ -165,16 +190,6 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
             )
         );
     }, []);
-
-    /**
-     * Keep track of the computed difference between
-     * where we first started dragging and where we are
-     * currently dragging.
-     */
-    const dragDeltaX = React.useRef(0);
-    React.useEffect(() => {
-        dragDeltaX.current = mouseX - startMouseX;
-    });
 
     /**
      * Keep track of the current value of the slider.
@@ -246,63 +261,7 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
             return;
         }
 
-        onDragStart(e);
-
-        window.addEventListener('mousemove', onDragging);
-        window.addEventListener('mouseup', onDragEnd);
-        window.addEventListener('contextmenu', onDragEnd);
-    }
-
-    function onDragStart(e: React.MouseEvent) {
-        setDragging(true);
-        setStartMouseX(e.clientX);
-        setMouseX(e.clientX);
-    }
-
-    function onDragging(e: MouseEvent) {
-        /**
-         * As we drag, we update the current X position of the mouse.
-         *
-         * This causes this component to re-render and re-run effects,
-         * which updates our computed `dragDeltaX`.
-         */
-        setMouseX(e.clientX);
-
-        /**
-         * Get new handle position based on mouse delta.
-         * Ensure it doesn't exceend min/max constraints.
-         *
-         * The `handlePositionX` below is static because we add/remove the
-         * `mousemove` event listener every time we start/stop dragging.
-         * This means we will always call the same version of the `onDragging` function
-         * while it is moving (with the same value for `handlePositionX`),
-         * even if the component re-renders in the middle of the event.
-         */
-        const newPosition = Math.min(
-            Math.max(0, handlePositionX + dragDeltaX.current),
-            sliderRef.current.offsetWidth
-        );
-
-        /**
-         * In case `step` prop was specified,
-         * we calculate the nearest step here in order
-         * to get the position based on the nearest step.
-         */
-        const newPositionWithStep = getNewPositionWithStep(
-            newPosition,
-            stopWidth.current,
-            numStops.current
-        );
-
-        setHandlePositionX(newPositionWithStep);
-    }
-
-    function onDragEnd(e: MouseEvent) {
-        setDragging(false);
-
-        window.removeEventListener('mousemove', onDragging);
-        window.removeEventListener('mouseup', onDragEnd);
-        window.removeEventListener('contextmenu', onDragEnd);
+        onMouseDown(e);
     }
 
     function onSliderClick(e: React.MouseEvent) {
@@ -335,36 +294,25 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     }
 
     return (
-        <>
-            {/* <div>{dragging ? 'dragging' : 'not dragging'}</div>
-            <div>slider width: {sliderRef.current ? sliderRef.current.offsetWidth : 0}</div>
-            <div>offset: {handlePositionX}</div>
-            <div>start drag x: {startMouseX}</div>
-            <div>current drag x: {mouseX}</div>
-            <div>offset delta x: {dragDeltaX.current}</div>
-            <div>starting value: {startingValue}</div>
-            <div>internal current value: {currentValue.current}</div> */}
-
-            <Runway
-                ref={sliderRef}
-                style={style}
-                className={className}
-                onClick={onSliderClick}
+        <Runway
+            ref={sliderRef}
+            style={style}
+            className={className}
+            onClick={onSliderClick}
+            disabled={disabled}
+        >
+            <Bar width={handlePositionX} disabled={disabled} />
+            <HandleWrapper
+                ref={handleRef}
+                offsetX={handlePositionX}
+                onMouseDown={onHandleDown}
+                dragging={dragging}
                 disabled={disabled}
             >
-                <Bar width={handlePositionX} disabled={disabled} />
-                <HandleWrapper
-                    ref={handleRef}
-                    offsetX={handlePositionX}
-                    onMouseDown={onHandleDown}
-                    dragging={dragging}
-                    disabled={disabled}
-                >
-                    <Handle dragging={dragging} disabled={disabled} />
-                </HandleWrapper>
-                {showStops && getStops(numStops.current, step, max, min)}
-            </Runway>
-        </>
+                <Handle dragging={dragging} disabled={disabled} />
+            </HandleWrapper>
+            {showStops && getStops(numStops.current, step, max, min)}
+        </Runway>
     );
 });
 
