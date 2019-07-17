@@ -112,6 +112,7 @@ const Handle = styled.div<IHandleProps>`
         disabled ? theme.defaultBorderColor : theme.primaryColor};
     border-radius: 50%;
     transition: transform 200ms;
+    user-select: none;
 
     transform: ${props => {
         if (props.disabled) {
@@ -241,8 +242,6 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     }, []);
 
     function onHandleDown(e: React.MouseEvent) {
-        e.preventDefault();
-
         if (disabled) {
             return;
         }
@@ -337,14 +336,14 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
 
     return (
         <>
-            <div>{dragging ? 'dragging' : 'not dragging'}</div>
+            {/* <div>{dragging ? 'dragging' : 'not dragging'}</div>
             <div>slider width: {sliderRef.current ? sliderRef.current.offsetWidth : 0}</div>
             <div>offset: {handlePositionX}</div>
             <div>start drag x: {startMouseX}</div>
             <div>current drag x: {mouseX}</div>
             <div>offset delta x: {dragDeltaX.current}</div>
             <div>starting value: {startingValue}</div>
-            <div>internal current value: {currentValue.current}</div>
+            <div>internal current value: {currentValue.current}</div> */}
 
             <Runway
                 ref={sliderRef}
