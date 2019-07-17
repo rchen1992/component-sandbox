@@ -5,6 +5,7 @@ import {
     convertOffsetPositionToSliderValue,
     getNewPositionWithStep,
 } from './util';
+import { getStops } from './Stop';
 
 interface ISliderProps extends IWithStyles {
     startingValue?: number;
@@ -12,6 +13,7 @@ interface ISliderProps extends IWithStyles {
     max?: number;
     disabled?: boolean;
     step?: number;
+    showStops?: boolean;
     onChange?: (value: number) => void;
 }
 
@@ -57,6 +59,7 @@ const BarStyles = (props: IBarProps) => css`
     width: 10%;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
+    z-index: ${({ theme }) => theme.zIndexSliderBar};
 `;
 
 const Bar = styled.div.attrs<IBarProps, IBarProps>(props => ({
@@ -125,6 +128,7 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         max = 100,
         startingValue = min,
         step = 1,
+        showStops = false,
         disabled = false,
         onChange,
         style,
@@ -143,7 +147,7 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     const [mouseX, setMouseX] = React.useState(0);
     const [startMouseX, setStartMouseX] = React.useState(0);
 
-    const barRef = React.useRef(null);
+    const handleRef = React.useRef(null);
     const ownRef = React.useRef(null);
     const sliderRef: any = ref || ownRef;
 
@@ -204,9 +208,8 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
      * keep the precision as high as possible.
      */
     const stopWidth = React.useRef(1);
-    const numStops = React.useRef(1);
+    const numStops = React.useRef((max - min) / step);
     React.useEffect(() => {
-        numStops.current = (max - min) / step;
         stopWidth.current = sliderRef.current.offsetWidth / numStops.current;
     }, []);
 
@@ -309,9 +312,9 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         }
 
         /**
-         * Make sure we clicked on either the slider or the bar, not the handle.
+         * Make sure we clicked any part of the slider other than the handle.
          */
-        if (e.target !== e.currentTarget && e.target !== barRef.current) {
+        if (e.target === handleRef.current) {
             return;
         }
 
@@ -350,8 +353,9 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
                 onClick={onSliderClick}
                 disabled={disabled}
             >
-                <Bar ref={barRef} width={handlePositionX} disabled={disabled} />
+                <Bar width={handlePositionX} disabled={disabled} />
                 <HandleWrapper
+                    ref={handleRef}
                     offsetX={handlePositionX}
                     onMouseDown={onHandleDown}
                     dragging={dragging}
@@ -359,6 +363,7 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
                 >
                     <Handle dragging={dragging} disabled={disabled} />
                 </HandleWrapper>
+                {showStops && getStops(numStops.current, step, max, min)}
             </Runway>
         </>
     );

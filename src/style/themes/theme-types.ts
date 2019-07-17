@@ -38,6 +38,7 @@ export interface IThemeZIndexes {
     zIndexOverlay: number;
     zIndexModal: number;
     zIndexSliderHandle: number;
+    zIndexSliderBar: number;
 }
 
 /**
