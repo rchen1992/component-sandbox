@@ -80,7 +80,7 @@ const ElementColors: IThemeColors = {
     dangerColorHighlight,
     dangerColorDark,
     linkColor: blue,
-    disabledColor: lightBlueGray,
+    lightBlueGray: lightBlueGray,
 };
 
 export default ElementColors;

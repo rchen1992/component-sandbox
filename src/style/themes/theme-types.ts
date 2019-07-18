@@ -31,12 +31,14 @@ export interface IThemeColors {
     dangerColorHighlight: string;
     dangerColorDark: string;
     linkColor: string;
-    disabledColor: string;
+    lightBlueGray: string;
 }
 
 export interface IThemeZIndexes {
     zIndexOverlay: number;
     zIndexModal: number;
+    zIndexSliderHandle: number;
+    zIndexSliderBar: number;
 }
 
 /**

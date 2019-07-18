@@ -123,9 +123,13 @@ export function testElementCanAttachStyleObject(element: any, useDocument = fals
  * `useHook` prop, in case you need access to it.
  */
 export const HookTester = React.forwardRef((props: any, ref: any) => {
-    props.useHook(ref);
+    const forwardProps = props.useHook(ref) || {};
 
-    return <div ref={ref}>{props.children}</div>;
+    return (
+        <div ref={ref} {...forwardProps} data-testid="hook-tester">
+            {props.children}
+        </div>
+    );
 });
 
 /**
