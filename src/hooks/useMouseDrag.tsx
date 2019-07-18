@@ -3,7 +3,6 @@ import * as React from 'react';
 export interface onDraggingData {
     dragDeltaX: number;
     mouseX: number;
-    startMouseX: number;
 }
 
 export type OnDraggingCallback = (e: MouseEvent, data: onDraggingData) => void;
@@ -61,7 +60,7 @@ export default function useMouseDrag(onDraggingCallback?: OnDraggingCallback) {
          * Here can use the mouse position data to do anything we want.
          */
         if (onDraggingCallback) {
-            onDraggingCallback(e, { dragDeltaX: dragDeltaX.current, mouseX, startMouseX });
+            onDraggingCallback(e, { dragDeltaX: dragDeltaX.current, mouseX });
         }
     }
 
