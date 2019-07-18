@@ -145,39 +145,6 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
     const sliderRef: any = ref || ownRef;
 
     /**
-     * Callback function to call when dragging.
-     *
-     * Note: we have to use the `dragDeltaX` provided to the callback instead of
-     * the one destructured from the `useMouseDrag` hook.
-     * This is because this function forms a closure over the destructured
-     * `dragDeltaX` variable, and while the dragging is happening, this callback
-     * will be always fired with the same `dragDeltaX`.
-     * By using the one provided as an argument, we get the accurate up-to-date value.
-     */
-    function onDragging(e: MouseEvent, { dragDeltaX }: onDraggingData) {
-        /**
-         * Get new handle position based on mouse delta.
-         * Ensure it doesn't exceend min/max constraints.
-         */
-        const newPosition = Math.min(
-            Math.max(0, handlePositionX + dragDeltaX),
-            sliderRef.current.offsetWidth
-        );
-        /**
-         * In case `step` prop was specified,
-         * we calculate the nearest step here in order
-         * to get the position based on the nearest step.
-         */
-        const newPositionWithStep = getNewPositionWithStep(
-            newPosition,
-            stopWidth.current,
-            numStops.current
-        );
-
-        setHandlePositionX(newPositionWithStep);
-    }
-
-    /**
      * Calculate initial position of slider before initial render.
      */
     React.useLayoutEffect(() => {
@@ -262,6 +229,39 @@ const Slider = React.forwardRef<HTMLDivElement, ISliderProps>((props, ref) => {
         }
 
         onMouseDown(e);
+    }
+
+    /**
+     * Callback function to call when dragging.
+     *
+     * Note: we have to use the `dragDeltaX` provided to the callback instead of
+     * the one destructured from the `useMouseDrag` hook.
+     * This is because this function forms a closure over the destructured
+     * `dragDeltaX` variable, and while the dragging is happening, this callback
+     * will be always fired with the same `dragDeltaX`.
+     * By using the one provided as an argument, we get the accurate up-to-date value.
+     */
+    function onDragging(e: MouseEvent, { dragDeltaX }: onDraggingData) {
+        /**
+         * Get new handle position based on mouse delta.
+         * Ensure it doesn't exceend min/max constraints.
+         */
+        const newPosition = Math.min(
+            Math.max(0, handlePositionX + dragDeltaX),
+            sliderRef.current.offsetWidth
+        );
+        /**
+         * In case `step` prop was specified,
+         * we calculate the nearest step here in order
+         * to get the position based on the nearest step.
+         */
+        const newPositionWithStep = getNewPositionWithStep(
+            newPosition,
+            stopWidth.current,
+            numStops.current
+        );
+
+        setHandlePositionX(newPositionWithStep);
     }
 
     function onSliderClick(e: React.MouseEvent) {
